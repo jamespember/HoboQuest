@@ -1,3 +1,6 @@
+#ifndef HOBO_ACTOR
+#define HOBO_ACTOR
+
 #include <string>
 #include <map>
 #include "area.h"
@@ -25,5 +28,4 @@ namespace hoboquest {
 	};
 }
 
-
-
+#endif

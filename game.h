@@ -1,3 +1,6 @@
+#ifndef HOBO_GAME
+#define HOBO_GAME
+
 #include <string>
 #include <vector>
 
@@ -15,3 +18,5 @@ namespace hoboquest {
 			std::vector<*Actor> actors;
 	};
 }
+
+#endif

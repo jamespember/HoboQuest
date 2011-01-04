@@ -1,3 +1,6 @@
+#ifndef HOBO_ITEM
+#define HOBO_ITEM
+
 #include <string>
 #include <map>
 
@@ -16,3 +19,4 @@ namespace hoboquest {
 	};
 }
 
+#endif
