@@ -1,3 +1,6 @@
+#ifndef HOBO_CONTAINER
+#define HOBO_CONTAINER
+
 #include <string>
 #include <map>
 #include "item.h"
@@ -13,3 +16,5 @@ namespace hoboquest {
 			Item & drop(std::string name);
 	};
 }
+
+#endif

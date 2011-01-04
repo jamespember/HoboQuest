@@ -1,23 +1,26 @@
+#ifndef HOBO_ACTOR
+#define HOBO_ACTOR
+
 #include <string>
 #include <map>
-#include "environment.h"
+#include "area.h"
 
 namespace hoboquest {
 	class Actor {
 		protected:
 			std::string name;
-			Environment *pos;
+			Area *pos;
 			int hp;
 
 		public:
-			Actor(std::string n, Environment *p) : name(n), pos(p), hp(1) {}
+			Actor(std::string n, Area *p) : name(n), pos(p), hp(1) {}
 
 			std::string name() const { return name; }
 			int hp() const { return hp; }
 
 			bool is_alive() const { return hp > 0; }
 
-			bool go(Environment *env) {
+			bool go(Area *env) {
 				pos->on_exit(this);
 				env->on_enter(this);
 				pos = env;
@@ -33,3 +36,4 @@ namespace hoboquest {
 	};
 }
 
+#endif
