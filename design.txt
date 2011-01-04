@@ -24,4 +24,9 @@ namespace hoboquest {
 		Environment *position;
 	}
 
+	class Item {
+		string name;
+		int value;
+	}
+
 }
