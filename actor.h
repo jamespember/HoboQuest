@@ -5,14 +5,14 @@
 namespace hoboquest {
 	class Actor {
 		protected:
-			string name;
-			int hp;
+			std::string name;
 			Environment *pos;
+			int hp;
 
 		public:
-			Actor(string n) : name(n), hp(1) {}
+			Actor(std::string n, Environment *p) : name(n), pos(p), hp(1) {}
 
-			string name() const { return name; }
+			std::string name() const { return name; }
 			int hp() const { return hp; }
 
 			bool is_alive() const { return hp > 0; }

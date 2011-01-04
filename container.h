@@ -5,11 +5,11 @@
 namespace hoboquest {
 	class Container {
 		protected:
-			map<string, *Item> items;
+			std::map<std::string, *Item> items;
 
 		public:
 			bool pickup(Item a);
-			Item & has(string name);
-			Item & drop(string name);
+			Item & has(std::string name);
+			Item & drop(std::string name);
 	};
 }
