@@ -1,6 +1,7 @@
 #include <string>
 #include <map>
 #include "actor.h"
+#include "item.h"
 
 namespace hoboquest {
 	class Player : Actor {

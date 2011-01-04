@@ -1,5 +1,6 @@
 #include <string>
 #include <map>
+#include "container.h"
 
 namespace hoboquest {
 	class Environment : Container {
