@@ -4,10 +4,12 @@
 
 namespace hoboquest {
 	class Container {
-		map<string, *Item> items;
+		protected:
+			map<string, *Item> items;
 
-		bool pickup(Item a);
-		Item & has(string name);
-		Item & drop(string name);
-	}
+		public:
+			bool pickup(Item a);
+			Item & has(string name);
+			Item & drop(string name);
+	};
 }
