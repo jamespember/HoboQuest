@@ -12,6 +12,7 @@ namespace hoboquest {
 			Player(std::string n, Area *p) : hp(100) {} 
 
 			bool use(Item *a) {
+				return false; //TODO
 			}
 	};
 }
