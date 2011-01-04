@@ -2,13 +2,13 @@
 #include <map>
 
 namespace hoboquest {
-	class Environment : Container {
+	class Area : Container {
 		protected:
 			std::string description;
-			std::map<std::string, *Environment> neighbours;
+			std::map<std::string, *Area> neighbours;
 
 		public:
-			Environment(std::string n) : description(n) {}
+			Area(std::string n) : description(n) {}
 
 			void on_enter(Actor *a);
 			void on_exit(Actor *a);
@@ -16,6 +16,4 @@ namespace hoboquest {
 			void on_pickup(Item *a);
 	};
 }
-
-
 
