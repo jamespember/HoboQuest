@@ -4,14 +4,14 @@
 namespace hoboquest {
 	class Item {
 		protected:
-			string name;
+			std::string name;
 			int value;
 
 		public:
-			Item(string n) : name(n), value(0) {}
-			Item(string n, int v) : name(n), value(v) {}
+			Item(std::string n) : name(n), value(0) {}
+			Item(std::string n, int v) : name(n), value(v) {}
 
-			string name() const { return name; }
+			std::string name() const { return name; }
 			int value() const { return value; }
 	};
 }
