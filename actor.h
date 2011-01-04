@@ -21,9 +21,15 @@ namespace hoboquest {
 				pos->on_exit(this);
 				env->on_enter(this);
 				pos = env;
+				return false; //TODO
+			}
+
+			bool pick_up(Item *a) {
+				return false; //TODO
+			}
+			bool drop(Item *a) {
+				return false; //TODO
 			}
 	};
 }
-
-
 

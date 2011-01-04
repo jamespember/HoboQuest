@@ -9,6 +9,7 @@ namespace hoboquest {
 			Player(Environment *p) : name("player"), pos(p), hp(100) {} 
 
 			bool use(Item *a) {
+				return false; //TODO
 			}
 	};
 }
