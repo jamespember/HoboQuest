@@ -7,15 +7,15 @@
 namespace hoboquest {
 	class Item {
 		protected:
-			std::string name;
-			int value;
+			std::string _name;
+			int _value;
 
 		public:
-			Item(std::string n) : name(n), value(0) {}
-			Item(std::string n, int v) : name(n), value(v) {}
+			Item(std::string n) : _name(n), _value(0) {}
+			Item(std::string n, int v) : _name(n), _value(v) {}
 
-			std::string name() const { return name; }
-			int value() const { return value; }
+			std::string name() const { return _name; }
+			int value() const { return _value; }
 	};
 }
 
