@@ -2,7 +2,6 @@
 #define HOBO_ITEM
 
 #include <string>
-#include <map>
 
 namespace hoboquest {
 	class Item {
