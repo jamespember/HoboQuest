@@ -1,4 +1,6 @@
 Makefile
+hobotest.exe
+hoboquest.exe
 nbproject
 build
 dist
