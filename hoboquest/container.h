@@ -3,20 +3,20 @@
 
 #include <string>
 #include <map>
-//#include "item.h"
+#include "item.h"
 
-
+using hoboquest::Item;
 
 namespace hoboquest {
-	struct Item {
-		
-	};
 
 	class Container {
 		protected:
-			std::map<std::string, Item> items;
+			std::map<std::string, *Item> items;
 		public:
-			bool pickup(Item a);
+			Container() { }
+			bool pickup(std::string name, Item a) {
+				items.insert(name, *a);
+			}
 			Item & has(std::string name) {
 				return & *this->items.find(name);
 			}
