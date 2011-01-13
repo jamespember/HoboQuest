@@ -5,6 +5,7 @@
 #include <map>
 #include "actor.h"
 #include "item.h"
+#include "area.h"
 
 namespace hoboquest {
 	class Player : public Actor {
