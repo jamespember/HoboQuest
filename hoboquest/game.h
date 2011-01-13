@@ -30,7 +30,7 @@ namespace hoboquest {
 				in = in_s;
 				out = out_s;
 
-				out << "HoboQuest starting up\n";
+				out << "HoboQuest starting...\n";
 			}
 	};
 }
