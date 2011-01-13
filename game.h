@@ -27,6 +27,10 @@ namespace hoboquest {
 
 		public:
 			Game(istream in_s, ostream out_s) {
+				in = in_s;
+				out = out_s;
+
+				out << "HoboQuest starting up\n";
 			}
 	};
 }

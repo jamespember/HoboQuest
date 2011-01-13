@@ -3,7 +3,6 @@
 #include "game.h"
 
 int main(int argc, char** argv) {
-	std::cout << "Welcome to HoboQuest!" << std::endl;
-	Game g();
+	Game g(stdin, stdout);
 	return (EXIT_SUCCESS);
 }
