@@ -1,4 +1,4 @@
-Makefile
+*.o
 hobotest.exe
 hoboquest.exe
 nbproject
