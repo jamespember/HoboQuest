@@ -1,0 +1,59 @@
+==================================================================
+  _    _  ____  ____   ____   ____  _    _ ______  _____ _______ 
+ | |  | |/ __ \|  _ \ / __ \ / __ \| |  | |  ____|/ ____|__   __|
+ | |__| | |  | | |_) | |  | | |  | | |  | | |__  | (___    | |   
+ |  __  | |  | |  _ <| |  | | |  | | |  | |  __|  \___ \   | |   
+ | |  | | |__| | |_) | |__| | |__| | |__| | |____ ____) |  | |   
+ |_|  |_|\____/|____/ \____/ \___\_\\____/|______|_____/   |_| 
+
+ 									A mogelshark production
+==================================================================
+
+Game:
+	vector areas
+	vector actors
+	vector items
+	map quests
+
+Area: (string name, string description, map directions, vector *actors, vector *items)
+	Room
+		PoliceHQ
+		Bathroom
+		Shop
+	Outdoors
+		Park
+		Alley
+
+Actor: (string name, map stats (hp, dmg, luck, regen, money, capacity, weight), Area *area, vector *items)
+	Human
+		Player
+		Police
+		Thug
+	Animal
+		Pet
+			{Cat
+			Dog}
+		Wild
+			{Rat
+			Moose
+			Elephant
+			Monkey}
+		
+Item: (string name, map modifiers, int value)
+	Equippable
+		{Weapon
+		...}
+	Container	
+		{Bag
+		OilDrum
+		Box
+		TrashCan}
+	Consumable
+		{Cookie
+		PizzaSlice}
+	QuestItem (Quest *quest)
+		
+Quest: (string name, map description, int length)
+	(En klass per quest, rewardmetod m.m.)
+		
+	

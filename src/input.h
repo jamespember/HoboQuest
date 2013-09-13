@@ -25,7 +25,7 @@ namespace hoboquest {
 	};
 
 	class Input {
-		Command parse(string in) {
+		static Command parse(string in) {
 			size_t space = in.find(' ');
 			if (space == string::npos)
 				throw invalid_input("missing target for action");
@@ -42,7 +42,7 @@ namespace hoboquest {
 			return command;
 		}
 
-		Action to_action(string in) {
+		static Action to_action(string in) {
 			int n_actions = sizeof(action_names) / sizeof(*action_names);
 			for (int i = 1; i < n_actions; ++i)
 				if (in == action_names) return (Action) i;
