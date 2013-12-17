@@ -24,18 +24,20 @@ namespace hoboquest {
         _stats["capacity"] = 0;
       }
 
-      on_enter(std::shared_ptr<Area> area) {
+      void on_enter(std::shared_ptr<Area> area) {
       }
 
-      on_exit(std::shared_ptr<Area> area) {
+      void on_exit(std::shared_ptr<Area> area) {
       }
 
-      move_to(std::shared_ptr<Area> area) {
+      void move_to(std::shared_ptr<Area> area) {
         if (*area)
           on_exit(_location);
         _location = area;
         on_enter(_location);
       }
+
+      void tick() {}
       
   };
 } /* hoboquest  */ 
