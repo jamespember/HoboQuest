@@ -15,7 +15,7 @@ Game:
 	vector items
 	map quests
 
-Area: (string name, string description, map<*Area> exits, vector *actors, vector *items)
+Area: (string name, string description)
 	Room
 		PoliceHQ
 		Bathroom
@@ -28,46 +28,44 @@ Area: (string name, string description, map<*Area> exits, vector *actors, vector
     getExit(name) -> Area
     hasExit(name) -> bool
     removeExit(name) -> bool
-    entityEnter(obj, fromArea?)
-    entityLeave(obj, toArea?)
+    onEnter(actor, fromArea?)
+    onLeave(actor, toArea?)
 
-Entity: (string name, bool isLiving)
-  *Area _location
+Actor: (string name, map stats (hp, dmg, luck, regen, money, capacity, weight), Area *area, vector *items)
   moveTo(loc) ->
-    _location->entityLeave(this)
+    _location->onLeave(this)
     _location = loc
-    _location->entityEnter(this)
-
-  Actor: (string name, map stats (hp, dmg, luck, regen, money, capacity, weight), Area *area, vector *items)
-    isLiving = true
-    Human
-      Player
-      Police
-      Thug
-    Animal
-      Pet
-        {Cat
-        Dog}
-      Wild
-        {Rat
-        Moose
-        Elephant
-        Monkey}
-      
-  Item: (string name, map modifiers, int value)
-    isLiving = false
-    Equippable
-      {Weapon
-      ...}
-    Container	
-      {Bag
-      OilDrum
-      Box
-      TrashCan}
-    Consumable
-      {Cookie
-      PizzaSlice}
-    QuestItem (Quest *quest)
+    _location->onEnter(this)
+  Human
+    Player
+    Police
+    Thug
+  Animal
+    Pet {
+   			Cat
+    		Dog
+    } Wild {
+      	Rat
+    		Moose
+    		Elephant
+      	Monkey
+    }
+    
+Item: (string name, map modifiers, int value)
+  isLiving = false
+  Equippable {
+  		Weapon
+    	...
+  } Container	{
+			Bag
+		  OilDrum
+		  Box
+		  TrashCan
+  } Consumable {
+  		Cookie
+    	PizzaSlice
+  }
+  QuestItem (Quest *quest)
       
 Quest: (string name, map description, int length)
 	(En klass per quest, rewardmetod m.m.)
