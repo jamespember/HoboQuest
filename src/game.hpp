@@ -23,7 +23,9 @@ namespace hoboquest {
 			std::ostream & out;
 
 		public:
-			Game(std::istream &in_s, std::ostream &out_s);
+      Game(std::istream &in_s, std::ostream &out_s) : in(in_s), out(out_s) {
+        out << "HoboQuest starting...\n";
+      }
 	};
 }
 
