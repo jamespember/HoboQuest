@@ -1,6 +1,5 @@
-#include <stdlib.h>
 #include <iostream>
-#include "hoboquest/game.h"
+#include "game.hpp"
 
 using hoboquest::Game;
 
