@@ -5,11 +5,11 @@
 #include <string>
 #include <vector>
 
-// #include "container.h"
-// #include "area.h"
-// #include "item.h"
-// #include "actor.h"
-// #include "player.h"
+// #include "container.hpp"
+#include "area.hpp"
+// #include "item.hpp"
+// #include "actor.hpp"
+// #include "player.hpp"
 
 namespace hoboquest {
 	class Game {
