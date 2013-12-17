@@ -14,13 +14,14 @@ namespace hoboquest {
     protected:
       string _name;
       bool _active;
-      std::unordered_map<string, int> _stats;
+      int _dmg = 1;
+      int _hp = 1;
+      int _hp_max;
       std::shared_ptr<Area> _location;
 
     public:
-      Actor(string name) : _name(name) : _active(false) {
-        _stats["hp"] = 1;
-        _stats["damage"] = 1;
+      Actor(string name) : _name(name) : _active(false), _hp_max(1) {
+        _hp = _hp_max;
       }
 
       void on_enter(std::shared_ptr<Area> area) {
