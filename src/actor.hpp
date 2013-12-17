@@ -21,7 +21,6 @@ namespace hoboquest {
       Actor(string name) : _name(name) : _active(false) {
         _stats["hp"] = 1;
         _stats["damage"] = 1;
-        _stats["capacity"] = 0;
       }
 
       void on_enter(std::shared_ptr<Area> area) {
@@ -37,7 +36,7 @@ namespace hoboquest {
         on_enter(_location);
       }
 
-      void tick() {}
+      void action() {}
       
   };
 } /* hoboquest  */ 
