@@ -1,9 +1,8 @@
 #include <iostream>
 #include "game.hpp"
 
-using hoboquest::Game;
-
-int main(int argc, char** argv) {
-	Game g(stdin, stdout);
+// int main(int argc, char** argv) {
+int main() {
+	hoboquest::Game g(std::cin, std::cout);
 	return (EXIT_SUCCESS);
 }

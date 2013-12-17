@@ -1,5 +1,6 @@
 *.o
 hobotest.exe
+hoboquest
 hoboquest.exe
 nbproject
 build
