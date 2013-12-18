@@ -52,7 +52,6 @@ Actor: (string name, map stats (hp, dmg, luck, regen, money, capacity, weight), 
     }
     
 Item: (string name, map modifiers, int value)
-  isLiving = false
   Equippable {
   		Weapon
     	...
