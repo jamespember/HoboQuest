@@ -12,7 +12,7 @@
 namespace hoboquest {
   class Actor : public Container {
     protected:
-      string _name;
+      std::string _name;
       bool _active;
       int _dmg = 1;
       int _hp = 1;
@@ -20,7 +20,7 @@ namespace hoboquest {
       std::shared_ptr<Area> _location;
 
     public:
-      Actor(string name) : _name(name) : _active(false), _hp_max(1) {
+      Actor(const std::string name) : _name(name), _active(false), _hp_max(1) {
         _hp = _hp_max;
       }
 
@@ -31,7 +31,7 @@ namespace hoboquest {
       }
 
       void move_to(std::shared_ptr<Area> area) {
-        if (*area)
+        if (area != nullptr)
           on_exit(_location);
         _location = area;
         on_enter(_location);
