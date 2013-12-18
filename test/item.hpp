@@ -9,7 +9,7 @@ using namespace hoboquest;
 void test_item() {
 	Item i1("Item 1, no value");
 	assert(i1.name() == "Item 1, no value");
-	assert(i1.value() == 0);
+	assert(i1.value() == 1);
 	assert(i1.weight() == 1);
 	assert(i1.type() == "item");
 

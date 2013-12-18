@@ -11,7 +11,7 @@ DEPS := $(OBJECTS:.o=.deps)
 
 $(TARGET): $(OBJECTS)
 	@echo " Linking...";
-	$(CC) $^ -o $(TARGET)
+	$(CC) $(CFLAGS) $^ -o $(TARGET)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(BUILDDIR)
@@ -21,6 +21,8 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 clean:
 	@echo " Cleaning...";
 	$(RM) -r $(BUILDDIR)/*.o $(BUILDDIR)/*.o $(TARGET)
+
+full: clean $(TARGET)
 
 -include $(DEPS)
 

@@ -1,8 +1,8 @@
 #include <cstdlib>
 #include <iostream>
 
-#include "test_item.h"
-#include "test_input.h"
+#include "item.hpp"
+#include "input.hpp"
 
 using std::cout;
 
@@ -11,6 +11,8 @@ int main(int argc, char **argv) {
 	test_item();
 	cout << "input\n";
 	test_input();
+
+  cout << "ALL TESTS PASSED\n";
 
 	return 0;
 }

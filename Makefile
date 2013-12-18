@@ -26,6 +26,9 @@ clean:
 	$(RM) -r $(BUILDDIR) $(TARGET)
 
 full: clean $(TARGET)
+
+test: $(TARGET)
+	cd test; make; ./test
  
 -include $(DEPS)
  
