@@ -2,7 +2,6 @@
 #define HOBO_AREA
 
 #include <iostream>
-//#include <stdlib>
 #include <memory>
 #include <string>
 #include <vector>
@@ -35,25 +34,47 @@ namespace hoboquest {
 
 		public:
       Area(std::string n, std::string desc) : _name(n), _description(desc) {
-      	//_exits();
-      	
+      	std::cout << "Added area. ";
         std::cout << "Name: " << _name << "\nDescription: " << _description << "\n";
       }
       
-    	void add_exit(std::string direction, std::shared_ptr<Area> exit)  {
-				_exits[direction] = exit;
+      std::string get_name() const {
+      	return this->_name;
+      }
+      
+      std::string get_description() const {
+      	return this->_description;
+      }
+      
+      void set_name(const std::string name) {
+      	this->_name = name;
+      }
+      
+      void set_description(const std::string description) {
+      	this->_description = description;
+      }
+      
+    	void add_exit(const std::string &direction, std::shared_ptr<Area> exit)  {
+				this->_exits[direction] = exit;
     	}
     	
-    	bool has_exit(std::string direction) {
-    		return _exits.count(direction);
+    	bool has_exit(const std::string &direction) const {
+    		return this->_exits.count(direction) > 0;
     	}
-    	/*
-    	bool remove_exit(std::string direction) {
     	
-    	}*/
+    	std::shared_ptr<Area> get_exit(const std::string &direction) const {
+    		if (!this->has_exit(direction))
+    			return nullptr;
+  			return this->_exits.at(direction);
+    	}
+    	
+    	std::shared_ptr<Area> remove_exit(const std::string &direction) {
+    		auto exit = this->get_exit(direction);
+    		if (exit != nullptr)
+    			this->_exits.erase(direction);
+  			return exit;
+    	}
     /*
-    getExit(name) -> Area
-    removeExit(name) -> bool
     onEnter(actor, fromArea?)
     onLeave(actor, toArea?)
     */
