@@ -10,8 +10,14 @@ namespace hoboquest {
 			unsigned _value, _weight;
 
 		public:
-			Item(std::string n) : _name(n), _type("item"), _value(0), _weight(1) {}
-			Item(std::string n, int v) : _name(n), _type("item"), _value(v), _weigth(1) {}
+			Item(std::string name, unsigned value, unsigned weight) :
+        _name(name), _type("item"), _value(value), _weight(weight) {}
+
+			Item(std::string name, unsigned value) :
+        Item(name, value, 1) {}
+
+			Item(std::string name) :
+        Item(name, 1, 1) {}
 
 			const std::string & type() const { return this->_type; }
 			const std::string & name() const { return this->_name; }

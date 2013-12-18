@@ -28,7 +28,7 @@ namespace hoboquest {
         this->_money -= amount;
         return amount;
       }
-      unsigned take_money() { this->take_money(this->_money); }
+      unsigned take_money() { return this->take_money(this->_money); }
       void give_money(unsigned amount) { this->_money += amount; }
 
       void set_capacity(unsigned capacity) { this->_capacity = capacity; }
