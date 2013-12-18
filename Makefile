@@ -1,7 +1,7 @@
 CC := clang++
 SRCDIR := src
 BUILDDIR := build
-CFLAGS := -g -Wall -Wno-unused-result -stdlib=libc++
+CFLAGS := -std=c++11 -stdlib=libc++ -g -Wall -Wno-unused-result
 TARGET := hoboquest
  
 SRCEXT := cpp
