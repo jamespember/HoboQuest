@@ -2,17 +2,19 @@
 #define HOBO_AREA
 
 #include <iostream>
+//#include <stdlib>
+#include <memory>
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 // #include "container.h"
-// #include "area.h"
 // #include "item.h"
 // #include "actor.h"
 // #include "player.h"
 
 /*
-Area: (string name, string description, map<string, *Area> exits, vector *actors, vector *items)
+Area: (string name, string description)
 	Room
 		PoliceHQ
 		Bathroom
@@ -20,25 +22,41 @@ Area: (string name, string description, map<string, *Area> exits, vector *actors
 	Outdoors
 		Park
 		Alley
-  Methods:
-    addExit(name, Area) -> bool
-    getExit(name) -> Area
-    hasExit(name) -> bool
-    removeExit(name) -> bool
-    onEnter(actor, fromArea?)
-    onLeave(actor, toArea?)
 */
 
 namespace hoboquest {
-	class Area {
+	class Area { // : public Container
 		protected:
 			std::string _name;
 			std::string _description;
+			std::unordered_map<std::string, std::shared_ptr<Area>> _exits;
+			//vector _actors;
+			//vector<shared_ptr<Item> _items;
 
 		public:
       Area(std::string n, std::string desc) : _name(n), _description(desc) {
-        //std::cout << "Name: " << _name << "\nDescription: " << _description << "\n";
+      	//_exits();
+      	
+        std::cout << "Name: " << _name << "\nDescription: " << _description << "\n";
       }
+      
+    	void add_exit(std::string direction, std::shared_ptr<Area> exit)  {
+				_exits[direction] = exit;
+    	}
+    	
+    	bool has_exit(std::string direction) {
+    		return _exits.count(direction);
+    	}
+    	/*
+    	bool remove_exit(std::string direction) {
+    	
+    	}*/
+    /*
+    getExit(name) -> Area
+    removeExit(name) -> bool
+    onEnter(actor, fromArea?)
+    onLeave(actor, toArea?)
+    */
 	};
 }
 
