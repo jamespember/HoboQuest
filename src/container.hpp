@@ -3,29 +3,67 @@
 
 #include <string>
 #include <unordered_map>
+#include <utility>
 #include "item.hpp"
 
 namespace hoboquest {
 	class Container {
 		protected:
-			std::unordered_map<std::string, Item> _items;
+      std::unordered_map<std::string, std::shared_ptr<Item>> _items;
+      unsigned _capacity, _carrying, _money;
 
 		public:
-			Container() {}
+			Container() : _capacity(100), _carrying(0), _money(0) {}
 
-			bool pickup(Item item) {
-				_items.insert(item->name, item);
+      unsigned carrying() const { return this->_carrying; }
+      unsigned capacity() const { return this->_capacity; }
+      bool over_encumbered() const {
+        return this->_carrying > this->_capacity;
+      }
+
+      unsigned money() const { return this->_money; }
+      unsigned take_money(unsigned amount) {
+        if (amount > this->_money)
+          return amount = this->_money;
+        this->_money -= amount;
+        return amount;
+      }
+      unsigned take_money() { this->take_money(this->_money); }
+      void give_money(unsigned amount) { this->_money += amount; }
+
+      void set_capacity(unsigned capacity) { this->_capacity = capacity; }
+
+			bool has_item(const std::string &name) const {
+				return this->_items.count(name) > 0;
 			}
 
-			Item & has(std::string name) {
-				return & *this->items.find(name);
+      // Returns item or nullptr.
+      std::shared_ptr<Item> get_item(const std::string &name) const {
+        if (!this->has_item(name))
+          return nullptr;
+				return this->_items.at(name);
 			}
 
-			Item drop(std::string name) {
-				Item & it = has(name);
-				if (it != NULL)
-					items.erase(name);
-				return it;
+			bool pickup(std::shared_ptr<Item> item) {
+        // Already has item
+        if (this->has_item(item->name()))
+          return false;
+        // Not enough carrying capacity remaining?
+        if (item->weight() > this->capacity() - this->carrying())
+          return false;
+				this->_items[item->name()] = item;
+        this->_carrying += item->weight();
+        return true;
+			}
+
+      // Drops and returns item if present, otherwise returns nullptr
+      std::shared_ptr<Item> drop(const std::string &name) {
+        std::shared_ptr<Item> item = this->get_item(name);
+        if (item != nullptr) {
+          this->_items.erase(name);
+          this->_carrying -= item->weight();
+        }
+				return item;
 			}
 	};
 }
