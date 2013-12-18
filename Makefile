@@ -14,7 +14,7 @@ DEPS := $(OBJECTS:.o=.deps)
  
 $(TARGET): $(OBJECTS)
 	@echo " Linking...";
-	$(CC) $^ -o $(TARGET)
+	$(CC) $(CFLAGS) $^ -o $(TARGET)
  
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(BUILDDIR)
