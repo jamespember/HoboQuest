@@ -1,16 +1,21 @@
 #include <cstdlib>
 #include <iostream>
 
+#define TEST(NAME) \
+  std::cout << "TESTING " << #NAME << std::endl; \
+  test_ ## NAME ();
+  
+
 #include "item.hpp"
+#include "container.hpp"
 #include "input.hpp"
 
 using std::cout;
 
 int main(int argc, char **argv) {
-	cout << "item\n";
-	test_item();
-	cout << "input\n";
-	test_input();
+  TEST(item)
+  TEST(container)
+  TEST(input)
 
   cout << "ALL TESTS PASSED\n";
 

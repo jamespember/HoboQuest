@@ -12,6 +12,8 @@ SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 DEPS := $(OBJECTS:.o=.deps)
  
+-include $(DEPS)
+ 
 $(TARGET): $(OBJECTS)
 	@echo " Linking...";
 	$(CC) $(CFLAGS) $^ -o $(TARGET)
@@ -28,9 +30,7 @@ clean:
 full: clean $(TARGET)
 
 test: $(TARGET)
-	cd test; make; ./test
+	cd test; make; ./hobotest
  
--include $(DEPS)
- 
-.PHONY: clean
+.PHONY: clean test
 
