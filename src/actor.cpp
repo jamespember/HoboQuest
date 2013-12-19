@@ -7,7 +7,8 @@
 
 namespace hoboquest {
 
-  Actor::Actor(const std::string name) : _name(name), _active(false), _hp_max(1) {
+  Actor::Actor(const std::string &name) : 
+	_name(name), _active(false), _hp_max(1) {
     _hp = _hp_max;
   }
   
@@ -15,7 +16,7 @@ namespace hoboquest {
 		return this->_name;
   }
   
-  void Actor::set_name(std::string name) {
+  void Actor::set_name(const std::string &name) {
 		this->_name = name;
   }
 

@@ -22,10 +22,10 @@ namespace hoboquest {
       std::shared_ptr<Area> _location;
 
     public:
-      Actor(const std::string name);
+      Actor(const std::string &name);
       
       std::string get_name() const;
-      void set_name(std::string name);
+      void set_name(const std::string &name);
 
       void on_enter(std::shared_ptr<Area> area);
       void on_exit(std::shared_ptr<Area> area);
