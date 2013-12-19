@@ -11,22 +11,26 @@
 // #include "actor.hpp"
 // #include "player.hpp"
 
-namespace hoboquest {
-	class Game {
-		protected:
-			/*
-			std::vector<*Area> areas;
-			std::vector<*Item> items;
-			std::vector<*Actor> actors;
-			*/
-			std::istream & in;
-			std::ostream & out;
+template <typename T> using ptr_vector = std::vector<std::shared_ptr<T>>;
 
-		public:
+namespace hoboquest {
+  class Game {
+    protected:
+      ptr_vector<Area> _areas;
+      ptr_vector<Actor> _actors;
+      ptr_vector<Item> _items;
+
+      std::istream & in;
+      std::ostream & out;
+
+    public:
       Game(std::istream &in_s, std::ostream &out_s) : in(in_s), out(out_s) {
         out << "HoboQuest starting...\n";
       }
-	};
+
+      void tick() {
+      }
+  };
 }
 
 #endif
