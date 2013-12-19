@@ -1,7 +1,8 @@
 *.o
-hobotest.exe
 hoboquest
 hoboquest.exe
+test/hobotest
+test/hobotest.exe
 nbproject
 build
 dist

@@ -2,7 +2,7 @@ CC := clang++
 SRCDIR := .
 BUILDDIR := build
 CFLAGS := -std=c++11 -stdlib=libc++ -g -Wall -Wno-unused-result
-TARGET := test
+TARGET := hobotest
 
 SRCEXT := cpp
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
