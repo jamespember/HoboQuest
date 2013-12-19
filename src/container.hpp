@@ -1,6 +1,8 @@
 #ifndef HOBO_CONTAINER
-#define HOBO_CONTAINER
+#define HOBO_CONTAINER 1
 
+#include <memory>
+#include <iostream>
 #include <string>
 #include <unordered_map>
 #include <utility>
@@ -22,17 +24,17 @@ namespace hoboquest {
         return this->_carrying > this->_capacity;
       }
 
+      void set_capacity(unsigned capacity) { this->_capacity = capacity; }
+
       unsigned money() const { return this->_money; }
       unsigned take_money(unsigned amount) {
         if (amount > this->_money)
-          return amount = this->_money;
+          amount = this->_money;
         this->_money -= amount;
         return amount;
       }
       unsigned take_money() { return this->take_money(this->_money); }
       void give_money(unsigned amount) { this->_money += amount; }
-
-      void set_capacity(unsigned capacity) { this->_capacity = capacity; }
 
 			bool has_item(const std::string &name) const {
 				return this->_items.count(name) > 0;
@@ -49,9 +51,6 @@ namespace hoboquest {
         // Already has item
         if (this->has_item(item->name()))
           return false;
-        // Not enough carrying capacity remaining?
-        if (item->weight() > this->capacity() - this->carrying())
-          return false;
 				this->_items[item->name()] = item;
         this->_carrying += item->weight();
         return true;
@@ -66,7 +65,16 @@ namespace hoboquest {
         }
 				return item;
 			}
+
+      friend std::ostream & operator << (std::ostream &out, const Container &c);
 	};
-}
+
+  inline std::ostream & operator << (std::ostream &out, const Container &c) {
+    out << c.carrying() << '/' << c.capacity();
+    if (c.over_encumbered())
+      out << " (over encumbered)";
+    return out;
+  }
+} /* hoboquest  */ 
 
 #endif
