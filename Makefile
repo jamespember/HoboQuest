@@ -30,7 +30,7 @@ clean:
 full: clean $(TARGET)
 
 test: $(TARGET)
-	cd test; make; ./hobotest
+	cd test; make; ../hobotest
  
 .PHONY: clean test
 
