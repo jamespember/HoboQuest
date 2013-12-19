@@ -1,11 +1,30 @@
 #include <iostream>
 #include <string>
 #include "game.hpp"
+#include "actor.hpp"
+#include "area.hpp"
 
+
+void actor_pointer_test() {
+	auto area = std::make_shared<hoboquest::Area>("House", "A small wooden house");
+	auto actor = std::make_shared<hoboquest::Actor>("Thief");
+
+	area->add_actor(actor);
+	std::cout << area->has_actor(actor->get_name()) << std::endl;
+	auto test = area->get_actor(actor->get_name());
+
+	actor->set_name("Dirty thief");
+
+	std::cout << "Area " << area->get_name() << " has actor " << test->get_name();
+	std::cout << std::endl;
+
+	area->remove_actor(actor->get_name());
+	std::cout << area->has_actor(actor->get_name()) << std::endl;
+}
 
 void area_pointer_test() {
-	auto sp1 = std::make_shared<hoboquest::Area>(hoboquest::Area("House", "A small wooden house"));
-	auto sp2 = std::make_shared<hoboquest::Area>(hoboquest::Area("Garden", "A beautiful garden"));
+	auto sp1 = std::make_shared<hoboquest::Area>("House", "A small wooden house");
+	auto sp2 = std::make_shared<hoboquest::Area>("Garden", "A beautiful garden");
 
 	sp1->add_exit("door", sp2);
 	std::cout << sp1->has_exit("door") << " " << sp2->has_exit("door") << std::endl;
@@ -21,10 +40,9 @@ void area_pointer_test() {
 	std::cout << sp1->has_exit("door") << " " << sp2->has_exit("door") << std::endl;	
 }
 
-// int main(int argc, char** argv) {
 int main() {
 	hoboquest::Game g(std::cin, std::cout);
-	//area_pointer_test();
+	actor_pointer_test();
 
 	return (0);
 }
