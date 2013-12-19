@@ -1,8 +1,12 @@
 CC := clang++
 SRCDIR := .
 BUILDDIR := build
-CFLAGS := -std=c++11 -stdlib=libc++ -g -Wall -Wno-unused-result
+CFLAGS := -std=c++11 -g -Wall -Wno-unused-result
 TARGET := hobotest
+
+ifeq ($(shell uname -s),Darwin)
+CFLAGS += -stdlib=libc++
+endif
 
 SRCEXT := cpp
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
