@@ -17,11 +17,11 @@ namespace hoboquest {
 
     Area::Area(std::string n, std::string desc) : _name(n), _description(desc) { }
     
-    std::string Area::get_name() const {
+    std::string Area::name() const {
     	return this->_name;
     }
     
-    std::string Area::get_description() const {
+    std::string Area::description() const {
     	return this->_description;
     }
     
@@ -55,7 +55,7 @@ namespace hoboquest {
   	}
   	
   	void Area::add_actor(std::shared_ptr<Actor> actor)  {
-			this->_actors[actor->get_name()] = actor;
+			this->_actors[actor->name()] = actor;
   	}
   	
   	bool Area::has_actor(const std::string &name) const {

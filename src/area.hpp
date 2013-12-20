@@ -21,8 +21,8 @@ namespace hoboquest {
 		public:
       Area(std::string n, std::string desc);
       
-      std::string get_name() const;
-      std::string get_description() const;      
+      std::string name() const;
+      std::string description() const;      
       void set_name(const std::string name);
       void set_description(const std::string description);
       
