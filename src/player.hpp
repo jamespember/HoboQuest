@@ -5,6 +5,7 @@
 
 #include <string>
 #include <iostream>
+#include <vector>
 
 namespace hoboquest {
   class Player : public Actor {
@@ -20,6 +21,9 @@ namespace hoboquest {
       void message(std::string msg);
       std::ostream & out();
       std::istream & in();
+
+      std::vector<std::string> read_command();
+      bool interact();
 
   };
 } /* hoboquest */ 
