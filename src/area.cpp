@@ -15,10 +15,7 @@ Area: (string name, string description)
 
 namespace hoboquest {
 
-    Area::Area(std::string n, std::string desc) : _name(n), _description(desc) {
-    	std::cout << "Added area. ";
-      std::cout << "Name: " << _name << "\nDescription: " << _description << "\n";
-    }
+    Area::Area(std::string n, std::string desc) : _name(n), _description(desc) { }
     
     std::string Area::get_name() const {
     	return this->_name;
