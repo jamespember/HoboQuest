@@ -9,21 +9,26 @@ using namespace std;
 using namespace hoboquest;
 
 void test_area() {
-	auto sp1 = make_shared<Area>("House", "A small wooden house");
-	auto sp2 = make_shared<Area>("Garden", "A beautiful garden");
+	auto house = make_shared<Area>("House", "A small wooden house");
+	auto garden = make_shared<Area>("Garden", "A beautiful garden");
 
-	sp1->add_exit("door", sp2);
-	// cout << sp1->has_exit("door") << " " << sp2->has_exit("door") << endl;
-	auto exit = sp1->get_exit("door");
+	// Verify that adding an exit works
+	house->add_exit("door", garden);
+	assert(house->has_exit("door") == true);
+	assert(garden->has_exit("door") == false);
+	
+	// Verify fetching exit works and that changes are reflected globally
+	auto exit = house->get_exit("door"); // exit should now point to garden
+	garden->set_name("Big Garden");
+	garden->set_description("An amazingly large garden");
+	assert(house->get_name() == "House");
+	assert(exit->get_name() == "Big Garden");
+	assert(exit->get_description() == "An amazingly large garden");
 
-	sp2->set_name("Big Garden");
-	sp2->set_description("An amazingly large garden");
-
-	// cout << "Area " << sp1->get_name() << " has exit " << exit->get_name();
-	// cout << " (" << exit->get_description() << ")" << endl;
-
-	sp1->remove_exit("door");
-	// cout << sp1->has_exit("door") << " " << sp2->has_exit("door") << endl;	
+	// Verify that removing an exit works
+	house->remove_exit("door");
+	assert(house->has_exit("door") == false);
+	assert(garden->has_exit("door") == false);
 }
 
 #endif
