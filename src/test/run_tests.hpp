@@ -13,13 +13,15 @@
 using std::cout;
 
 int run_tests() {
+  cout << "Running test suite...\n";
+
   TEST(item)
   TEST(container)
   TEST(area)
   TEST(actor)
   TEST(input)
 
-  cout << "ALL TESTS PASSED\n";
+  cout << "All tests passed!\n";
 
 	return 0;
 }

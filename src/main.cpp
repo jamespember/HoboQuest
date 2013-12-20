@@ -11,10 +11,8 @@
 int main(int argc, char *argv[]) {
   // Built with tests?
   #ifdef TESTS
-  if (argc > 0 && strcmp(argv[0], "test") == 0) {
-    run_tests();
-    return 0;
-  }
+  if (argc > 1 && strcmp(argv[1], "test") == 0)
+    return run_tests();
   #endif
 
 	hoboquest::Game g(std::cin, std::cout);
