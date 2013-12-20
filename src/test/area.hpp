@@ -21,9 +21,9 @@ void test_area() {
 	auto exit = house->get_exit("door"); // exit should now point to garden
 	garden->set_name("Big Garden");
 	garden->set_description("An amazingly large garden");
-	assert(house->get_name() == "House");
-	assert(exit->get_name() == "Big Garden");
-	assert(exit->get_description() == "An amazingly large garden");
+	assert(house->name() == "House");
+	assert(exit->name() == "Big Garden");
+	assert(exit->description() == "An amazingly large garden");
 
 	// Verify that removing an exit works
 	house->remove_exit("door");

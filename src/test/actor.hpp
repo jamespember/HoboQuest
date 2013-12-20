@@ -14,19 +14,19 @@ void test_actor() {
 	area->add_actor(actor);
 	
 	// Verify actor name and that area has the actor
-	assert(actor->get_name() == "Thief");
-	assert(area->has_actor(actor->get_name()) == true);
+	assert(actor->name() == "Thief");
+	assert(area->has_actor(actor->name()) == true);
 	assert(area->has_actor("Hufflepuff") == false);
 	
 	// Verify fetching actor works and that name changes are reflected globally
-	auto test = area->get_actor(actor->get_name());
+	auto test = area->get_actor(actor->name());
 	actor->set_name("Dirty thief");
-	assert(actor->get_name() == "Dirty thief");
-	assert(test->get_name() == actor->get_name());
+	assert(actor->name() == "Dirty thief");
+	assert(test->name() == actor->name());
 
 	// Verify that removing actors from areas work
-	area->remove_actor(actor->get_name());
-	assert(area->has_actor(actor->get_name()) == false);
+	area->remove_actor(actor->name());
+	assert(area->has_actor(actor->name()) == false);
 	
 }
 
