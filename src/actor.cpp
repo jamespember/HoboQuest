@@ -3,7 +3,7 @@
 #include <vector>
 #include <unordered_map>
 #include "container.hpp"
-#include "item.hpp"
+#include "item/item.hpp"
 
 namespace hoboquest {
 

@@ -7,7 +7,7 @@
 #include <unordered_map>
 #include <utility>
 #include <memory>
-#include "item.hpp"
+#include "item/item.hpp"
 
 namespace hoboquest {
 	class Container {

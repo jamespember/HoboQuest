@@ -4,7 +4,7 @@
 #include <memory>
 #include <cassert>
 #include "../container.hpp"
-#include "../item.hpp"
+#include "../item/item.hpp"
 
 using namespace std;
 using namespace hoboquest;

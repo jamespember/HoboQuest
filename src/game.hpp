@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "area.hpp"
-#include "item.hpp"
+#include "item/item.hpp"
 #include "actor.hpp"
 // #include "player.hpp"
 

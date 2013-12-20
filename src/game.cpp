@@ -9,7 +9,7 @@
 #include "util/tokenizer.hpp"
 
 #include "area.hpp"
-#include "item.hpp"
+#include "item/item.hpp"
 #include "actor.hpp"
 // #include "player.hpp"
 

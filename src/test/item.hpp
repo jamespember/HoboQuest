@@ -2,7 +2,7 @@
 #define HOBO_TEST_ITEM
 
 #include <cassert>
-#include "../item.hpp"
+#include "../item/item.hpp"
 
 using namespace hoboquest;
 
