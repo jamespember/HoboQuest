@@ -5,6 +5,7 @@
 #include "player.hpp"
 
 namespace hoboquest {
+
   Command::Command(const std::string &name, const std::string &alias) :
     _name(name), _alias(alias) {}
   Command::Command(const std::string &name) :

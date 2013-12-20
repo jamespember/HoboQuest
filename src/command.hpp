@@ -24,6 +24,7 @@ namespace hoboquest {
 
       virtual bool execute(Player &player, std::vector<std::string> &args) = 0;
       virtual bool can_execute(Player &player);
+
   };
 } /* hoboquest */ 
 
