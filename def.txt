@@ -1,0 +1,42 @@
+item rock
+  name Rock
+  value 1
+  weight 5
+
+item flower
+  name Flower
+  value 5
+  weight 1
+
+item questItem
+  name Quest item
+  type quest
+
+actor police
+  name Policeman
+
+area start
+  name Starting area
+  desc <<<
+    Multi line description.
+  >>>
+  exit north woods
+  exit west town
+  pickup rock
+
+area woods
+  name Woods
+  desc {{{
+    Extended description.
+  }}}
+  exit south start
+  pickup flower
+
+area town
+  name Town
+  desc {{{
+    A small town.
+  }}}
+  exit east start
+  pickup questItem
+  place police
