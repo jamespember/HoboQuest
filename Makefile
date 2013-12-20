@@ -23,7 +23,7 @@ $(TARGET): $(OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $(TARGET)
  
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
-	@mkdir -p $(BUILDDIR)
+	@mkdir -p $(@D)
 	@echo " CC $<";
 	$(CC) $(CFLAGS) -MD -MF $(@:.o=.deps) -c -o $@ $<
  
