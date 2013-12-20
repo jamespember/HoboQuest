@@ -8,31 +8,41 @@
 #include "container.hpp"
 
 namespace hoboquest {
-
 	class Area;
 	
-  class Actor : public Container  {
+  class Actor : public Container {
   
     protected:
       std::string _name;
       bool _active;
-      int _dmg = 1;
+      int _damage = 1;
       int _hp = 1;
       int _hp_max;
       std::shared_ptr<Area> _location;
 
     public:
       Actor(const std::string &name);
+      virtual ~Actor();
       
-      std::string get_name() const;
+      std::string name() const;
       void set_name(const std::string &name);
 
-      void on_enter(std::shared_ptr<Area> area);
-      void on_exit(std::shared_ptr<Area> area);
+      bool active() const;
+      void set_active(bool active);
+
+      int damage() const;
+      int hp() const;
+      int hp_max() const;
+      void set_damage(int damage);
+      void set_hp(int hp);
+      void set_hp_max(int hp_max);
+
+      virtual void on_enter(std::shared_ptr<Area> area);
+      virtual void on_exit(std::shared_ptr<Area> area);
 
       void move_to(std::shared_ptr<Area> area);
 
-      void action();
+      virtual void tick();
       
   };
 } /* hoboquest  */ 
