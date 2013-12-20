@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cstring>
 #include "game.hpp"
 #include "actor.hpp"
 #include "area.hpp"
