@@ -28,7 +28,8 @@ namespace hoboquest {
       out << "> ";
 
       // Read and tokenize input line
-      std::getline(in, input);
+      if (!std::getline(in, input))
+        return tokens;
       tokenize(input, tokens, "\n\t ");
 
       #if DEBUGGING
@@ -49,8 +50,8 @@ namespace hoboquest {
     while (1) {
       auto tokens = this->read_command();
 
-      if (tokens[0] == "quit") {
-        DEBUG("quitting...");
+      if (tokens.size() < 1 || tokens[0] == "quit") {
+        DEBUG("Quitting...");
         return;
       }
 
