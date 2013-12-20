@@ -3,9 +3,13 @@ TARGET := hoboquest
 SRCDIR := src
 BUILDDIR := build
 CFLAGS := -std=c++11 -g -Wall -Wno-unused-result
+
 ifeq ($(shell uname -s),Darwin)
 CFLAGS += -stdlib=libc++
 endif
+
+# Build with test suite
+CFLAGS += -DTESTS
  
 SRCEXT := cpp
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
@@ -30,7 +34,7 @@ clean:
 full: clean $(TARGET)
 
 test: $(TARGET)
-	cd test; make; ../hobotest
+	./$(TARGET) test
  
 .PHONY: clean test
 

@@ -3,8 +3,8 @@
 
 #include <memory>
 #include <cassert>
-#include "../src/container.hpp"
-#include "../src/item.hpp"
+#include "../container.hpp"
+#include "../item.hpp"
 
 using namespace std;
 using namespace hoboquest;
