@@ -17,19 +17,10 @@ namespace hoboquest {
 
     Area::Area(std::string n, std::string desc) : _name(n), _description(desc) { }
     
-    std::string Area::name() const {
-    	return this->_name;
-    }
-    
-    std::string Area::description() const {
-    	return this->_description;
-    }
-    
-    void Area::set_name(const std::string name) {
-    	this->_name = name;
-    }
-    
-    void Area::set_description(const std::string description) {
+    std::string Area::name() const 							{ return this->_name; }
+    std::string Area::description() const 			{ return this->_description; }
+    void Area::set_name(const std::string name) {	this->_name = name; }
+    void Area::set_description(const std::string description) { 
     	this->_description = description;
     }
     
