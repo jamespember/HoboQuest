@@ -6,14 +6,14 @@
 #include "item.hpp"
 
 namespace hoboquest {
-	class Equippable : public Item {
-		public:
-			Equippable(std::string name);
-			Equippable(std::string name, unsigned value);
-			Equippable(std::string name, unsigned value, unsigned weight);
+  class Equippable : public Item {
+    public:
+      Equippable(std::string name);
+      Equippable(std::string name, unsigned value);
+      Equippable(std::string name, unsigned value, unsigned weight);
 
-			const bool is_equippable() 	const;
-	};
+      virtual bool is_equippable() const;
+  };
 }
 
 #endif
