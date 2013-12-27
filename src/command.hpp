@@ -22,8 +22,10 @@ namespace hoboquest {
       void set_alias(const std::string &alias);
       bool has_alias() const;
 
-      virtual bool execute(Player &player, std::vector<std::string> &args) = 0;
+      bool responds_to(const std::string &name) const;
+
       virtual bool can_execute(Player &player);
+      virtual bool execute(Player &player, std::vector<std::string> &args) = 0;
 
   };
 } /* hoboquest */ 
