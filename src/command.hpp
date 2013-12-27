@@ -1,7 +1,7 @@
 #ifndef HOBO_COMMAND
 #define HOBO_COMMAND
 
-#include <vector>
+#include <list>
 #include <string>
 
 namespace hoboquest {
@@ -26,7 +26,7 @@ namespace hoboquest {
       bool responds_to(const std::string &name) const;
 
       virtual bool can_execute(Player &player);
-      virtual bool execute(Player &player, std::vector<std::string> &args) = 0;
+      virtual bool execute(Player &player, std::list<std::string> &args) = 0;
 
   };
 } /* hoboquest */ 

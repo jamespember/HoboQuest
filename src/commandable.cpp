@@ -1,10 +1,10 @@
 #include "commandable.hpp"
 
-#include <vector>
-#include <string>
-
 #include "command.hpp"
 #include "player.hpp"
+
+#include <list>
+#include <string>
 
 namespace hoboquest {
 
@@ -14,24 +14,48 @@ namespace hoboquest {
   bool Commandable::add_command(std::shared_ptr<Command> cmd) {
     if (has_command(cmd->name()))
       return false;
-    _commands[cmd->name()] = cmd;
+    _commands.push_front(cmd);
     return true;
   }
-  bool Commandable::remove_command(const std::string &name) {
-    return _commands.erase(name) > 0;
+
+  Commandable::container_type::const_iterator
+    Commandable::get_command_iterator(const std::string &name) const {
+    Commandable::container_type::const_iterator it = _commands.begin(), itend = _commands.end();
+    for (; it != itend; it++)
+      if ((*it)->name() == name || (*it)->alias() == name)
+        return it;
+    return itend;
   }
+
+  Commandable::container_type::iterator
+    Commandable::get_command_iterator(const std::string &name) {
+    Commandable::container_type::iterator it = _commands.begin(), itend = _commands.end();
+    for (; it != itend; it++)
+      if ((*it)->name() == name || (*it)->alias() == name)
+        return it;
+    return itend;
+  }
+
+  // Removes (last) command whose name or alias matches.
+  bool Commandable::remove_command(const std::string &name) {
+    auto it = get_command_iterator(name);
+    if (it != _commands.end())
+      return _commands.erase(it), true;
+    return false;
+  }
+
   bool Commandable::has_command(const std::string &name) const {
-    return _commands.count(name) > 0;
+    return get_command_iterator(name) != _commands.end();
   }
 
   bool Commandable::try_execute(const std::string &name, Player &player,
-      std::vector<std::string> &args) {
-    if (!has_command(name))
+      std::list<std::string> &args) {
+    auto it = get_command_iterator(name);
+    if (it == _commands.end())
       return false;
-    std::shared_ptr<Command> p_cmd = _commands[name];
-    if (!p_cmd->can_execute(player))
+    if (!(*it)->can_execute(player))
       return false;
-    return p_cmd->execute(player, args);
+    return (*it)->execute(player, args);
   }
 
 } /* hoboquest */ 

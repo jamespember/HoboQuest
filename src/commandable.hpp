@@ -2,7 +2,7 @@
 #define HOBO_COMMANDABLE
 
 #include <memory>
-#include <unordered_map>
+#include <list>
 #include <string>
 
 #include "command.hpp"
@@ -11,19 +11,25 @@ namespace hoboquest {
   class Player;
 
   class Commandable {
+    typedef std::list<std::shared_ptr<Command>> container_type;
+
     protected:
-      std::unordered_map<std::string, std::shared_ptr<Command>> _commands;
+      std::list<std::shared_ptr<Command>> _commands;
+
+      container_type::const_iterator get_command_iterator(const std::string &name) const;
+      container_type::iterator get_command_iterator(const std::string &name);
 
     public:
+
       Commandable();
-      virtual ~Commandable();
+      ~Commandable();
 
-      virtual bool add_command(std::shared_ptr<Command>);
-      virtual bool remove_command(const std::string &name);
-      virtual bool has_command(const std::string &name) const;
+      bool add_command(std::shared_ptr<Command>);
+      bool remove_command(const std::string &name);
+      bool has_command(const std::string &name) const;
 
-      virtual bool try_execute(const std::string &name, Player &player,
-          std::vector<std::string> &args);
+      bool try_execute(const std::string &name, Player &player,
+          std::list<std::string> &args);
   };
 } /* hoboquest */ 
 

@@ -4,9 +4,9 @@
 #include "actor.hpp"
 #include "util/tokenizer.hpp"
 
+#include <list>
 #include <string>
 #include <iostream>
-#include <vector>
 
 namespace hoboquest {
 
@@ -14,21 +14,21 @@ namespace hoboquest {
     Actor::Actor("Player"), _in(in), _out(out), game(game) {}
 
   void Player::message(std::string msg) {
-    this->_out << msg << std::endl;
+    _out << msg << std::endl;
   }
-  // std::ostream & Player::out() { return this->_out; }
-  // std::istream & Player::in() { return this->_in; }
+  // std::ostream & Player::out() { return _out; }
+  // std::istream & Player::in() { return _in; }
 
   // Reads input from input stream until a valid command is given, then return it.
-  std::vector<std::string> Player::read_command() {
+  std::list<std::string> Player::read_command() {
     std::string input;
-    std::vector<std::string> tokens;
+    std::list<std::string> tokens;
 
     do {
-      this->_out << "> ";
+      _out << "> ";
 
       // Read and tokenize input line
-      if (!std::getline(this->_in, input))
+      if (!std::getline(_in, input))
         return tokens;
       tokenize(input, tokens, "\n\t ");
     } while (tokens.size() < 1);
@@ -37,14 +37,17 @@ namespace hoboquest {
   }
 
   bool Player::interact() {
-    auto tokens = this->read_command();
+    auto tokens = read_command();
 
-    if (tokens.size() < 1 || tokens[0] == "quit") {
-      this->_out << "\nQuitting...\n";
+    if (tokens.size() < 1 || tokens.front() == "quit") {
+      _out << "\nQuitting...\n";
       return false;
     }
 
     // TODO: Interpret command
+    std::string command = tokens.front();
+    tokens.pop_front();
+    commands.try_execute(command, *this, tokens);
 
     return true;
   }

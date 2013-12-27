@@ -26,7 +26,7 @@ namespace hoboquest {
       // std::ostream & out();
       // std::istream & in();
 
-      std::vector<std::string> read_command();
+      std::list<std::string> read_command();
       bool interact();
 
   };
