@@ -9,6 +9,8 @@
 #include "area.hpp"
 #include "actor.hpp"
 #include "input.hpp"
+#include "command.hpp"
+#include "commandable.hpp"
 
 using std::cout;
 
@@ -20,6 +22,8 @@ int run_tests() {
   TEST(area)
   TEST(actor)
   TEST(input)
+  TEST(command)
+  TEST(commandable)
 
   cout << "All tests passed!\n";
 

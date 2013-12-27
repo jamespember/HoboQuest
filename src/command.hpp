@@ -3,9 +3,10 @@
 
 #include <vector>
 #include <string>
-#include "player.hpp"
 
 namespace hoboquest {
+  class Player;
+
   class Command {
     protected:
       std::string _name;

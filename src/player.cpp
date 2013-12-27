@@ -1,24 +1,23 @@
 #include "player.hpp"
+
+#include "game.hpp"
 #include "actor.hpp"
+#include "util/tokenizer.hpp"
 
 #include <string>
 #include <iostream>
 #include <vector>
 
-#include "util/tokenizer.hpp"
-
 namespace hoboquest {
 
-  Player::Player(std::istream &in, std::ostream &out) :
-    Actor::Actor("Player"), _in(in), _out(out) {}
-
-  Player::~Player() {}
+  Player::Player(Game &game, std::istream &in, std::ostream &out) :
+    Actor::Actor("Player"), _in(in), _out(out), game(game) {}
 
   void Player::message(std::string msg) {
     this->_out << msg << std::endl;
   }
-  std::ostream & Player::out() { return this->_out; }
-  std::istream & Player::in() { return this->_in; }
+  // std::ostream & Player::out() { return this->_out; }
+  // std::istream & Player::in() { return this->_in; }
 
   // Reads input from input stream until a valid command is given, then return it.
   std::vector<std::string> Player::read_command() {

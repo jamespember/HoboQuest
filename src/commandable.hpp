@@ -6,9 +6,10 @@
 #include <string>
 
 #include "command.hpp"
-#include "player.hpp"
 
 namespace hoboquest {
+  class Player;
+
   class Commandable {
     protected:
       std::unordered_map<std::string, std::shared_ptr<Command>> _commands;

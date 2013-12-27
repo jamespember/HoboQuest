@@ -16,7 +16,7 @@ namespace hoboquest {
   Game::Game(std::istream &in, std::ostream &out) :
   _in(in), _out(out) {
     this->_out << "HoboQuest starting...\n";
-    this->_player = std::make_shared<Player>(in, out);
+    this->_player = std::make_shared<Player>(*this, in, out);
     this->loop();
   }
 

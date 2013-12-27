@@ -8,11 +8,12 @@
 #include "area.hpp"
 #include "item/item.hpp"
 #include "actor.hpp"
-#include "player.hpp"
 
 template <typename T> using ptr_vector = std::vector<std::shared_ptr<T>>;
 
 namespace hoboquest {
+  class Player;
+
   class Game {
     protected:
       std::shared_ptr<Player> _player;
