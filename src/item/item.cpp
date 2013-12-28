@@ -12,6 +12,10 @@ namespace hoboquest {
     unsigned Item::value() const { return this->_value; }
     unsigned Item::weight() const { return this->_weight; }
 
+    void Item::set_name(std::string name) { _name = name; }
+    void Item::set_value(unsigned value) { _value = value; }
+    void Item::set_weight(unsigned weight) { _weight = weight; }
+
     bool Item::is_consumable() const { return false; }
     bool Item::is_equippable() const { return false; }
     bool Item::is_container() const { return false; }

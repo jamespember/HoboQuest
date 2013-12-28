@@ -42,12 +42,14 @@ void test_item() {
   assert(sword.is_consumable() == false);
   
   ContainerItem bag("Bag");
-  items[bag.name()] = &bag;
   bag.set_capacity(30);
+  bag.set_name("Large bag");
+  items[bag.name()] = &bag;
+  assert(bag.capacity() == 30);
+  assert(bag.name() == "Large bag");
   assert(bag.is_equippable() == false); // TODO: should be equippable too?
   assert(bag.is_container() == true);
   assert(bag.is_consumable() == false);
-  assert(bag.capacity() == 30);
   
   Consumable beer("Beer");
   items[beer.name()] = &beer;

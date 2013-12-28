@@ -18,6 +18,10 @@ namespace hoboquest {
       unsigned value() const;
       unsigned weight() const;
 
+      void set_name(std::string name);
+      void set_value(unsigned value);
+      void set_weight(unsigned weight);
+
       virtual bool is_consumable() const;
       virtual bool is_equippable() const;
       virtual bool is_container() const;
