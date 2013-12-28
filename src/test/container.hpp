@@ -33,10 +33,13 @@ void test_container() {
   assert(c.get_item("unknown item") == nullptr);
   assert(c.drop("unknown item") == nullptr);
 
-  auto i1 = make_shared<Item>("1", 1, 1);
-  auto i2 = make_shared<Item>("2", 1, 2);
-  auto i4 = make_shared<Item>("4", 1, 4);
-  auto i5 = make_shared<Item>("5", 1, 5);
+  auto i1 = make_shared<Item>("1", "");
+  auto i2 = make_shared<Item>("2", "");
+  auto i4 = make_shared<Item>("4", "");
+  auto i5 = make_shared<Item>("5", "");
+  i2->set_weight(2);
+  i4->set_weight(4);
+  i5->set_weight(5);
 
   assert(c.pickup(i1) == true);
   assert(c.has_item("1") == true);

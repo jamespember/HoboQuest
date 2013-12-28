@@ -4,12 +4,8 @@
 #include <string>
 
 namespace hoboquest {
-    Equippable::Equippable(std::string name) :
-      Item(name) { }
-    Equippable::Equippable(std::string name, unsigned value) :
-      Item(name, value) { }
-    Equippable::Equippable(std::string name, unsigned value, unsigned weight) :
-      Item(name, value, weight) { }
+    Equippable::Equippable(std::string name, std::string description) :
+      Item(name, description) { }
 
     bool Equippable::is_equippable() const { return true; }
 }

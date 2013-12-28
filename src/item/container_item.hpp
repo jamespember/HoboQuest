@@ -9,9 +9,7 @@
 namespace hoboquest {
   class ContainerItem : public Item, public Container {
     public:
-      ContainerItem(std::string name);
-      ContainerItem(std::string name, unsigned value);
-      ContainerItem(std::string name, unsigned value, unsigned weight);
+      ContainerItem(std::string name, std::string description);
 
       virtual bool is_container() const;
   };

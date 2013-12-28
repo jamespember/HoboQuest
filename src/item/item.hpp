@@ -6,19 +6,19 @@
 namespace hoboquest {
   class Item {
     protected:
-      std::string _name;
+      std::string _name, _description;
       unsigned _value, _weight;
 
     public:
-      Item(std::string name);
-      Item(std::string name, unsigned value);
-      Item(std::string name, unsigned value, unsigned weight);
+      Item(std::string name, std::string description);
 
       const std::string & name() const;
+      const std::string & description() const;
       unsigned value() const;
       unsigned weight() const;
 
       void set_name(std::string name);
+      void set_description(std::string description);
       void set_value(unsigned value);
       void set_weight(unsigned weight);
 

@@ -8,9 +8,7 @@
 namespace hoboquest {
   class Equippable : public Item {
     public:
-      Equippable(std::string name);
-      Equippable(std::string name, unsigned value);
-      Equippable(std::string name, unsigned value, unsigned weight);
+      Equippable(std::string name, std::string description);
 
       virtual bool is_equippable() const;
   };

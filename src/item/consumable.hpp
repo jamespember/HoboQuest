@@ -8,9 +8,7 @@
 namespace hoboquest {
   class Consumable : public Item {
     public:
-      Consumable(std::string name);
-      Consumable(std::string name, unsigned value);
-      Consumable(std::string name, unsigned value, unsigned weight);
+      Consumable(std::string name, std::string description);
 
       virtual bool is_consumable() const;
   };
