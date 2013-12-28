@@ -19,7 +19,8 @@ namespace hoboquest {
     public:
       SimpleCommand(const std::string &name, const std::string &alias, const command_function &executor);
       SimpleCommand(const std::string &name, const command_function &executor);
-      virtual ~SimpleCommand();
+
+      ~SimpleCommand();
 
       bool execute(Player &player, std::list<std::string> &args);
 
