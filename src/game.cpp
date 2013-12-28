@@ -15,9 +15,9 @@
 namespace hoboquest {
   Game::Game(std::istream &in, std::ostream &out) :
   _in(in), _out(out) {
-    this->_out << "HoboQuest starting...\n";
-    this->_player = std::make_shared<Player>(in, out);
-    this->loop();
+    _out << "HoboQuest starting...\n";
+    _player = std::make_shared<Player>(in, out);
+    loop();
   }
 
   void Game::tick() {
@@ -26,9 +26,9 @@ namespace hoboquest {
 
   void Game::loop() {
     while (1) {
-      if (!this->_player->interact())
+      if (!_player->interact())
         return;
-      this->tick();
+      tick();
     }
   }
 } /* hoboquest */ 

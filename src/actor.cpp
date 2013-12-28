@@ -14,17 +14,17 @@ namespace hoboquest {
 
   Actor::~Actor() {}
   
-  std::string Actor::name() const { return this->_name; }
-  void Actor::set_name(const std::string &name) { this->_name = name; }
+  std::string Actor::name() const { return _name; }
+  void Actor::set_name(const std::string &name) { _name = name; }
 
-  bool Actor::active() const          { return this->_active; }
-  int  Actor::damage() const          { return this->_damage; }
-  int  Actor::hp() const              { return this->_hp; }
-  int  Actor::hp_max() const          { return this->_hp_max; }
-  void Actor::set_active(bool active) { this->_active = active; }
-  void Actor::set_damage(int damage)  { this->_damage = damage; }
-  void Actor::set_hp(int hp)          { this->_hp = hp; }
-  void Actor::set_hp_max(int hp_max)  { this->_hp_max = hp_max; }
+  bool Actor::active() const          { return _active; }
+  int  Actor::damage() const          { return _damage; }
+  int  Actor::hp() const              { return _hp; }
+  int  Actor::hp_max() const          { return _hp_max; }
+  void Actor::set_active(bool active) { _active = active; }
+  void Actor::set_damage(int damage)  { _damage = damage; }
+  void Actor::set_hp(int hp)          { _hp = hp; }
+  void Actor::set_hp_max(int hp_max)  { _hp_max = hp_max; }
 
   void Actor::on_enter(std::shared_ptr<Area> area) {
   }

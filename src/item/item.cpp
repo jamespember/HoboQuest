@@ -8,9 +8,9 @@ namespace hoboquest {
     Item::Item(std::string name, unsigned value, unsigned weight) :
       _name(name), _value(value), _weight(weight) {}
 
-    const std::string & Item::name()  const { return this->_name; }
-    unsigned Item::value() const { return this->_value; }
-    unsigned Item::weight() const { return this->_weight; }
+    const std::string & Item::name()  const { return _name; }
+    unsigned Item::value() const { return _value; }
+    unsigned Item::weight() const { return _weight; }
 
     void Item::set_name(std::string name) { _name = name; }
     void Item::set_value(unsigned value) { _value = value; }
