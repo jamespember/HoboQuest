@@ -1,6 +1,5 @@
 #include "player.hpp"
 
-#include "game.hpp"
 #include "actor.hpp"
 #include "util/tokenizer.hpp"
 
@@ -10,8 +9,8 @@
 
 namespace hoboquest {
 
-  Player::Player(Game &game, std::istream &in, std::ostream &out) :
-    Actor::Actor("Player"), _in(in), _out(out), game(game) {}
+  Player::Player(std::istream &in, std::ostream &out) :
+    Actor::Actor("Player"), _in(in), _out(out) {}
 
   void Player::message(std::string msg) {
     _out << msg << std::endl;

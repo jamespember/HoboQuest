@@ -1,7 +1,6 @@
 #ifndef HOBO_PLAYER
 #define HOBO_PLAYER
 
-#include "game.hpp"
 #include "actor.hpp"
 #include "commandable.hpp"
 
@@ -19,9 +18,8 @@ namespace hoboquest {
 
     public:
       Commandable commands;
-      Game &game;
 
-      Player(Game &game, std::istream &in, std::ostream &out);
+      Player(std::istream &in, std::ostream &out);
 
       void message(std::string msg);
       // std::ostream & out();
