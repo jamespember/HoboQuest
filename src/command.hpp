@@ -25,7 +25,6 @@ namespace hoboquest {
 
       bool responds_to(const std::string &name) const;
 
-      virtual bool can_execute(Player &player);
       virtual bool execute(Player &player, std::list<std::string> &args) = 0;
 
   };

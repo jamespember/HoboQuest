@@ -53,8 +53,6 @@ namespace hoboquest {
     auto it = get_command_iterator(name);
     if (it == _commands.end())
       return false;
-    if (!(*it)->can_execute(player))
-      return false;
     return (*it)->execute(player, args);
   }
 

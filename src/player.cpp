@@ -19,37 +19,44 @@ namespace hoboquest {
   // std::ostream & Player::out() { return _out; }
   // std::istream & Player::in() { return _in; }
 
-  // Reads input from input stream until a valid command is given, then return it.
-  std::list<std::string> Player::read_command() {
+  Player::token_container Player::command_prompt() {
     std::string input;
-    std::list<std::string> tokens;
+    Player::token_container tokens;
 
     do {
       _out << "> ";
 
-      // Read and tokenize input line
       if (!std::getline(_in, input))
         return tokens;
+
       tokenize(input, tokens, "\n\t ");
     } while (tokens.size() < 1);
 
     return tokens;
   }
 
+  // Prompts the player input for a command and then attempts to execute it.
+  // This is repeated until a valid command read and successfully executed.
   bool Player::interact() {
-    auto tokens = read_command();
+    Player::token_container tokens;
 
-    if (tokens.size() < 1 || tokens.front() == "quit") {
-      _out << "\nQuitting...\n";
-      return false;
+    while (1) {
+      tokens = command_prompt();
+
+      // Quit?
+      if (tokens.size() < 1 || tokens.front() == "quit")
+        return message("Quitting..."), false;
+
+      std::string command = tokens.front();
+      tokens.pop_front();
+
+      if (commands.try_execute(command, *this, tokens))
+        return true;
+
+      message("Invalid command, try again.");
+      tokens.clear();
     }
-
-    // TODO: Interpret command
-    std::string command = tokens.front();
-    tokens.pop_front();
-    commands.try_execute(command, *this, tokens);
-
-    return true;
+    return false;
   }
 
 

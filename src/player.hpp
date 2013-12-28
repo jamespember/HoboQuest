@@ -11,6 +11,7 @@
 
 namespace hoboquest {
   class Player : public Actor {
+    typedef std::list<std::string> token_container;
 
     protected:
       std::istream &_in;
@@ -26,7 +27,7 @@ namespace hoboquest {
       // std::ostream & out();
       // std::istream & in();
 
-      std::list<std::string> read_command();
+      token_container command_prompt();
       bool interact();
 
   };

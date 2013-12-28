@@ -23,6 +23,4 @@ namespace hoboquest {
     return name == _name || name == _alias;
   }
 
-  bool Command::can_execute(Player &player) { return true; }
-
 } /* hoboquest */ 
