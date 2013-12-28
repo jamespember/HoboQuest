@@ -12,6 +12,10 @@ namespace hoboquest {
   Player::Player(std::istream &in, std::ostream &out) :
     Actor::Actor("Player"), _in(in), _out(out) {}
 
+  bool Player::execute(const std::string &command, std::list<std::string> &args) {
+    return commands.try_execute(command, *this, args);
+  }
+
   void Player::message(std::string msg) {
     _out << msg << std::endl;
   }
@@ -49,7 +53,7 @@ namespace hoboquest {
       std::string command = tokens.front();
       tokens.pop_front();
 
-      if (commands.try_execute(command, *this, tokens))
+      if (execute(command, tokens))
         return true;
 
       message("Invalid command, try again.");

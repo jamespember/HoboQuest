@@ -1,7 +1,7 @@
 #include <iostream>
 
 #define TEST(NAME) \
-  std::cout << "TESTING " << #NAME << std::endl; \
+  std::cout << "=== TESTING " << #NAME << std::endl; \
   test_ ## NAME ();
  
 #include "item.hpp"
@@ -12,12 +12,12 @@
 #include "command.hpp"
 #include "commandable.hpp"
 #include "game.hpp"
-
+#include "player.hpp"
 
 using std::cout;
 
 int run_tests() {
-  cout << "Running test suite...\n";
+  cout << "=== Running test suite...\n";
 
   TEST(item)
   TEST(container)
@@ -27,8 +27,9 @@ int run_tests() {
   TEST(command)
   TEST(commandable)
   TEST(game)
+  TEST(player)
 
-  cout << "All tests passed!\n";
+  cout << "=== All tests passed!\n";
 
 	return 0;
 }

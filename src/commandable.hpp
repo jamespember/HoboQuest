@@ -1,11 +1,11 @@
 #ifndef HOBO_COMMANDABLE
 #define HOBO_COMMANDABLE
 
+#include "command.hpp"
+
 #include <memory>
 #include <list>
 #include <string>
-
-#include "command.hpp"
 
 namespace hoboquest {
   class Player;
@@ -17,7 +17,6 @@ namespace hoboquest {
       std::list<std::shared_ptr<Command>> _commands;
 
       container_type::const_iterator get_command_iterator(const std::string &name) const;
-      container_type::iterator get_command_iterator(const std::string &name);
 
     public:
 

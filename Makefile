@@ -8,7 +8,7 @@ ifeq ($(shell uname -s),Darwin)
 CFLAGS += -stdlib=libc++
 endif
 
-# Build with test suite
+# Build with test suite?
 CFLAGS += -DTESTS
 
 SRCEXT := cpp
