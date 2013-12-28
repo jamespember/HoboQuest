@@ -10,7 +10,7 @@
 #include "actor.hpp"
 #include "input.hpp"
 #include "command.hpp"
-#include "commandable.hpp"
+#include "player.hpp"
 
 using std::cout;
 
@@ -23,7 +23,7 @@ int run_tests() {
   TEST(actor)
   TEST(input)
   TEST(command)
-  TEST(commandable)
+  TEST(player)
 
   cout << "All tests passed!\n";
 
