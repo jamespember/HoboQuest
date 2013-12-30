@@ -16,6 +16,7 @@ namespace hoboquest {
     protected:
       std::list<std::shared_ptr<Command>> _commands;
 
+      container_type::iterator get_command_iterator(const std::string &name);
       container_type::const_iterator get_command_iterator(const std::string &name) const;
 
     public:
@@ -27,7 +28,7 @@ namespace hoboquest {
       bool remove_command(const std::string &name);
       bool has_command(const std::string &name) const;
 
-      bool try_execute(const std::string &name, Player &player,
+      bool try_execute(Player &player, const std::string &name,
           std::list<std::string> &args);
   };
 } /* hoboquest */ 
