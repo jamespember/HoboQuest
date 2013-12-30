@@ -13,7 +13,7 @@ namespace hoboquest {
     Actor::Actor("Player"), _in(in), _out(out) {}
 
   bool Player::execute(const std::string &command, std::list<std::string> &args) {
-    return commands.try_execute(command, *this, args);
+    return commands.try_execute(command, args, *this);
   }
 
   void Player::message(std::string msg) {

@@ -22,24 +22,26 @@ namespace hoboquest {
   }
 
   Commandable::container_type::iterator
-    Commandable::get_command_iterator(const std::string &name) {
-    auto it = _commands.begin(), itend = _commands.end();
-    if (_commands.empty())
-      return itend;
-    for (; it != itend; it++)
+    Commandable::get_iterator(const std::string &name) {
+    auto end = _commands.end();
+    for (auto it = _commands.begin(); it != end; it++)
       if ((*it)->responds_to(name))
         return it;
-    return itend;
+    return end;
   }
 
   Commandable::container_type::const_iterator
-    Commandable::get_command_iterator(const std::string &name) const {
-    return Commandable::get_command_iterator(name);
+    Commandable::get_iterator(const std::string &name) const {
+    auto end = _commands.end();
+    for (auto it = _commands.begin(); it != end; it++)
+      if ((*it)->responds_to(name))
+        return it;
+    return end;
   }
 
   // Removes (last) command whose name or alias matches.
   bool Commandable::remove_command(const std::string &name) {
-    auto it = get_command_iterator(name);
+    auto it = get_iterator(name);
     if (it == _commands.end())
       return false;
     _commands.erase(it);
@@ -47,12 +49,12 @@ namespace hoboquest {
   }
 
   bool Commandable::has_command(const std::string &name) const {
-    return get_command_iterator(name) != _commands.end();
+    return get_iterator(name) != _commands.end();
   }
 
-  bool Commandable::try_execute(Player &player, const std::string &name,
-      std::list<std::string> &args) {
-    Commandable::container_type::const_iterator it = get_command_iterator(name);
+  bool Commandable::try_execute(const std::string &name,
+      std::list<std::string> &args, Player &player) {
+    auto it = get_iterator(name);
     if (it == _commands.end())
       return false;
     return (*it)->execute(player, args);
