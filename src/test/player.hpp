@@ -1,5 +1,5 @@
-#ifndef HOBO_TEST_COMMANDABLE
-#define HOBO_TEST_COMMANDABLE
+#ifndef HOBO_TEST_PLAYER
+#define HOBO_TEST_PLAYER
 
 #include "../player.hpp"
 #include "../simple_command.hpp"
@@ -44,6 +44,9 @@ void test_player() {
   assert(p.execute("test", args) == true);
   assert(p.execute("hello", args) == true);
   assert(p.execute("fail", args) == false);
+
+  assert(p.commands.remove_command("test") == true);
+  assert(p.commands.has_command("test") == false);
 
 }
 
