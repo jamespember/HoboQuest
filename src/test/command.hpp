@@ -1,7 +1,7 @@
 #ifndef HOBO_TEST_COMMAND
 #define HOBO_TEST_COMMAND
 
-#include "../command.hpp"
+#include "../command/command.hpp"
 #include "../player.hpp"
 
 #include <cassert>

@@ -37,6 +37,9 @@ namespace hoboquest {
       void set_hp(int hp);
       void set_hp_max(int hp_max);
 
+      const std::shared_ptr<Area> location() const;
+      std::shared_ptr<Area> location();
+
       virtual void on_enter(std::shared_ptr<Area> area);
       virtual void on_exit(std::shared_ptr<Area> area);
 

@@ -11,8 +11,9 @@
 #include "input.hpp"
 #include "command.hpp"
 #include "commandable.hpp"
-#include "game.hpp"
 #include "player.hpp"
+#include "movement.hpp"
+#include "game.hpp"
 
 using std::cout;
 
@@ -26,8 +27,9 @@ int run_tests() {
   TEST(input)
   TEST(command)
   TEST(commandable)
-  TEST(game)
   TEST(player)
+  TEST(movement)
+  TEST(game)
 
   cout << "=== All tests passed!\n";
 

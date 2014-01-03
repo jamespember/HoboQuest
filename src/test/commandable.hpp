@@ -2,7 +2,7 @@
 #define HOBO_TEST_COMMANDABLE
 
 #include "../player.hpp"
-#include "../simple_command.hpp"
+#include "../command/simple_command.hpp"
 
 #include <cassert>
 #include <memory>

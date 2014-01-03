@@ -26,6 +26,9 @@ namespace hoboquest {
   void Actor::set_hp(int hp)          { _hp = hp; }
   void Actor::set_hp_max(int hp_max)  { _hp_max = hp_max; }
 
+  const std::shared_ptr<Area> Actor::location() const { return _location; }
+  std::shared_ptr<Area> Actor::location() { return _location; }
+
   void Actor::on_enter(std::shared_ptr<Area> area) {
   }
 
@@ -33,10 +36,11 @@ namespace hoboquest {
   }
 
   void Actor::move_to(std::shared_ptr<Area> area) {
-    if (area != nullptr)
+    if (_location != nullptr)
       on_exit(_location);
     _location = area;
     on_enter(_location);
+    // TODO: Trigger on exit/enter for areas as well?
   }
 
   void Actor::tick() {}

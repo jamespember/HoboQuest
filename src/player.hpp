@@ -2,7 +2,7 @@
 #define HOBO_PLAYER
 
 #include "actor.hpp"
-#include "commandable.hpp"
+#include "command/commandable.hpp"
 
 #include <string>
 #include <iostream>
@@ -24,7 +24,7 @@ namespace hoboquest {
       bool execute(const std::string &command, std::list<std::string> &args);
 
       void message(std::string msg);
-      // std::ostream & out();
+      std::ostream & out();
       // std::istream & in();
 
       token_container command_prompt();

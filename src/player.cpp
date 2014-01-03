@@ -19,7 +19,7 @@ namespace hoboquest {
   void Player::message(std::string msg) {
     _out << msg << std::endl;
   }
-  // std::ostream & Player::out() { return _out; }
+  std::ostream & Player::out() { return _out; }
   // std::istream & Player::in() { return _in; }
 
   Player::token_container Player::command_prompt() {
@@ -56,7 +56,7 @@ namespace hoboquest {
       if (execute(command, tokens))
         return true;
 
-      message("Invalid command, try again.");
+      // message("Invalid command, try again.");
       tokens.clear();
     }
     return false;
