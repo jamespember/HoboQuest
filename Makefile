@@ -32,6 +32,9 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 
 full: clean $(TARGET)
 
+run: $(TARGET)
+	./$(TARGET)
+
 test: $(TARGET)
 	./$(TARGET) test
 
