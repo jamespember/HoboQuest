@@ -22,7 +22,7 @@ void test_commandable() {
   list<string> args;
 
   assert(cmds.has_command("test") == false);
-  assert(cmds.execute("test", args, p) == CommandOutcome::NOT_FOUND);
+  assert(cmds.execute("test", args, p) == NOT_FOUND);
 
   cmds.add_command(PTR_SimpleCommand("test", [](Player &player, list<string> &args) -> bool {
     player.message("test command ran!");
@@ -43,9 +43,9 @@ void test_commandable() {
   assert(cmds.has_command("fail") == true);
   assert(cmds.has_command("nope") == false);
 
-  assert(cmds.execute("test", args, p) == CommandOutcome::SUCCESS);
-  assert(cmds.execute("hello", args, p) == CommandOutcome::SUCCESS);
-  assert(cmds.execute("fail", args, p) == CommandOutcome::ERROR);
+  assert(cmds.execute("test", args, p) == SUCCESS);
+  assert(cmds.execute("hello", args, p) == SUCCESS);
+  assert(cmds.execute("fail", args, p) == ERROR);
 
   assert(cmds.remove_command("test") == true);
   assert(cmds.has_command("test") == false);

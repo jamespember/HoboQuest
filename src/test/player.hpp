@@ -20,7 +20,7 @@ void test_player() {
   Player p(cin, cout);
   list<string> args;
 
-  assert(p.execute("test", args) == false);
+  assert(p.execute("test", args) == NOT_FOUND);
 
   p.commands.add_command(PTR_SimpleCommand("test",
         [](Player &player, list<string> &args) -> bool {
@@ -28,7 +28,7 @@ void test_player() {
     return true;
   }));
 
-  assert(p.execute("test", args) == true);
+  assert(p.execute("test", args) == SUCCESS);
 
 }
 

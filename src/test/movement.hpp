@@ -32,21 +32,21 @@ void test_movement() {
   player->move_to(house);
   player->commands.add_command(make_shared<GoCommand>());
   args.push_back("west");
-  assert(player->execute("go", args) == false);
+  assert(player->execute("go", args) == ERROR);
   assert(player->location() == house);
   args.clear();
   args.push_back("east");
-  assert(player->execute("go", args) == true);
+  assert(player->execute("go", args) == SUCCESS);
   assert(player->location() == cellar);
-  assert(player->execute("go", args) == false);
+  assert(player->execute("go", args) == ERROR);
   assert(player->location() == cellar);
 
   player->commands.add_command(make_shared<GoShorthandCommand>("west", "w"));
   args.clear();
-  assert(player->execute("west", args) == true);
+  assert(player->execute("west", args) == SUCCESS);
   assert(player->location() == house);
 
-  assert(player->execute("east", args) == false);
+  assert(player->execute("east", args) == NOT_FOUND);
   assert(player->location() == house);
 }
 
