@@ -14,18 +14,23 @@ namespace hoboquest {
   _in(in), _out(out) {
     _out << "HoboQuest starting...\n";
     _player = std::make_shared<Player>(in, out);
-    loop();
   }
 
-  void Game::tick() {
+  bool Game::tick() {
     _out << "tick...\n";
+
+    // Player interaction (stop game on false return value)
+    if (!_player->interact())
+      return false;
+
+    _out << "Running actor actions\n";
+    for (auto actor : _actors)
+      actor->tick();
+
+    return true;
   }
 
   void Game::loop() {
-    while (1) {
-      if (!_player->interact())
-        return;
-      tick();
-    }
+    while (tick());
   }
 } /* hoboquest */ 

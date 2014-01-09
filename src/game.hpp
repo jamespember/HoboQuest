@@ -16,10 +16,10 @@ namespace hoboquest {
 
   class Game {
     protected:
-      std::shared_ptr<Player> _player;
       ptr_vector<Area> _areas;
-      ptr_vector<Actor> _actors;
       ptr_vector<Item> _items;
+      ptr_vector<Actor> _actors;
+      std::shared_ptr<Player> _player;
 
       std::istream & _in;
       std::ostream & _out;
@@ -28,7 +28,7 @@ namespace hoboquest {
       Game(std::istream &in_s, std::ostream &out_s);
 
       std::vector<std::string> read_command();
-      void tick();
+      bool tick();
       void loop();
   };
 }

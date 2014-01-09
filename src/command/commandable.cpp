@@ -52,12 +52,12 @@ namespace hoboquest {
     return get_iterator(name) != _commands.end();
   }
 
-  bool Commandable::try_execute(const std::string &name,
+  CommandOutcome Commandable::execute(const std::string &name,
       std::list<std::string> &args, Player &player) {
     auto it = get_iterator(name);
     if (it == _commands.end())
-      return false;
-    return (*it)->execute(player, args);
+      return CommandOutcome::NOT_FOUND;
+    return (*it)->execute(player, args) ? CommandOutcome::SUCCESS : CommandOutcome::ERROR;
   }
 
 } /* hoboquest */ 

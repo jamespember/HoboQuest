@@ -21,7 +21,7 @@ namespace hoboquest {
 
       Player(std::istream &in, std::ostream &out);
 
-      bool execute(const std::string &command, std::list<std::string> &args);
+      CommandOutcome execute(const std::string &command, std::list<std::string> &args);
 
       void message(std::string msg);
       std::ostream & out();

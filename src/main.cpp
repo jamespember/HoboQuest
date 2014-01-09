@@ -17,6 +17,8 @@ int main(int argc, char *argv[]) {
   #endif
 
 	hoboquest::Game g(std::cin, std::cout);
+  g.loop();
+
   return 0;
 }
 
