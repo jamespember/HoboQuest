@@ -8,7 +8,6 @@
 #include "container.hpp"
 #include "area.hpp"
 #include "actor.hpp"
-#include "input.hpp"
 #include "command.hpp"
 #include "commandable.hpp"
 #include "player.hpp"
@@ -24,7 +23,6 @@ int run_tests() {
   TEST(container)
   TEST(area)
   TEST(actor)
-  TEST(input)
   TEST(command)
   TEST(commandable)
   TEST(player)

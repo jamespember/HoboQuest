@@ -9,7 +9,7 @@
 #include "../item/item.hpp"
 #include "../item/equippable.hpp"
 #include "../item/consumable.hpp"
-#include "../item/container_item.hpp"
+// #include "../item/container_item.hpp"
 
 using namespace std;
 using namespace hoboquest;
@@ -33,16 +33,16 @@ test_small() only contains House, Cellar, Garden.
 */
 
 void test_small() {
-  auto house = make_shared<Area>("House", "A small wooden house");
-  auto garden = make_shared<Area>("Garden", "A beautiful garden");
-  auto cellar = make_shared<Area>("Cellar", "A tiny cellar full of dust");
+  auto house = make_shared<Area>("house", "House");
+  auto garden = make_shared<Area>("garden", "Garden");
+  auto cellar = make_shared<Area>("cellar", "Cellar");
 
-  auto player = make_shared<Actor>("Player");
-  auto troll = make_shared<Actor>("Troll");
+  auto player = make_shared<Actor>("player", "Player");
+  auto troll = make_shared<Actor>("troll", "Troll");
 
-  auto bag = make_shared<ContainerItem>("Bag", "A leather bag");
-  auto beer = make_shared<Consumable>("Beer", "A lovely beverage");
-  auto book = make_shared<Equippable>("Recipe Book", "A book with many brewing recepies");
+  // auto bag = make_shared<ContainerItem>("Bag");
+  auto beer = make_shared<Consumable>("beer", "Beer");
+  auto book = make_shared<Equippable>("book", "Recipe Book");
 
   garden->add_exit("door", house);
   house->add_exit("front door", garden);

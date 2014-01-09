@@ -9,24 +9,26 @@ using namespace std;
 using namespace hoboquest;
 
 void test_actor() {
-	auto area = make_shared<Area>("House", "A small wooden house");
-	auto actor = make_shared<Actor>("Thief");
+  auto id = "thief";
+	auto area = make_shared<Area>("house", "House");
+	auto actor = make_shared<Actor>(id, "Thief");
 	area->add_actor(actor);
 	
 	// Verify actor name and that area has the actor
+	assert(actor->id() == id);
 	assert(actor->name() == "Thief");
-	assert(area->has_actor(actor->name()) == true);
+	assert(area->has_actor(actor->id()) == true);
 	assert(area->has_actor("Hufflepuff") == false);
 	
 	// Verify fetching actor works and that name changes are reflected globally
-	auto test = area->get_actor(actor->name());
+	auto test = area->get_actor(actor->id());
 	actor->set_name("Dirty thief");
 	assert(actor->name() == "Dirty thief");
 	assert(test->name() == actor->name());
 
 	// Verify that removing actors from areas work
-	area->remove_actor(actor->name());
-	assert(area->has_actor(actor->name()) == false);
+	area->remove_actor(actor->id());
+	assert(area->has_actor(actor->id()) == false);
 	
 }
 

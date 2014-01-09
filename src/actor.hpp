@@ -1,19 +1,18 @@
 #ifndef HOBO_ACTOR
 #define HOBO_ACTOR
 
+#include "container_entity.hpp"
+#include "area.hpp"
+
 #include <string>
 #include <memory>
-
-#include "area.hpp"
-#include "container.hpp"
 
 namespace hoboquest {
 	class Area;
 	
-  class Actor : public Container {
+  class Actor : public ContainerEntity {
   
     protected:
-      std::string _name;
       bool _active;
       int _damage = 1;
       int _hp = 1;
@@ -21,12 +20,9 @@ namespace hoboquest {
       std::shared_ptr<Area> _location;
 
     public:
-      Actor(const std::string &name);
+      Actor(const std::string &id, const std::string &name);
       virtual ~Actor();
       
-      std::string name() const;
-      void set_name(const std::string &name);
-
       bool active() const;
       void set_active(bool active);
 

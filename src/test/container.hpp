@@ -3,14 +3,14 @@
 
 #include <memory>
 #include <cassert>
-#include "../container.hpp"
+#include "../container_entity.hpp"
 #include "../item/item.hpp"
 
 using namespace std;
 using namespace hoboquest;
 
 void test_container() {
-  Container c;
+  ContainerEntity c(Entity::ITEM, "container", "Container");
   assert(c.capacity() == 100);
   assert(c.carrying() == 0);
   assert(c.money() == 0);
@@ -29,14 +29,14 @@ void test_container() {
   assert(c.capacity() == 10);
   assert(c.over_encumbered() == false);
 
-  assert(c.has_item("unknown item") == false);
-  assert(c.get_item("unknown item") == nullptr);
-  assert(c.drop("unknown item") == nullptr);
+  assert(c.has_item("unknown_item") == false);
+  assert(c.get_item("unknown_item") == nullptr);
+  assert(c.drop("unknown_item") == nullptr);
 
-  auto i1 = make_shared<Item>("1", "");
-  auto i2 = make_shared<Item>("2", "");
-  auto i4 = make_shared<Item>("4", "");
-  auto i5 = make_shared<Item>("5", "");
+  auto i1 = make_shared<Item>("1", "One");
+  auto i2 = make_shared<Item>("2", "Two");
+  auto i4 = make_shared<Item>("4", "Three");
+  auto i5 = make_shared<Item>("5", "Four");
   i2->set_weight(2);
   i4->set_weight(4);
   i5->set_weight(5);

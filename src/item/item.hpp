@@ -1,23 +1,23 @@
 #ifndef HOBO_ITEM
 #define HOBO_ITEM
 
+#include "../entity.hpp"
+
 #include <string>
 
 namespace hoboquest {
-  class Item {
+  class Item : public Entity {
     protected:
-      std::string _name, _description;
+      std::string _description;
       unsigned _value, _weight;
 
     public:
-      Item(std::string name, std::string description);
+      Item(const std::string &id, const std::string &name);
 
-      const std::string & name() const;
       const std::string & description() const;
       unsigned value() const;
       unsigned weight() const;
 
-      void set_name(std::string name);
       void set_description(std::string description);
       void set_value(unsigned value);
       void set_weight(unsigned weight);

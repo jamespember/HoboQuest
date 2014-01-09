@@ -9,8 +9,8 @@ using namespace std;
 using namespace hoboquest;
 
 void test_area() {
-	auto house = make_shared<Area>("House", "A small wooden house");
-	auto garden = make_shared<Area>("Garden", "A beautiful garden");
+	auto house = make_shared<Area>("house", "House");
+	auto garden = make_shared<Area>("garden", "Garden");
 
 	// Verify that adding an exit works
 	house->add_exit("door", garden);

@@ -1,22 +1,30 @@
 #ifndef HOBO_CONTAINER
 #define HOBO_CONTAINER 1
 
+#include "entity.hpp"
+#include "util/ptr_map.hpp"
+#include "item/item.hpp"
+
 #include <memory>
 #include <iostream>
 #include <string>
 #include <unordered_map>
 #include <utility>
 #include <memory>
-#include "item/item.hpp"
 
 namespace hoboquest {
-	class Container {
+	class ContainerEntity : public Entity {
 		protected:
-      std::unordered_map<std::string, std::shared_ptr<Item>> _items;
+      PtrMap<Item> _items;
       unsigned _capacity, _carrying, _money;
 
 		public:
-			Container() : _capacity(100), _carrying(0), _money(0) {}
+      ContainerEntity(Entity::Type type, const std::string &id,
+          const std::string &name) :
+        Entity(type, id, name), _capacity(100), _carrying(0), _money(0) {
+        if (type == AREA)
+          set_capacity(10e8);
+      }
 
       unsigned carrying() const { return _carrying; }
       unsigned capacity() const { return _capacity; }
@@ -36,40 +44,33 @@ namespace hoboquest {
       unsigned take_money() { return take_money(_money); }
       void give_money(unsigned amount) { _money += amount; }
 
-			bool has_item(const std::string &name) const {
-				return _items.count(name) > 0;
+			bool has_item(const std::string &id) const {
+				return _items.has(id);
 			}
 
-      // Returns item or nullptr.
-      std::shared_ptr<Item> get_item(const std::string &name) const {
-        if (!has_item(name))
-          return nullptr;
-				return _items.at(name);
+      std::shared_ptr<Item> get_item(const std::string &id) const {
+				return _items.get(id);
 			}
 
 			bool pickup(std::shared_ptr<Item> item) {
-        // Already has item
-        if (has_item(item->name()))
-          return false;
-				_items[item->name()] = item;
-        _carrying += item->weight();
-        return true;
+        bool success = _items.add(item);
+        if (success)
+          _carrying += item->weight();
+        return success;
 			}
 
       // Drops and returns item if present, otherwise returns nullptr
-      std::shared_ptr<Item> drop(const std::string &name) {
-        std::shared_ptr<Item> item = get_item(name);
-        if (item != nullptr) {
-          _items.erase(name);
+      std::shared_ptr<Item> drop(const std::string &id) {
+        auto item = _items.remove(id);
+        if (item != nullptr)
           _carrying -= item->weight();
-        }
 				return item;
 			}
 
-      friend std::ostream & operator << (std::ostream &out, const Container &c);
+      friend std::ostream & operator << (std::ostream &out, const ContainerEntity &c);
 	};
 
-  inline std::ostream & operator << (std::ostream &out, const Container &c) {
+  inline std::ostream & operator << (std::ostream &out, const ContainerEntity &c) {
     out << c.carrying() << '/' << c.capacity();
     if (c.over_encumbered())
       out << " (over encumbered)";

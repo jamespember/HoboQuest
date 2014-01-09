@@ -1,21 +1,18 @@
 #include "actor.hpp"
+#include "container_entity.hpp"
+#include "item/item.hpp"
 
 #include <vector>
 #include <unordered_map>
-#include "container.hpp"
-#include "item/item.hpp"
 
 namespace hoboquest {
 
-  Actor::Actor(const std::string &name) : 
-	_name(name), _active(false), _hp_max(1) {
+  Actor::Actor(const std::string &id, const std::string &name) :
+  ContainerEntity(ACTOR, id, name), _active(false), _hp_max(1) {
     _hp = _hp_max;
   }
 
   Actor::~Actor() {}
-  
-  std::string Actor::name() const { return _name; }
-  void Actor::set_name(const std::string &name) { _name = name; }
 
   bool Actor::active() const          { return _active; }
   int  Actor::damage() const          { return _damage; }
