@@ -2,6 +2,7 @@
 #define HOBO_ENTITY
 
 #include <string>
+#include <iostream>
 
 namespace hoboquest {
   class Entity {
@@ -23,7 +24,15 @@ namespace hoboquest {
 
       void set_name(const std::string &name) {	_name = name; }
 
+      virtual void to_ostream(std::ostream &out) const {
+        out << _id << " (" << _name << ")";
+      }
   };
+
+  inline std::ostream & operator << (std::ostream &out, const Entity &e) {
+    e.to_ostream(out);
+    return out;
+  }
 }
 
 #endif

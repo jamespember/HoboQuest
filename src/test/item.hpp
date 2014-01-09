@@ -38,7 +38,7 @@ void test_item() {
   assert(custom.is_container() == false);
   assert(custom.is_consumable() == false);
   
-  Equippable sword("sword", "An excellent killer");
+  Equippable sword("sword", "Sword");
   items[sword.name()] = &sword;
   assert(sword.is_equippable() == true);
   assert(sword.is_container() == false);

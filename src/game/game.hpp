@@ -12,41 +12,64 @@ using namespace std;
 
 namespace hoboquest {
   class Game : public Engine {
+    protected:
+
+      void add_area(const string &id, const string &name,
+          const string &description) {
+        auto area = make_shared<Area>(id, name);
+        area->set_description(description);
+        areas.add(area);
+      }
+
+      void connect_areas(const string &area_a, const string &dir_a,
+          const string &dir_b, const string &area_b) {
+        if (!areas.has(area_a) || !areas.has(area_b)) {
+          _out << "Can't connect '" << area_a << "' with '" << area_b << "'\n";
+          return;
+        }
+
+        auto a = areas.get(area_a), b = areas.get(area_b);
+        a->add_exit(dir_a, b);
+        b->add_exit(dir_b, a);
+      }
+
     public:
-      Game(std::istream &in, std::ostream &out) : Engine(in, out) {
+      Game(istream &in, ostream &out) : Engine(in, out) {
         _out << "Starting HoboQuest...\n";
 
-        auto alley = make_shared<Area>("Alley",
+        add_area("alley", "Dark alley",
             "Starting area.");
-        auto main_street = make_shared<Area>("Main street",
+        add_area("main_street", "Main street",
             "The main street of the town, plenty of places to go from here.");
-        auto market = make_shared<Area>("Market",
+        add_area("market", "Market",
             "The town market, there's not many people around right now though.");
-        auto pub = make_shared<Area>("Pub",
+        add_area("pub", "Pub",
             "A pub filled with people, more or less drunk.");
-        auto shelter = make_shared<Area>("Homeless shelter",
+        add_area("shelter", "Homeless shelter",
             "A state-owned homeless shelter for people lacking a home.");
-        auto park = make_shared<Area>("Park",
+        add_area("park", "Park",
             "A park with plenty of park benches.");
-        auto police_station = make_shared<Area>("Police station",
+        add_area("police_station", "Police station",
             "The town police station.");
-        auto cell = make_shared<Area>("Jail cell",
+        add_area("cell", "Jail cell",
             "A jail cell inside the police station.");
-        auto floor0 = make_shared<Area>("Apartments, bottom floor",
+        add_area("floor0", "Apartments, bottom floor",
             "Bottom floor of a large apartments building.");
-        auto floor1 = make_shared<Area>("Apartments, 1st floor",
+        add_area("floor1", "Apartments, 1st floor",
             "Hallway on the first floor of the aparments building.");
-        auto floor2 = make_shared<Area>("Apartments, 2nd floor",
+        add_area("floor2", "Apartments, 2nd floor",
             "Hallway on the second floor of the aparments building.");
-        auto roof = make_shared<Area>("Roof",
+        add_area("roof", "Roof",
             "The rooftop area of a a large apartments building.");
 
+        _out << areas;
+
         /*
-           Roof
-            |
-          Floor2
-            |
-          Floor1
+           Roof  ------\
+            |          |
+          Floor2       |
+            |          |
+          Floor1       v
             |
           Floor0 --- Market ------- Park
                        |
@@ -58,34 +81,45 @@ namespace hoboquest {
         */
 
         // Exits
-        main_street->add_exit("west", alley);
-        alley->add_exit("east", main_street);
-        alley->add_exit("north", pub);
-        pub->add_exit("south", alley);
+        connect_areas("alley", "north", "south", "pub");
+        connect_areas("alley", "east", "west", "main_street");
+        connect_areas("main_street", "east", "west", "shelter");
+        connect_areas("main_street", "south", "north", "police_station");
+        connect_areas("cell", "east", "west", "police_station");
+        connect_areas("market", "south", "north", "main_street");
+        connect_areas("market", "west", "east", "floor0");
+        connect_areas("floor0", "up", "down", "floor1");
+        connect_areas("floor1", "up", "down", "floor2");
+        connect_areas("floor2", "up", "down", "roof");
+        areas.get("roof")->add_exit("east", areas.get("market"));
+        // main_street->add_exit("west", alley);
+        // alley->add_exit("east", main_street);
+        // alley->add_exit("north", pub);
+        // pub->add_exit("south", alley);
 
-        main_street->add_exit("east", shelter);
-        shelter->add_exit("west", main_street);
+        // main_street->add_exit("east", shelter);
+        // shelter->add_exit("west", main_street);
 
-        main_street->add_exit("south", police_station);
-        police_station->add_exit("north", main_street);
-        police_station->add_exit("west", cell);
-        cell->add_exit("east", police_station);
+        // main_street->add_exit("south", police_station);
+        // police_station->add_exit("north", main_street);
+        // police_station->add_exit("west", cell);
+        // cell->add_exit("east", police_station);
 
-        main_street->add_exit("north", market);
-        market->add_exit("south", main_street);
+        // main_street->add_exit("north", market);
+        // market->add_exit("south", main_street);
 
-        market->add_exit("east", park);
-        park->add_exit("west", market);
+        // market->add_exit("east", park);
+        // park->add_exit("west", market);
 
-        market->add_exit("west", floor0);
-        floor0->add_exit("east", market);
-        floor0->add_exit("up", floor1);
-        floor1->add_exit("up", floor2);
-        floor2->add_exit("up", roof);
-        floor1->add_exit("down", floor0);
-        floor2->add_exit("down", floor1);
-        roof->add_exit("down", floor2);
-        roof->add_exit("east", market); // jump
+        // market->add_exit("west", floor0);
+        // floor0->add_exit("east", market);
+        // floor0->add_exit("up", floor1);
+        // floor1->add_exit("up", floor2);
+        // floor2->add_exit("up", roof);
+        // floor1->add_exit("down", floor0);
+        // floor2->add_exit("down", floor1);
+        // roof->add_exit("down", floor2);
+        // roof->add_exit("east", market); // jump
 
         // Items
         auto beer = make_shared<Consumable>("Beer", "A lovely beverage");

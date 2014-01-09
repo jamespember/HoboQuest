@@ -15,9 +15,8 @@ namespace hoboquest {
       map_type _objects;
 
     public:
-      const map_type & get_map() const {
-        return _objects;
-      }
+      const map_type & get_map() const { return _objects; }
+      map_type & get_map() { return _objects; }
 
 			bool has(const std::string &id) const {
 				return _objects.count(id) > 0;
@@ -46,7 +45,7 @@ namespace hoboquest {
   template <class ObjectT>
   inline std::ostream & operator << (std::ostream &out, const PtrMap<ObjectT> &m) {
     for (const auto &kv : m.get_map())
-      out << "  " << kv.first << ": " << kv.second << std::endl;
+      out << "  " << kv.first << ": " << *(kv.second) << std::endl;
     return out;
   }
 } /* hoboquest */ 

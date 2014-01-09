@@ -23,16 +23,18 @@ namespace hoboquest {
           const std::string &name) :
         Entity(type, id, name), _capacity(100), _carrying(0), _money(0) {
         if (type == AREA)
-          set_capacity(10e8);
+          set_capacity(INT_MAX);
       }
 
       unsigned carrying() const { return _carrying; }
       unsigned capacity() const { return _capacity; }
-      bool over_encumbered() const {
-        return _carrying > _capacity;
+      bool over_encumbered() const { return _carrying > _capacity; }
+      bool has_unlimited_capacity() const { return _capacity == INT_MAX; }
+      void set_capacity(unsigned capacity) {
+        if (capacity > INT_MAX)
+          capacity = INT_MAX;
+        _capacity = capacity;
       }
-
-      void set_capacity(unsigned capacity) { _capacity = capacity; }
 
       unsigned money() const { return _money; }
       unsigned take_money(unsigned amount) {
@@ -67,15 +69,17 @@ namespace hoboquest {
 				return item;
 			}
 
-      friend std::ostream & operator << (std::ostream &out, const ContainerEntity &c);
+      virtual void to_ostream(std::ostream &out) const {
+        Entity::to_ostream(out);
+        out << ", container($" << _money  << ", " << _carrying;
+        if (!has_unlimited_capacity()) {
+          out << '/' << _capacity;
+          if (over_encumbered())
+            out << ", over encumbered";
+        }
+        out << ')';
+      }
 	};
-
-  inline std::ostream & operator << (std::ostream &out, const ContainerEntity &c) {
-    out << c.carrying() << '/' << c.capacity();
-    if (c.over_encumbered())
-      out << " (over encumbered)";
-    return out;
-  }
-} /* hoboquest  */ 
+} /* hoboquest  */
 
 #endif
