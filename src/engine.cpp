@@ -1,4 +1,4 @@
-#include "game.hpp"
+#include "engine.hpp"
 
 #include <iostream>
 #include <string>
@@ -10,13 +10,12 @@
 #include "player.hpp"
 
 namespace hoboquest {
-  Game::Game(std::istream &in, std::ostream &out) :
+  Engine::Engine(std::istream &in, std::ostream &out) :
   _in(in), _out(out) {
-    _out << "HoboQuest starting...\n";
     _player = std::make_shared<Player>(in, out);
   }
 
-  bool Game::tick() {
+  bool Engine::tick() {
     _out << "tick...\n";
 
     // Player interaction (stop game on false return value)
@@ -30,7 +29,7 @@ namespace hoboquest {
     return true;
   }
 
-  void Game::loop() {
+  void Engine::loop() {
     while (tick());
   }
 } /* hoboquest */ 

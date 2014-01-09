@@ -1,5 +1,5 @@
-#ifndef HOBO_GAME
-#define HOBO_GAME
+#ifndef HOBO_ENGINE
+#define HOBO_ENGINE
 
 #include <iostream>
 #include <string>
@@ -14,7 +14,7 @@ template <typename T> using ptr_vector = std::vector<std::shared_ptr<T>>;
 namespace hoboquest {
   class Player;
 
-  class Game {
+  class Engine {
     protected:
       ptr_vector<Area> _areas;
       ptr_vector<Item> _items;
@@ -25,7 +25,7 @@ namespace hoboquest {
       std::ostream & _out;
 
     public:
-      Game(std::istream &in_s, std::ostream &out_s);
+      Engine(std::istream &in_s, std::ostream &out_s);
 
       std::vector<std::string> read_command();
       bool tick();

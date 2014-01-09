@@ -5,7 +5,7 @@
 #include <cassert>
 #include "../area.hpp"
 #include "../actor.hpp"
-#include "../game.hpp"
+#include "../engine.hpp"
 #include "../item/item.hpp"
 #include "../item/equippable.hpp"
 #include "../item/consumable.hpp"

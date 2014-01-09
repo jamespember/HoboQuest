@@ -1,13 +1,12 @@
-#include <iostream>
-#include <string>
-#include <cstring>
-#include "game.hpp"
-#include "actor.hpp"
-#include "area.hpp"
+#include "game/game.hpp"
 
 #ifdef TESTS
 #include "test/run_tests.hpp"
 #endif
+
+#include <iostream>
+#include <string>
+#include <cstring>
 
 int main(int argc, char *argv[]) {
   // Built with tests?
