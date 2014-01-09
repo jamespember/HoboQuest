@@ -1,8 +1,5 @@
 #include "game.hpp"
 
-#define DEBUGGING 1
-#include "util/debug.hpp"
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -21,7 +18,7 @@ namespace hoboquest {
   }
 
   void Game::tick() {
-    DEBUG("tick...");
+    _out << "tick...\n";
   }
 
   void Game::loop() {
