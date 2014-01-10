@@ -16,13 +16,12 @@ namespace hoboquest {
   }
 
   bool Engine::tick() {
-    _out << "tick...\n";
-
     // Player interaction (stop game on false return value)
     if (!player->interact())
       return false;
 
-    _out << "Running actor actions\n";
+    _out << "tick...\n";
+
     for (auto actor : actors.get_map())
       actor.second->tick();
 

@@ -26,18 +26,20 @@ namespace hoboquest {
   const std::shared_ptr<Area> Actor::location() const { return _location; }
   std::shared_ptr<Area> Actor::location() { return _location; }
 
-  void Actor::on_enter(std::shared_ptr<Area> area) {
+  void Actor::enter_area(std::shared_ptr<Area> area) {
   }
 
-  void Actor::on_exit(std::shared_ptr<Area> area) {
+  void Actor::exit_area(std::shared_ptr<Area> area) {
   }
 
   void Actor::move_to(std::shared_ptr<Area> area) {
-    if (_location != nullptr)
-      on_exit(_location);
+    if (_location != nullptr) {
+      exit_area(_location);
+      area->remove_actor(_id);
+    }
+    area->add_actor(shared_from_this());
     _location = area;
-    on_enter(_location);
-    // TODO: Trigger on exit/enter for areas as well?
+    enter_area(_location);
   }
 
   void Actor::tick() {}

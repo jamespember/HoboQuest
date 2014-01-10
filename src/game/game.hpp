@@ -135,6 +135,9 @@ namespace hoboquest {
         player->commands.add_command(make_shared<GoShorthandCommand>("south", "s"));
         player->commands.add_command(make_shared<GoShorthandCommand>("west", "w"));
         player->commands.add_command(make_shared<GoShorthandCommand>("east", "e"));
+
+        // Actors
+        player->move_to(areas.get("alley"));
       }
   };
 }

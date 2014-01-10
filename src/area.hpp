@@ -34,6 +34,11 @@ namespace hoboquest {
 			bool has_actor(const std::string &id) const;
       std::shared_ptr<Actor> get_actor(const std::string &id) const;
       void remove_actor(const std::string &id);
+
+      void describe_exits(std::ostream &out) const;
+      void describe(std::ostream &out) const;
+
+      virtual void to_ostream(std::ostream &out) const;
   };
 }
 

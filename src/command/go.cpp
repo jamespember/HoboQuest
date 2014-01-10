@@ -24,11 +24,13 @@ namespace hoboquest {
 
     if (args.empty()) {
       player.message("Go where?");
+      location->describe_exits(player.out());
       return false;
     }
 
     if (!location->has_exit(args.front())) {
       player.out() << "You can't go " << args.front() << ".\n";
+      location->describe_exits(player.out());
       return false;
     }
 

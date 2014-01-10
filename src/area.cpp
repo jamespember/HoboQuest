@@ -51,8 +51,24 @@ namespace hoboquest {
     _actors.remove(id);
   }
 
-  /*
-     onEnter(actor, fromArea?)
-     onLeave(actor, toArea?)
-     */
+  void Area::describe_exits(std::ostream &out) const {
+    if (_exits.empty()) {
+      out << "There are no exits." << std::endl;
+      return;
+    }
+
+    out << "Exits:" << std::endl;
+    for (const auto &kv : _exits)
+      out << "  " << kv.first << ": " << kv.second->name() << std::endl;
+  }
+
+  void Area::describe(std::ostream &out) const {
+    if (!_description.empty())
+      out << _description << std::endl;
+    describe_exits(out);
+  }
+
+  void Area::to_ostream(std::ostream &out) const {
+    Entity::to_ostream(out);
+  }
 }

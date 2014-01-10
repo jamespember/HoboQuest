@@ -10,7 +10,7 @@
 namespace hoboquest {
 	class Area;
 	
-  class Actor : public ContainerEntity {
+  class Actor : public ContainerEntity, public std::enable_shared_from_this<Actor> {
   
     protected:
       bool _active;
@@ -36,8 +36,8 @@ namespace hoboquest {
       const std::shared_ptr<Area> location() const;
       std::shared_ptr<Area> location();
 
-      virtual void on_enter(std::shared_ptr<Area> area);
-      virtual void on_exit(std::shared_ptr<Area> area);
+      virtual void enter_area(std::shared_ptr<Area> area);
+      virtual void exit_area(std::shared_ptr<Area> area);
 
       void move_to(std::shared_ptr<Area> area);
 
