@@ -8,8 +8,6 @@
 #include <string>
 
 namespace hoboquest {
-  class Player;
-
   class HelpCommand : public Command {
     public:
       HelpCommand() : Command("help", "h") {}

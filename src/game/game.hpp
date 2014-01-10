@@ -4,10 +4,12 @@
 #include "../engine.hpp"
 #include "../item/consumable.hpp"
 
+#include "../command/consume.hpp"
 #include "../command/exit.hpp"
-#include "../command/help.hpp"
 #include "../command/go.hpp"
 #include "../command/go_shorthand.hpp"
+#include "../command/help.hpp"
+#include "../command/inventory.hpp"
 
 #include <iostream>
 #include <string>
@@ -47,7 +49,7 @@ namespace hoboquest {
         add_area("main_street", "Main street",
             "The main street of the town, plenty of places to go from here.");
         add_area("market", "Market",
-            "The town market, there's not many people around right now though.");
+            "The town market. There are not many people around right now.");
         add_area("pub", "Pub",
             "A pub filled with people, more or less drunk.");
         add_area("shelter", "Homeless shelter",
@@ -128,6 +130,7 @@ namespace hoboquest {
 
         // Items
         auto beer = make_shared<Consumable>("Beer", "A lovely beverage");
+        areas.get("pub")->add_item(beer);
 
         // Commands
         player->commands.add_command(make_shared<HelpCommand>());
@@ -138,6 +141,10 @@ namespace hoboquest {
         player->commands.add_command(make_shared<GoShorthandCommand>("east", "e"));
         player->commands.add_command(make_shared<GoShorthandCommand>("up", "u"));
         player->commands.add_command(make_shared<GoShorthandCommand>("down", "d"));
+        player->commands.add_command(make_shared<InventoryCommand>());
+        player->commands.add_command(make_shared<PickupCommand>());
+        player->commands.add_command(make_shared<DropCommand>());
+        player->commands.add_command(make_shared<ConsumeCommand>());
         player->commands.add_command(make_shared<ExitCommand>());
 
         // Actors

@@ -13,8 +13,6 @@ namespace hoboquest {
       GoCommand(const std::string &direction);
       GoCommand();
 
-      ~GoCommand();
-
       CommandOutcome execute(Player &player, std::list<std::string> &args);
 
   };

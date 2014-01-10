@@ -19,5 +19,7 @@ namespace hoboquest {
 
   bool Item::is_consumable() const { return false; }
   bool Item::is_equippable() const { return false; }
-  bool Item::is_container() const { return false; }
+
+  void Item::on_consume(Actor &actor) {}
+  void Item::on_equip(Actor &actor) {}
 }

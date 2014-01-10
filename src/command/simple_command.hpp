@@ -10,6 +10,7 @@
 namespace hoboquest {
   class Player;
 
+  // FIXME: Change return type to CommandOutcome
   typedef std::function<bool(Player&, std::list<std::string>&)> command_function;
 
   class SimpleCommand : public Command {

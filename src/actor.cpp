@@ -23,6 +23,18 @@ namespace hoboquest {
   void Actor::set_hp(int hp)          { _hp = hp; }
   void Actor::set_hp_max(int hp_max)  { _hp_max = hp_max; }
 
+  int Actor::modify_hp(int modifier) {
+    _hp += modifier;
+    if (_hp < 0) {
+      modifier -= _hp;
+      _hp = 0;
+    } else if (_hp > _hp_max) {
+      modifier -= _hp;
+      _hp = _hp_max;
+    }
+    return modifier;
+  }
+
   const std::shared_ptr<Area> Actor::location() const { return _location; }
   std::shared_ptr<Area> Actor::location() { return _location; }
 

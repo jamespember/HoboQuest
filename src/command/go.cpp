@@ -12,8 +12,6 @@ namespace hoboquest {
     Command(direction) {}
   GoCommand::GoCommand() : Command("go", "g") {}
 
-  GoCommand::~GoCommand() {}
-
   CommandOutcome GoCommand::execute(Player &player, std::list<std::string> &args) {
     auto location = player.location();
 

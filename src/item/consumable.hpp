@@ -1,16 +1,25 @@
 #ifndef HOBO_ITEM_CONSUMABLE
 #define HOBO_ITEM_CONSUMABLE
 
-#include <string>
-
 #include "item.hpp"
 
+#include <string>
+
 namespace hoboquest {
+  class Actor;
+
   class Consumable : public Item {
+    protected:
+      int _hp_modifier;
+
     public:
       Consumable(std::string name, std::string description);
 
-      virtual bool is_consumable() const;
+      bool is_consumable() const;
+      virtual void on_consume(Actor &actor);
+
+      int hp_modifier() const;
+      void set_hp_modifier(int modifier);
   };
 }
 

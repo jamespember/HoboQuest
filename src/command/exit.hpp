@@ -2,7 +2,6 @@
 #define HOBO_EXIT_COMMAND
 
 #include "command.hpp"
-#include "../player.hpp"
 
 #include <list>
 #include <string>

@@ -6,6 +6,8 @@
 #include <string>
 
 namespace hoboquest {
+  class Actor;
+
   class Item : public Entity {
     protected:
       std::string _description;
@@ -24,7 +26,9 @@ namespace hoboquest {
 
       virtual bool is_consumable() const;
       virtual bool is_equippable() const;
-      virtual bool is_container() const;
+
+      virtual void on_consume(Actor &actor);
+      virtual void on_equip(Actor &actor);
   };
 }
 

@@ -56,7 +56,7 @@ namespace hoboquest {
 				return _items.get(id);
 			}
 
-			bool pickup(std::shared_ptr<Item> item) {
+			bool add_item(std::shared_ptr<Item> item) {
         bool success = _items.add(item);
         if (success)
           _carrying += item->weight();
@@ -64,21 +64,31 @@ namespace hoboquest {
 			}
 
       // Drops and returns item if present, otherwise returns nullptr
-      std::shared_ptr<Item> drop(const std::string &id) {
+      std::shared_ptr<Item> remove_item(const std::string &id) {
         auto item = _items.remove(id);
         if (item != nullptr)
           _carrying -= item->weight();
 				return item;
 			}
 
-      virtual void to_ostream(std::ostream &out) const {
-        Entity::to_ostream(out);
-        out << ", container($" << _money  << ", " << _carrying;
+      void describe_carrying(std::ostream &out) const {
+        out << _carrying;
         if (!has_unlimited_capacity()) {
           out << '/' << _capacity;
           if (over_encumbered())
             out << ", over encumbered";
         }
+      }
+
+      void describe_contents(std::ostream &out) const {
+        for (const auto &kv : _items.get_map())
+          out << "  " << *(kv.second) << std::endl;
+      }
+
+      virtual void to_ostream(std::ostream &out) const {
+        Entity::to_ostream(out);
+        out << ", container($" << _money  << ", ";
+        describe_carrying(out);
         out << ')';
       }
 	};

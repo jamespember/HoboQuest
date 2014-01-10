@@ -35,13 +35,11 @@ void test_item() {
   assert(custom.value() == 1);
   assert(custom.weight() == 1);
   assert(custom.is_equippable() == false);
-  assert(custom.is_container() == false);
   assert(custom.is_consumable() == false);
   
   Equippable sword("sword", "Sword");
   items[sword.name()] = &sword;
   assert(sword.is_equippable() == true);
-  assert(sword.is_container() == false);
   assert(sword.is_consumable() == false);
   
   // ContainerItem bag("Bag", "A leather bag");
@@ -51,26 +49,20 @@ void test_item() {
   // assert(bag.capacity() == 30);
   // assert(bag.name() == "Large bag");
   // assert(bag.is_equippable() == false); // TODO: should be equippable too?
-  // assert(bag.is_container() == true);
   // assert(bag.is_consumable() == false);
   
   Consumable beer("Beer", "A lovely beverage");
   items[beer.name()] = &beer;
   assert(beer.is_equippable() == false);
-  assert(beer.is_container() == false);
   assert(beer.is_consumable() == true);
   
   
   // Verify that inheritance works properly
-  // assert(items[bag.name()]->is_container() == true);
   assert(items[sword.name()]->is_equippable() == true);
   assert(items[beer.name()]->is_consumable() == true);
   // assert(items[bag.name()]->is_consumable() == false);
-  assert(items[sword.name()]->is_container() == false);
   assert(items[sword.name()]->is_consumable() == false);
   assert(items[beer.name()]->is_equippable() == false);
-  assert(items[beer.name()]->is_container() == false);
-  assert(items[custom.name()]->is_container() == false);
   assert(items[custom.name()]->is_consumable() == false);
   assert(items[custom.name()]->is_equippable() == false);
 }

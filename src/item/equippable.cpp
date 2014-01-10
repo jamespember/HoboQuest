@@ -1,5 +1,6 @@
 #include "equippable.hpp"
 #include "item.hpp"
+#include "../actor.hpp"
 
 #include <string>
 
@@ -8,5 +9,6 @@ namespace hoboquest {
       Item(name, description) { }
 
     bool Equippable::is_equippable() const { return true; }
+    void Equippable::on_equip(Actor &actor) {}
 }
 

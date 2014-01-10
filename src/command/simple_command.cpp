@@ -15,6 +15,7 @@ namespace hoboquest {
 
   SimpleCommand::~SimpleCommand() {}
 
+  // FIXME: Return actual outcome
   CommandOutcome SimpleCommand::execute(Player &player, std::list<std::string> &args) {
     return _executor(player, args) ? SUCCESS : ERROR;
   }
