@@ -1,11 +1,15 @@
 #ifndef HOBO_ENTITY
 #define HOBO_ENTITY
 
+#include "util/subject.hpp"
+
 #include <string>
 #include <iostream>
 
 namespace hoboquest {
-  class Entity {
+  class Entity;
+
+  class Entity : public Subject<Entity> {
     public:
       enum Type { AREA, ITEM, ACTOR };
       static const char* const TYPE_NAME[];

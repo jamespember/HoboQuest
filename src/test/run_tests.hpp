@@ -4,6 +4,7 @@
   std::cout << "=== TESTING " << #NAME << std::endl; \
   test_ ## NAME ();
  
+#include "subject.hpp"
 #include "item.hpp"
 #include "container.hpp"
 #include "area.hpp"
@@ -19,6 +20,7 @@ using std::cout;
 int run_tests() {
   cout << "=== Running test suite...\n";
 
+  TEST(subject)
   TEST(item)
   TEST(container)
   TEST(area)

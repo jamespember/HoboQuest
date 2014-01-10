@@ -130,6 +130,7 @@ namespace hoboquest {
         // Items
         auto beer = make_shared<Consumable>("beer", "Beer");
         beer->set_description("A lovely non-alcoholic(?) beverage.");
+        beer->set_hp_modifier(-5);
         areas.get("pub")->add_item(beer);
 
         // Commands
