@@ -4,6 +4,7 @@
 #include "../engine.hpp"
 #include "../item/consumable.hpp"
 
+#include "../command/exit.hpp"
 #include "../command/help.hpp"
 #include "../command/go.hpp"
 #include "../command/go_shorthand.hpp"
@@ -135,6 +136,9 @@ namespace hoboquest {
         player->commands.add_command(make_shared<GoShorthandCommand>("south", "s"));
         player->commands.add_command(make_shared<GoShorthandCommand>("west", "w"));
         player->commands.add_command(make_shared<GoShorthandCommand>("east", "e"));
+        player->commands.add_command(make_shared<GoShorthandCommand>("up", "u"));
+        player->commands.add_command(make_shared<GoShorthandCommand>("down", "d"));
+        player->commands.add_command(make_shared<ExitCommand>());
 
         // Actors
         player->move_to(areas.get("alley"));

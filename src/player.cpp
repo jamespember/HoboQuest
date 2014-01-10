@@ -46,10 +46,6 @@ namespace hoboquest {
     while (1) {
       tokens = command_prompt();
 
-      // Quit?
-      if (tokens.size() < 1 || tokens.front() == "quit")
-        return message("Quitting..."), false;
-
       std::string command = tokens.front();
       tokens.pop_front();
 
@@ -61,9 +57,13 @@ namespace hoboquest {
         case NOT_FOUND:
           _out << "Unknown command '" << command << "', try again.\n";
           break;
+        case NOOP:
         case ERROR:
           // noop
           break;
+        case EXIT:
+          message("Quitting...");
+          return false;
       }
       tokens.clear();
     }

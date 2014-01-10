@@ -15,8 +15,8 @@ namespace hoboquest {
 
   SimpleCommand::~SimpleCommand() {}
 
-  bool SimpleCommand::execute(Player &player, std::list<std::string> &args) {
-    return _executor(player, args);
+  CommandOutcome SimpleCommand::execute(Player &player, std::list<std::string> &args) {
+    return _executor(player, args) ? SUCCESS : ERROR;
   }
 
 } /* hoboquest */

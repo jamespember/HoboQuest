@@ -6,7 +6,6 @@
 #include <memory>
 #include <list>
 #include <string>
-#include <cassert>
 #include <iostream>
 
 namespace hoboquest {
@@ -62,7 +61,7 @@ namespace hoboquest {
     auto it = get_iterator(name);
     if (it == _commands.end())
       return CommandOutcome::NOT_FOUND;
-    return (*it)->execute(player, args) ? CommandOutcome::SUCCESS : CommandOutcome::ERROR;
+    return (*it)->execute(player, args);
   }
 
 } /* hoboquest */ 

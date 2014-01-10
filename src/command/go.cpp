@@ -14,28 +14,28 @@ namespace hoboquest {
 
   GoCommand::~GoCommand() {}
 
-  bool GoCommand::execute(Player &player, std::list<std::string> &args) {
+  CommandOutcome GoCommand::execute(Player &player, std::list<std::string> &args) {
     auto location = player.location();
 
     if (location == nullptr) {
       player.message("You can't go anywhere!");
-      return false;
+      return ERROR;
     }
 
     if (args.empty()) {
       player.message("Go where?");
       location->describe_exits(player.out());
-      return false;
+      return ERROR;
     }
 
     if (!location->has_exit(args.front())) {
       player.out() << "You can't go " << args.front() << ".\n";
       location->describe_exits(player.out());
-      return false;
+      return ERROR;
     }
 
     player.move_to(location->get_exit(args.front()));
-    return true;
+    return SUCCESS;
   }
 
 } /* hoboquest */ 

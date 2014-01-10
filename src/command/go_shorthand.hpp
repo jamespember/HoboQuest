@@ -15,7 +15,7 @@ namespace hoboquest {
       GoShorthandCommand(const std::string &direction) :
         GoCommand(direction) {}
 
-      bool execute(Player &player, std::list<std::string> &args) {
+      CommandOutcome execute(Player &player, std::list<std::string> &args) {
         std::list<std::string> go_args { name };
         return GoCommand::execute(player, go_args);
       }

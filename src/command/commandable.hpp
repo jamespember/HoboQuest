@@ -10,8 +10,6 @@
 namespace hoboquest {
   class Player;
 
-  enum CommandOutcome { SUCCESS, ERROR, NOT_FOUND };
-
   class Commandable {
     typedef std::list<std::shared_ptr<Command>> container_type;
 

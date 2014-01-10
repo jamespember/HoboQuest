@@ -8,6 +8,8 @@
 namespace hoboquest {
   class Player;
 
+  enum CommandOutcome { SUCCESS, NOOP, ERROR, EXIT, NOT_FOUND };
+
   class Command {
 
     public:
@@ -27,7 +29,7 @@ namespace hoboquest {
 
       bool responds_to(const std::string &cmd) const;
 
-      virtual bool execute(Player &player, std::list<std::string> &args) = 0;
+      virtual CommandOutcome execute(Player &player, std::list<std::string> &args) = 0;
 
   };
 

@@ -22,7 +22,7 @@ namespace hoboquest {
 
       ~SimpleCommand();
 
-      bool execute(Player &player, std::list<std::string> &args);
+      CommandOutcome execute(Player &player, std::list<std::string> &args);
 
   };
 } /* hoboquest */ 
