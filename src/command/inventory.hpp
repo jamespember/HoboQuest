@@ -17,7 +17,7 @@ namespace hoboquest {
         auto &out = player.out();
         out << "Player inventory (";
         player.describe_carrying(out);
-        out << ")" << std::endl << "  Cash: $" << player.money() << std::endl;
+        out << ")" << std::endl;
         player.describe_contents(out);
         return NOOP;
       }

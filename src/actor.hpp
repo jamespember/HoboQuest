@@ -9,9 +9,9 @@
 
 namespace hoboquest {
 	class Area;
-	
+
   class Actor : public ContainerEntity, public std::enable_shared_from_this<Actor> {
-  
+
     protected:
       bool _active;
       int _damage = 1;
@@ -22,7 +22,7 @@ namespace hoboquest {
     public:
       Actor(const std::string &id, const std::string &name);
       virtual ~Actor();
-      
+
       bool active() const;
       void set_active(bool active);
 
@@ -43,8 +43,10 @@ namespace hoboquest {
       virtual void exit_area(std::shared_ptr<Area> area);
 
       void move_to(std::shared_ptr<Area> area);
-      
+
+      virtual void describe(std::ostream &out) const;
+
   };
-} /* hoboquest  */ 
+} /* hoboquest  */
 
 #endif

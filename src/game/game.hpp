@@ -5,6 +5,7 @@
 #include "../item/consumable.hpp"
 
 #include "../command/consume.hpp"
+#include "../command/describe.hpp"
 #include "../command/exit.hpp"
 #include "../command/go.hpp"
 #include "../command/go_shorthand.hpp"
@@ -69,8 +70,6 @@ namespace hoboquest {
         add_area("roof", "Roof",
             "The rooftop area of a a large apartments building.");
 
-        _out << areas;
-
         /*
            Roof  ------\
             |          |
@@ -129,11 +128,13 @@ namespace hoboquest {
         // roof->add_exit("east", market); // jump
 
         // Items
-        auto beer = make_shared<Consumable>("Beer", "A lovely beverage");
+        auto beer = make_shared<Consumable>("beer", "Beer");
+        beer->set_description("A lovely non-alcoholic(?) beverage.");
         areas.get("pub")->add_item(beer);
 
         // Commands
         player->commands.add_command(make_shared<HelpCommand>());
+        player->commands.add_command(make_shared<DescribeCommand>());
         player->commands.add_command(make_shared<GoCommand>());
         player->commands.add_command(make_shared<GoShorthandCommand>("north", "n"));
         player->commands.add_command(make_shared<GoShorthandCommand>("south", "s"));

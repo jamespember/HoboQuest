@@ -22,9 +22,6 @@ namespace hoboquest {
 		public:
       Area(const std::string &id, const std::string &name);
       
-      std::string description() const;      
-      void set_description(const std::string description);
-      
     	void add_exit(const std::string &direction, std::shared_ptr<Area> exit);
     	bool has_exit(const std::string &direction) const;
     	std::shared_ptr<Area> get_exit(const std::string &direction) const;
@@ -36,9 +33,7 @@ namespace hoboquest {
       void remove_actor(const std::string &id);
 
       void describe_exits(std::ostream &out) const;
-      void describe(std::ostream &out) const;
-
-      virtual void to_ostream(std::ostream &out) const;
+      virtual void describe(std::ostream &out) const;
   };
 }
 

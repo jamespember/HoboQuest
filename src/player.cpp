@@ -72,7 +72,7 @@ namespace hoboquest {
 
 
   void Player::enter_area(std::shared_ptr<Area> area) {
-    _out << "Entering " << *area << std::endl;
+    _out << "Entering ";
     area->describe(_out);
   }
 

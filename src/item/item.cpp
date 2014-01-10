@@ -9,11 +9,9 @@ namespace hoboquest {
     _weight = 1;
   }
 
-  const std::string & Item::description()  const { return _description; }
   unsigned Item::value() const { return _value; }
   unsigned Item::weight() const { return _weight; }
 
-  void Item::set_description(std::string description) { _description = description; }
   void Item::set_value(unsigned value) { _value = value; }
   void Item::set_weight(unsigned weight) { _weight = weight; }
 
@@ -22,4 +20,14 @@ namespace hoboquest {
 
   void Item::on_consume(Actor &actor) {}
   void Item::on_equip(Actor &actor) {}
+
+  void Item::describe(std::ostream &out) const {
+    Entity::describe(out);
+    out << "  ";
+    if (is_equippable())
+      out << "equippable, ";
+    if (is_consumable())
+      out << "consumable, ";
+    out << "value: " << _value << ", weight: " << _weight << std::endl;
+  }
 }

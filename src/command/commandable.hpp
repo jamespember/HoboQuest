@@ -41,8 +41,9 @@ namespace hoboquest {
       out << "  (No commands available)." << std::endl;
       return out;
     }
-    for (const auto &cmd : c._commands)
-      out << "  " << (*cmd) << std::endl;
+    // Output available commands in reverse order (first added listed first)
+    for (auto it = c._commands.rbegin(), rend = c._commands.rend(); it != rend; it++)
+      out << "  " << (**it) << std::endl;
     return out;
   }
 } /* hoboquest */ 

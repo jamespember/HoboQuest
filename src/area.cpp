@@ -8,12 +8,6 @@ namespace hoboquest {
   Area::Area(const std::string &id, const std::string &name) :
     ContainerEntity(Entity::AREA, id, name) {}
 
-  std::string Area::description() const { return _description; }
-
-  void Area::set_description(const std::string description) { 
-    _description = description;
-  }
-
   void Area::add_exit(const std::string &direction, std::shared_ptr<Area> exit)  {
     _exits[direction] = exit;
   }
@@ -63,12 +57,10 @@ namespace hoboquest {
   }
 
   void Area::describe(std::ostream &out) const {
+    Entity::describe(out);
     if (!_description.empty())
       out << _description << std::endl;
     describe_exits(out);
-  }
-
-  void Area::to_ostream(std::ostream &out) const {
-    Entity::to_ostream(out);
+    describe_contents(out);
   }
 }

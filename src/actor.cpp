@@ -55,6 +55,10 @@ namespace hoboquest {
   }
 
   void Actor::tick() {}
-      
-} /* hoboquest  */ 
+
+  void Actor::describe(std::ostream &out) const {
+    ContainerEntity::describe(out);
+  }
+
+} /* hoboquest  */
 

@@ -48,6 +48,10 @@ namespace hoboquest {
       unsigned take_money() { return take_money(_money); }
       void give_money(unsigned amount) { _money += amount; }
 
+      bool has_contents() const {
+        return _money > 0 || !_items.get_map().empty();
+      }
+
 			bool has_item(const std::string &id) const {
 				return _items.has(id);
 			}
@@ -81,15 +85,21 @@ namespace hoboquest {
       }
 
       void describe_contents(std::ostream &out) const {
+        if (!has_contents())
+          return;
+        out << "Items:" << std::endl;
+        if (_money > 0)
+          out << "  Cash: $" << _money << std::endl;
         for (const auto &kv : _items.get_map())
           out << "  " << *(kv.second) << std::endl;
       }
 
-      virtual void to_ostream(std::ostream &out) const {
-        Entity::to_ostream(out);
-        out << ", container($" << _money  << ", ";
-        describe_carrying(out);
-        out << ')';
+      virtual void describe(std::ostream &out) const {
+        Entity::describe(out);
+        // out << "Carrying ";
+        // describe_carrying(out);
+        // out << std::endl;
+        describe_contents(out);
       }
 	};
 } /* hoboquest  */
