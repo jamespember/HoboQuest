@@ -3,6 +3,7 @@
 
 #include <list>
 #include <string>
+#include <ostream>
 
 namespace hoboquest {
   class Player;
@@ -29,6 +30,13 @@ namespace hoboquest {
       virtual bool execute(Player &player, std::list<std::string> &args) = 0;
 
   };
+
+  inline std::ostream & operator << (std::ostream &out, const Command &c) {
+    out << c.name;
+    if (!c.alias.empty())
+      out << " (" << c.alias << ")";
+    return out;
+  }
 } /* hoboquest */ 
 
 #endif

@@ -39,6 +39,11 @@ namespace hoboquest {
     return end;
   }
 
+
+  const Commandable::container_type & Commandable::get_commands() const {
+    return _commands;
+  }
+
   // Removes (last) command whose name or alias matches.
   bool Commandable::remove_command(const std::string &name) {
     auto it = get_iterator(name);

@@ -19,20 +19,22 @@ namespace hoboquest {
       unsigned _capacity, _carrying, _money;
 
 		public:
+      const unsigned UNLIMITED_CAPACITY = 10e8;
+      
       ContainerEntity(Entity::Type type, const std::string &id,
           const std::string &name) :
         Entity(type, id, name), _capacity(100), _carrying(0), _money(0) {
         if (type == AREA)
-          set_capacity(INT_MAX);
+          set_capacity(UNLIMITED_CAPACITY);
       }
 
       unsigned carrying() const { return _carrying; }
       unsigned capacity() const { return _capacity; }
       bool over_encumbered() const { return _carrying > _capacity; }
-      bool has_unlimited_capacity() const { return _capacity == INT_MAX; }
+      bool has_unlimited_capacity() const { return _capacity == UNLIMITED_CAPACITY; }
       void set_capacity(unsigned capacity) {
-        if (capacity > INT_MAX)
-          capacity = INT_MAX;
+        if (capacity > UNLIMITED_CAPACITY)
+          capacity = UNLIMITED_CAPACITY;
         _capacity = capacity;
       }
 

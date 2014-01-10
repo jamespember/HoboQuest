@@ -4,6 +4,10 @@
 #include "../engine.hpp"
 #include "../item/consumable.hpp"
 
+#include "../command/help.hpp"
+#include "../command/go.hpp"
+#include "../command/go_shorthand.hpp"
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -123,6 +127,14 @@ namespace hoboquest {
 
         // Items
         auto beer = make_shared<Consumable>("Beer", "A lovely beverage");
+
+        // Commands
+        player->commands.add_command(make_shared<HelpCommand>());
+        player->commands.add_command(make_shared<GoCommand>());
+        player->commands.add_command(make_shared<GoShorthandCommand>("north", "n"));
+        player->commands.add_command(make_shared<GoShorthandCommand>("south", "s"));
+        player->commands.add_command(make_shared<GoShorthandCommand>("west", "w"));
+        player->commands.add_command(make_shared<GoShorthandCommand>("east", "e"));
       }
   };
 }
