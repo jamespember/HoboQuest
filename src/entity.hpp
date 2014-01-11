@@ -28,8 +28,14 @@ namespace hoboquest {
       const std::string & name() const { return _name; }
       const std::string & description() const { return _description; }
 
-      void set_name(const std::string &name) {	_name = name; }
-      void set_description(const std::string desc) { _description = desc; }
+      void set_name(const std::string &name) {
+        _name = name;
+        notify("changed_name", *this);
+      }
+      void set_description(const std::string desc) {
+        _description = desc;
+        notify("changed_description", *this);
+      }
 
       virtual void describe_short(std::ostream &out) const {
         out << _name << " (" << _id << ": " << TYPE_NAME[_type] << ")";

@@ -23,24 +23,19 @@ namespace hoboquest {
       Actor(const std::string &id, const std::string &name);
       virtual ~Actor();
 
-      bool active() const;
-      void set_active(bool active);
-
-      int damage() const;
+      bool alive() const;
       int hp() const;
       int hp_max() const;
-      void set_damage(int damage);
+      int modify_hp(int modifier);
       void set_hp(int hp);
       void set_hp_max(int hp_max);
-      int modify_hp(int modifier);
+      void set_damage(int damage);
+      int damage() const;
 
       const std::shared_ptr<Area> location() const;
       std::shared_ptr<Area> location();
 
       virtual void tick();
-
-      virtual void enter_area(std::shared_ptr<Area> area);
-      virtual void exit_area(std::shared_ptr<Area> area);
 
       void move_to(std::shared_ptr<Area> area);
 

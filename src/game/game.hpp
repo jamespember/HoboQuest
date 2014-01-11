@@ -133,6 +133,13 @@ namespace hoboquest {
         beer->set_hp_modifier(-5);
         areas.get("pub")->add_item(beer);
 
+        // Player events
+        player->observe("enter_area", [this](Entity &e) {
+          player->out() << "Entering ";
+          e.describe(player->out());
+          return true;
+        });
+
         // Commands
         player->commands.add_command(make_shared<HelpCommand>());
         player->commands.add_command(make_shared<DescribeCommand>());

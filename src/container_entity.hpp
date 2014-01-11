@@ -36,6 +36,7 @@ namespace hoboquest {
         if (capacity > UNLIMITED_CAPACITY)
           capacity = UNLIMITED_CAPACITY;
         _capacity = capacity;
+        notify("changed_capacity", *this);
       }
 
       unsigned money() const { return _money; }
@@ -43,10 +44,14 @@ namespace hoboquest {
         if (amount > _money)
           amount = _money;
         _money -= amount;
+        notify("lost_money", *this);
         return amount;
       }
       unsigned take_money() { return take_money(_money); }
-      void give_money(unsigned amount) { _money += amount; }
+      void give_money(unsigned amount) {
+        notify("got_money", *this);
+        _money += amount;
+      }
 
       bool has_contents() const {
         return _money > 0 || !_items.get_map().empty();
@@ -62,16 +67,22 @@ namespace hoboquest {
 
 			bool add_item(std::shared_ptr<Item> item) {
         bool success = _items.add(item);
-        if (success)
+        if (success) {
           _carrying += item->weight();
+          notify("add_item", *item);
+          if (over_encumbered())
+            notify("over_encumbered", *this);
+        }
         return success;
 			}
 
       // Drops and returns item if present, otherwise returns nullptr
       std::shared_ptr<Item> remove_item(const std::string &id) {
         auto item = _items.remove(id);
-        if (item != nullptr)
+        if (item != nullptr) {
           _carrying -= item->weight();
+          notify("remove_item", *item);
+        }
 				return item;
 			}
 

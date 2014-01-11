@@ -10,6 +10,7 @@ namespace hoboquest {
 
   void Area::add_exit(const std::string &direction, std::shared_ptr<Area> exit)  {
     _exits[direction] = exit;
+    notify("add_exit", *exit);
   }
 
   bool Area::has_exit(const std::string &direction) const {
@@ -24,13 +25,17 @@ namespace hoboquest {
 
   std::shared_ptr<Area> Area::remove_exit(const std::string &direction) {
     auto exit = get_exit(direction);
-    if (exit != nullptr)
+    if (exit != nullptr) {
       _exits.erase(direction);
+      notify("remove_exit", *exit);
+    }
     return exit;
   }
 
   bool Area::add_actor(std::shared_ptr<Actor> actor) {
-    return _actors.add(actor);
+    bool result = _actors.add(actor);
+    if (result) notify("add_actor", *actor);
+    return result;
   }
 
   bool Area::has_actor(const std::string &id) const {
@@ -42,7 +47,9 @@ namespace hoboquest {
   }
 
   void Area::remove_actor(const std::string &id) {
-    _actors.remove(id);
+    auto removed = _actors.remove(id);
+    if (removed)
+      notify("remove_actor", *removed);
   }
 
   void Area::describe_exits(std::ostream &out) const {

@@ -19,8 +19,9 @@ namespace hoboquest {
       }
 
       virtual void notify(const EventId &event, Source &source) {
-        std::list<Observer> &observers = _observers.at(event);
-        observers.remove_if([&source](const Observer &obs) {
+        if (!_observers.count(event))
+          return;
+        _observers.at(event).remove_if([&source](const Observer &obs) {
           return !obs(source);
         });
       }
