@@ -78,6 +78,7 @@ namespace hoboquest {
     if (!_description.empty())
       out << _description << std::endl;
     describe_exits(out);
+    describe_actors(out);
     describe_contents(out);
   }
 }

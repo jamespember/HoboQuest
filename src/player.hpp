@@ -2,6 +2,7 @@
 #define HOBO_PLAYER
 
 #include "actor.hpp"
+#include "quest.hpp"
 #include "command/commandable.hpp"
 
 #include <string>
@@ -18,6 +19,7 @@ namespace hoboquest {
 
     public:
       Commandable commands;
+      PtrMap<Quest> quests;
 
       Player(std::istream &in, std::ostream &out);
 

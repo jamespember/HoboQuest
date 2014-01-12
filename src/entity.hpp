@@ -11,7 +11,7 @@ namespace hoboquest {
 
   class Entity : public Subject<Entity>, public std::enable_shared_from_this<Entity> {
     public:
-      enum Type { AREA, ITEM, ACTOR };
+      enum Type { AREA, ITEM, ACTOR, QUEST };
       static const char* const TYPE_NAME[];
 
     protected:

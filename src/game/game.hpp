@@ -3,6 +3,7 @@
 
 #include "../engine.hpp"
 #include "../item/consumable.hpp"
+#include "../item/equippable.hpp"
 
 #include "../command/consume.hpp"
 #include "../command/describe.hpp"
@@ -144,8 +145,8 @@ namespace hoboquest {
         // Actors
         auto cop = make_shared<Actor>("cop", "Cop");
         cop->set_description("Random badge-wearer.");
-        cop->observe("interact", [this](shared_ptr<Entity> e) {
-          says(e, "Good evening sir.");
+        cop->observe("interact", [&](shared_ptr<Entity> e) {
+          says(cop, "Good evening sir.");
           return true;
         });
         areas.get("police_station")->add_actor(cop);

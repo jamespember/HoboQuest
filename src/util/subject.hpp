@@ -15,7 +15,7 @@ namespace hoboquest {
       typedef std::function<bool(std::shared_ptr<Source>)> Observer;
 
       void observe(const EventId &event, Observer&& observer) {
-        _observers[event].push_back(std::forward<Observer>(observer));
+        _observers[event].push_front(std::forward<Observer>(observer));
       }
 
       virtual void notify(const EventId &event, std::shared_ptr<Source> source) {
