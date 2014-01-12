@@ -70,6 +70,10 @@ namespace hoboquest {
 
   void Actor::tick() {}
 
+  void Actor::on_interact(std::shared_ptr<Actor> actor) {
+    notify("interact", actor);
+  }
+
   void Actor::describe(std::ostream &out) const {
     ContainerEntity::describe(out);
   }

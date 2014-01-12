@@ -18,7 +18,10 @@ namespace hoboquest {
         out << "Player inventory (";
         player.describe_carrying(out);
         out << ")" << std::endl;
-        player.describe_contents(out);
+        if (!player.has_contents())
+          out << "  Nothing in here!" << std::endl;
+        else
+          player.describe_contents(out);
         return NOOP;
       }
   }; /*}}}*/

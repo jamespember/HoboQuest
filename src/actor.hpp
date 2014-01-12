@@ -39,6 +39,8 @@ namespace hoboquest {
 
       void move_to(std::shared_ptr<Area> area);
 
+      virtual void on_interact(std::shared_ptr<Actor> actor);
+
       virtual void describe(std::ostream &out) const;
 
   };

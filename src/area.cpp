@@ -57,10 +57,20 @@ namespace hoboquest {
       out << "There are no exits." << std::endl;
       return;
     }
-
     out << "Exits:" << std::endl;
     for (const auto &kv : _exits)
       out << "  " << kv.first << ": " << kv.second->name() << std::endl;
+  }
+
+  void Area::describe_actors(std::ostream &out) const {
+    auto map = _actors.get_map();
+    // Don't output anything if the are no actors, or if the player is the only one
+    if (map.empty() || (map.size() == 1 && map.count("player") > 0))
+      return;
+    out << "Actors:" << std::endl;
+    for (const auto &kv : map)
+      if (kv.first != "player")
+        out << "  " << kv.first << ": " << kv.second->name() << std::endl;
   }
 
   void Area::describe(std::ostream &out) const {

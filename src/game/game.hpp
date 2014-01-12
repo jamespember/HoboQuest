@@ -11,6 +11,7 @@
 #include "../command/go_shorthand.hpp"
 #include "../command/help.hpp"
 #include "../command/inventory.hpp"
+#include "../command/interact.hpp"
 
 #include <iostream>
 #include <string>
@@ -39,6 +40,10 @@ namespace hoboquest {
         auto a = areas.get(area_a), b = areas.get(area_b);
         a->add_exit(dir_a, b);
         b->add_exit(dir_b, a);
+      }
+
+      void says(shared_ptr<Entity> who, const string &what) {
+        player->out() << who->name() << " says: " << what << std::endl;
       }
 
     public:
@@ -98,34 +103,6 @@ namespace hoboquest {
         connect_areas("floor1", "up", "down", "floor2");
         connect_areas("floor2", "up", "down", "roof");
         areas.get("roof")->add_exit("east", areas.get("market"));
-        // main_street->add_exit("west", alley);
-        // alley->add_exit("east", main_street);
-        // alley->add_exit("north", pub);
-        // pub->add_exit("south", alley);
-
-        // main_street->add_exit("east", shelter);
-        // shelter->add_exit("west", main_street);
-
-        // main_street->add_exit("south", police_station);
-        // police_station->add_exit("north", main_street);
-        // police_station->add_exit("west", cell);
-        // cell->add_exit("east", police_station);
-
-        // main_street->add_exit("north", market);
-        // market->add_exit("south", main_street);
-
-        // market->add_exit("east", park);
-        // park->add_exit("west", market);
-
-        // market->add_exit("west", floor0);
-        // floor0->add_exit("east", market);
-        // floor0->add_exit("up", floor1);
-        // floor1->add_exit("up", floor2);
-        // floor2->add_exit("up", roof);
-        // floor1->add_exit("down", floor0);
-        // floor2->add_exit("down", floor1);
-        // roof->add_exit("down", floor2);
-        // roof->add_exit("east", market); // jump
 
         // Items
         auto beer = make_shared<Consumable>("beer", "Beer");
@@ -139,6 +116,13 @@ namespace hoboquest {
           e->describe(player->out());
           return true;
         });
+        player->observe("interact", [this](shared_ptr<Entity> e) {
+          if (e == player)
+            player->message("You can't interact with yourself, you're not schizophrenic!");
+          else
+            player->out() << e->name() << " tries to interact with you." << std::endl;
+          return true;
+        });
 
         // Commands
         player->commands.add_command(make_shared<HelpCommand>());
@@ -150,6 +134,7 @@ namespace hoboquest {
         player->commands.add_command(make_shared<GoShorthandCommand>("east", "e"));
         player->commands.add_command(make_shared<GoShorthandCommand>("up", "u"));
         player->commands.add_command(make_shared<GoShorthandCommand>("down", "d"));
+        player->commands.add_command(make_shared<InteractCommand>());
         player->commands.add_command(make_shared<InventoryCommand>());
         player->commands.add_command(make_shared<PickupCommand>());
         player->commands.add_command(make_shared<DropCommand>());
@@ -157,6 +142,15 @@ namespace hoboquest {
         player->commands.add_command(make_shared<ExitCommand>());
 
         // Actors
+        auto cop = make_shared<Actor>("cop", "Cop");
+        cop->set_description("Random badge-wearer.");
+        cop->observe("interact", [this](shared_ptr<Entity> e) {
+          says(e, "Good evening sir.");
+          return true;
+        });
+        areas.get("police_station")->add_actor(cop);
+
+        // Initialize player
         player->move_to(areas.get("alley"));
       }
   };

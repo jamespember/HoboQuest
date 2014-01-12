@@ -33,6 +33,7 @@ namespace hoboquest {
       void remove_actor(const std::string &id);
 
       void describe_exits(std::ostream &out) const;
+      void describe_actors(std::ostream &out) const;
       virtual void describe(std::ostream &out) const;
   };
 }
