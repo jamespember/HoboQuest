@@ -16,7 +16,7 @@ namespace hoboquest {
       Consumable(std::string name, std::string description);
 
       bool is_consumable() const;
-      virtual void on_consume(Actor &actor);
+      virtual void on_consume(std::shared_ptr<Actor> actor);
 
       int hp_modifier() const;
       void set_hp_modifier(int modifier);

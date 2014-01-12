@@ -25,7 +25,8 @@ namespace hoboquest {
           const std::string &name) :
         Entity(type, id, name), _capacity(100), _carrying(0), _money(0) {
         if (type == AREA)
-          set_capacity(UNLIMITED_CAPACITY);
+          _capacity = UNLIMITED_CAPACITY;
+          // set_capacity(UNLIMITED_CAPACITY);
       }
 
       unsigned carrying() const { return _carrying; }
@@ -36,7 +37,7 @@ namespace hoboquest {
         if (capacity > UNLIMITED_CAPACITY)
           capacity = UNLIMITED_CAPACITY;
         _capacity = capacity;
-        notify("changed_capacity", *this);
+        notify("changed_capacity", shared_from_this());
       }
 
       unsigned money() const { return _money; }
@@ -44,12 +45,12 @@ namespace hoboquest {
         if (amount > _money)
           amount = _money;
         _money -= amount;
-        notify("lost_money", *this);
+        notify("lost_money", shared_from_this());
         return amount;
       }
       unsigned take_money() { return take_money(_money); }
       void give_money(unsigned amount) {
-        notify("got_money", *this);
+        notify("got_money", shared_from_this());
         _money += amount;
       }
 
@@ -69,9 +70,9 @@ namespace hoboquest {
         bool success = _items.add(item);
         if (success) {
           _carrying += item->weight();
-          notify("add_item", *item);
+          notify("add_item", item);
           if (over_encumbered())
-            notify("over_encumbered", *this);
+            notify("over_encumbered", shared_from_this());
         }
         return success;
 			}
@@ -81,7 +82,7 @@ namespace hoboquest {
         auto item = _items.remove(id);
         if (item != nullptr) {
           _carrying -= item->weight();
-          notify("remove_item", *item);
+          notify("remove_item", item);
         }
 				return item;
 			}

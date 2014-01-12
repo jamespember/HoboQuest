@@ -9,7 +9,7 @@
 namespace hoboquest {
   class Entity;
 
-  class Entity : public Subject<Entity> {
+  class Entity : public Subject<Entity>, public std::enable_shared_from_this<Entity> {
     public:
       enum Type { AREA, ITEM, ACTOR };
       static const char* const TYPE_NAME[];
@@ -30,11 +30,11 @@ namespace hoboquest {
 
       void set_name(const std::string &name) {
         _name = name;
-        notify("changed_name", *this);
+        notify("changed_name", shared_from_this());
       }
       void set_description(const std::string desc) {
         _description = desc;
-        notify("changed_description", *this);
+        notify("changed_description", shared_from_this());
       }
 
       virtual void describe_short(std::ostream &out) const {

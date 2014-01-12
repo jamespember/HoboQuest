@@ -12,13 +12,13 @@ namespace hoboquest {
   class Subject {
     public:
       typedef std::string EventId;
-      typedef std::function<bool(Source&)> Observer;
+      typedef std::function<bool(std::shared_ptr<Source>)> Observer;
 
       void observe(const EventId &event, Observer&& observer) {
         _observers[event].push_back(std::forward<Observer>(observer));
       }
 
-      virtual void notify(const EventId &event, Source &source) {
+      virtual void notify(const EventId &event, std::shared_ptr<Source> source) {
         if (!_observers.count(event))
           return;
         _observers.at(event).remove_if([&source](const Observer &obs) {

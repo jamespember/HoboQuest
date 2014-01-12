@@ -1,7 +1,9 @@
 #include "actor.hpp"
+#include "area.hpp"
 #include "container_entity.hpp"
 #include "item/item.hpp"
 
+#include <memory>
 #include <vector>
 #include <unordered_map>
 
@@ -21,9 +23,9 @@ namespace hoboquest {
 
   void Actor::set_hp(int hp) {
     _hp = hp < 0 ? 0 : hp;
-    notify("changed_hp", *this);
+    notify("changed_hp", shared_from_this());
     if (_hp < 1)
-      notify("death", *this);
+      notify("death", shared_from_this());
   }
 
   int Actor::modify_hp(int modifier) {
@@ -35,22 +37,22 @@ namespace hoboquest {
       modifier -= _hp;
       _hp = _hp_max;
     }
-    notify("changed_hp", *this);
+    notify("changed_hp", shared_from_this());
     if (_hp < 1)
-      notify("death", *this);
+      notify("death", shared_from_this());
     return modifier;
   }
 
   void Actor::set_hp_max(int hp_max) {
     _hp_max = hp_max;
-    notify("changed_hp_max", *this);
+    notify("changed_hp_max", shared_from_this());
     if (_hp > _hp_max)
       set_hp(_hp_max);
   }
 
   void Actor::set_damage(int damage) {
     _damage = damage;
-    notify("changed_damage", *this);
+    notify("changed_damage", shared_from_this());
   }
 
   const std::shared_ptr<Area> Actor::location() const { return _location; }
@@ -58,12 +60,12 @@ namespace hoboquest {
 
   void Actor::move_to(std::shared_ptr<Area> area) {
     if (_location != nullptr) {
-      notify("exit_area", *_location);
+      notify("exit_area", _location);
       area->remove_actor(_id);
     }
-    area->add_actor(shared_from_this());
+    area->add_actor(std::static_pointer_cast<Actor>(shared_from_this()));
     _location = area;
-    notify("enter_area", *_location);
+    notify("enter_area", _location);
   }
 
   void Actor::tick() {}

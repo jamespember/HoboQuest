@@ -10,7 +10,7 @@
 namespace hoboquest {
 	class Area;
 
-  class Actor : public ContainerEntity, public std::enable_shared_from_this<Actor> {
+  class Actor : public ContainerEntity {
 
     protected:
       bool _active;

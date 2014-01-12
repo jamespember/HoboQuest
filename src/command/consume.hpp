@@ -30,7 +30,7 @@ namespace hoboquest {
         }
 
         player.out() << "You consume " << *item << std::endl; 
-        item->on_consume(player);
+        item->on_consume(std::static_pointer_cast<Actor>(player.shared_from_this()));
         player.remove_item(item->id());
 
         return SUCCESS;

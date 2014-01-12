@@ -3,6 +3,7 @@
 
 #include "../entity.hpp"
 
+#include <memory>
 #include <string>
 
 namespace hoboquest {
@@ -24,8 +25,8 @@ namespace hoboquest {
       virtual bool is_consumable() const;
       virtual bool is_equippable() const;
 
-      virtual void on_consume(Actor &actor);
-      virtual void on_equip(Actor &actor);
+      virtual void on_consume(std::shared_ptr<Actor> actor);
+      virtual void on_equip(std::shared_ptr<Actor> actor);
 
       virtual void describe(std::ostream &out) const;
   };

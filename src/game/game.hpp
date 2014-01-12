@@ -134,9 +134,9 @@ namespace hoboquest {
         areas.get("pub")->add_item(beer);
 
         // Player events
-        player->observe("enter_area", [this](Entity &e) {
+        player->observe("enter_area", [this](shared_ptr<Entity> e) {
           player->out() << "Entering ";
-          e.describe(player->out());
+          e->describe(player->out());
           return true;
         });
 
