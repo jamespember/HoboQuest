@@ -25,6 +25,19 @@ void test_actor() {
 	actor->set_name("Dirty thief");
 	assert(actor->name() == "Dirty thief");
 	assert(test->name() == actor->name());
+	
+	// Verify hp modifiers work properly
+	auto police = make_shared<Actor>("police", "Police");
+	police->set_hp_max(100);
+	police->set_hp(20);
+	int modtest = police->modify_hp(-50);
+	assert(modtest == -20);
+	assert(police->hp() == 0);
+	police->set_hp(90);
+	modtest = police->modify_hp(50);
+	assert(modtest == 10);
+	assert(police->hp() == 100);
+
 
 	// Verify that removing actors from areas work
 	area->remove_actor(actor->id());
