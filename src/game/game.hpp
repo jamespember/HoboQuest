@@ -109,6 +109,9 @@ namespace hoboquest {
         auto beer = make_shared<Consumable>("beer", "Beer");
         beer->set_description("A lovely non-alcoholic(?) beverage.");
         beer->set_hp_modifier(-5);
+        beer->observe("consumed", [this](shared_ptr<Entity> e) { 
+        	player->message("You drank the beer and lost 5 hp."); return false; 
+      	});
         areas.get("pub")->add_item(beer);
 
         // Player events
