@@ -13,6 +13,7 @@
 #include "commandable.hpp"
 #include "player.hpp"
 #include "movement.hpp"
+#include "quest.hpp"
 #include "game.hpp"
 
 using std::cout;
@@ -29,6 +30,7 @@ int run_tests() {
   TEST(commandable)
   TEST(player)
   TEST(movement)
+  TEST(quest)
   TEST(game)
 
   cout << "=== All tests passed!\n";
