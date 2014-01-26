@@ -114,12 +114,18 @@ namespace hoboquest {
         auto bartender = make_shared<Actor>("bartender", "Bartender");
         auto crazy_joe = make_shared<Actor>("crazy_joe", "Crazy Joe");
         
+        // Place actors
         areas.get("main_street")->add_actor(police);
         areas.get("park")->add_actor(kid);
         areas.get("floor0")->add_actor(manager);
         areas.get("pub")->add_actor(bartender);
         areas.get("shelter")->add_actor(hobo);
         areas.get("roof")->add_actor(crazy_joe);
+
+        // Actor interactions
+        crazy_joe->observe("interact", [this](shared_ptr<Entity> e) { 
+          player->message("Crazy Joe: One step closer and I'll jump! I promise I will!"); return false; 
+        });
 
 
         // Items
