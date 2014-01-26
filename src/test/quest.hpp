@@ -4,13 +4,15 @@
 #include <memory>
 #include <cassert>
 #include "../quest.hpp"
+#include "../engine.hpp"
 #include "../entity.hpp"
 
 using namespace std;
 using namespace hoboquest;
 
 void test_quest() {
-  auto q = make_shared<Quest>("q", "THe Hunt for Red October");
+  Engine eng(cin, cout);
+  auto q = make_shared<Quest>("q", "THe Hunt for Red October", eng);
 
   assert(q->state() == 0);
   assert(q->completed() == false);
