@@ -1,4 +1,3 @@
-
 #ifndef HOBO_GAME
 #define HOBO_GAME
 
@@ -14,6 +13,8 @@
 #include "../command/help.hpp"
 #include "../command/inventory.hpp"
 #include "../command/interact.hpp"
+
+#include "gun_quest.hpp"
 
 #include <iostream>
 #include <string>
@@ -52,6 +53,23 @@ namespace hoboquest {
       Game(istream &in, ostream &out) : Engine(in, out) {
         _out << "Starting HoboQuest...\n";
 
+        /*
+           Roof  ------\
+            |          |
+          Floor2       |
+            |          |
+          Floor1       v
+            |
+          Floor0 --- Market ------- Park
+                       |
+           Pub         |
+            |          |
+          Alley -- Main street --- Shelter
+                       |
+           Cell - Police station
+        */
+
+        // {{{ Areas
         add_area("alley", "Dark alley",
             "Starting area.");
         add_area("main_street", "Main street",
@@ -76,24 +94,9 @@ namespace hoboquest {
             "Hallway on the second floor of the aparments building.");
         add_area("roof", "Roof",
             "The rooftop area of a a large apartments building.");
+        // }}}
 
-        /*
-           Roof  ------\
-            |          |
-          Floor2       |
-            |          |
-          Floor1       v
-            |
-          Floor0 --- Market ------- Park
-                       |
-           Pub         |
-            |          |
-          Alley -- Main street --- Shelter
-                       |
-           Cell - Police station
-        */
-
-        // Exits
+        // {{{ Exits
         connect_areas("alley", "north", "south", "pub");
         connect_areas("alley", "east", "west", "main_street");
         connect_areas("main_street", "east", "west", "shelter");
@@ -129,6 +132,7 @@ namespace hoboquest {
 
 
         // Items
+        // {{{ beer @ pub
         auto beer = make_shared<Consumable>("beer", "Beer");
         beer->set_description("A lovely non-alcoholic(?) beverage.");
         beer->set_hp_modifier(-5);
@@ -136,22 +140,27 @@ namespace hoboquest {
         	player->message("You drank the beer and lost 5 hp."); return false; 
       	});
         areas.get("pub")->add_item(beer);
+        // }}}
 
-        // Player events
-        player->observe("enter_area", [this](shared_ptr<Entity> e) {
-          player->out() << "Entering ";
-          e->describe(player->out());
+        // Actors
+        // {{{ cop @ police_station
+        auto cop = make_shared<Actor>("cop", "Cop");
+        cop->set_description("Random badge-wearer.");
+        cop->observe("interact", [&](shared_ptr<Entity> e) {
+          if (player->completed_quest("gun_quest")) {
+            says(cop, "Thanks for the help before!");
+          } else if (!player->has_quest("gun_quest")) {
+            says(cop, "Good evening sir. I've lost my sidearm, would you help me find it?");
+            make_shared<GunQuest>(*this, areas.get("main_street"), cop)->start();
+          } else {
+            says(cop, "Found anything?");
+          }
           return true;
         });
-        player->observe("interact", [this](shared_ptr<Entity> e) {
-          if (e == player)
-            player->message("You can't interact with yourself, you're not schizophrenic!");
-          else
-            player->out() << e->name() << " tries to interact with you." << std::endl;
-          return true;
-        });
+        areas.get("police_station")->add_actor(cop);
+        // }}}
 
-        // Commands
+        //{{{ Commands
         player->commands.add_command(make_shared<HelpCommand>());
         player->commands.add_command(make_shared<DescribeCommand>());
         player->commands.add_command(make_shared<GoCommand>());
@@ -167,15 +176,36 @@ namespace hoboquest {
         player->commands.add_command(make_shared<DropCommand>());
         player->commands.add_command(make_shared<ConsumeCommand>());
         player->commands.add_command(make_shared<ExitCommand>());
+        //}}}
 
-        // Actors
-        auto cop = make_shared<Actor>("cop", "Cop");
-        cop->set_description("Random badge-wearer.");
-        cop->observe("interact", [&](shared_ptr<Entity> e) {
-          says(cop, "Good evening sir. I've lost my sidearm, would you help me find it?");
+        //{{{ Player events
+        player->observe("enter_area", [this](shared_ptr<Entity> e) {
+          player->out() << "Entering ";
+          e->describe(player->out());
           return true;
         });
-        areas.get("police_station")->add_actor(cop);
+        player->observe("interact", [this](shared_ptr<Entity> e) {
+          if (e == player)
+            player->message("You can't interact with yourself, you're not schizophrenic!");
+          else
+            player->out() << e->name() << " tries to interact with you." << std::endl;
+          return true;
+        });
+        player->observe("quest_started", [this](shared_ptr<Entity> e) {
+          auto &out = player->out();
+          out << "Quest started: ";
+          e->describe(out);
+          return true;
+        });
+        player->observe("quest_progressed", [this](shared_ptr<Entity> e) {
+          player->out() << "Quest completed: " << e->name() << std::endl;
+          return true;
+        });
+        player->observe("quest_completed", [this](shared_ptr<Entity> e) {
+          player->out() << "Quest completed: " << e->name() << std::endl;
+          return true;
+        });
+        //}}}
 
         // Initialize player
         player->move_to(areas.get("alley"));

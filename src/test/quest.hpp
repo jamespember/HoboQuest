@@ -14,25 +14,33 @@ void test_quest() {
   Engine eng(cin, cout);
   auto q = make_shared<Quest>("q", "THe Hunt for Red October", eng);
 
-  assert(q->state() == 0);
+  assert(q->state() == INACTIVE);
+  assert(q->started() == false);
   assert(q->completed() == false);
 
   // q->describe(cout);
 
-  q->advance("Take your first steps.");
-  assert(q->state() == 1);
+  q->progress("Take your first steps.");
+  assert(q->state() == INACTIVE);
+  assert(q->started() == false);
+  assert(q->completed() == false);
+
+  assert(q->start() == true);
+  assert(q->state() == STARTED);
+  assert(q->started() == true);
   assert(q->completed() == false);
 
   // q->describe(cout);
 
-  q->advance("Carry on then.");
-  assert(q->state() == 2);
+  q->progress("Carry on then.");
+  assert(q->state() == PROGRESSED);
+  assert(q->started() == true);
   assert(q->completed() == false);
 
   // q->describe(cout);
 
   assert(q->complete() == true);
-  assert(q->state() == 999);
+  assert(q->state() == COMPLETED);
   assert(q->completed() == true);
 
   // q->describe(cout);

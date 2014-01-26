@@ -70,4 +70,12 @@ namespace hoboquest {
     return false;
   }
 
+  bool Player::has_quest(const std::string &id) const {
+    return quests.has(id);
+  }
+  bool Player::completed_quest(const std::string &id) const {
+    auto quest = quests.get(id);
+    return quest && quest->completed();
+  }
+
 } /* hoboquest */ 

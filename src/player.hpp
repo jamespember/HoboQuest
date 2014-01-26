@@ -32,8 +32,11 @@ namespace hoboquest {
       token_container command_prompt();
       bool interact();
 
-      void enter_area(std::shared_ptr<Area> area);
-      void exit_area(std::shared_ptr<Area> area);
+      // void enter_area(std::shared_ptr<Area> area);
+      // void exit_area(std::shared_ptr<Area> area);
+
+      bool has_quest(const std::string &id) const;
+      bool completed_quest(const std::string &id) const;
 
   };
 } /* hoboquest */ 

@@ -6,7 +6,6 @@
 #include <unordered_map>
 #include <list>
 #include <algorithm>
-#include <iostream>
 
 namespace hoboquest {
   template <class Source>
