@@ -146,7 +146,7 @@ namespace hoboquest {
         auto cop = make_shared<Actor>("cop", "Cop");
         cop->set_description("Random badge-wearer.");
         cop->observe("interact", [&](shared_ptr<Entity> e) {
-          says(cop, "Good evening sir.");
+          says(cop, "Good evening sir. I've lost my sidearm, would you help me find it?");
           return true;
         });
         areas.get("police_station")->add_actor(cop);

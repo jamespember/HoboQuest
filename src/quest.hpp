@@ -7,24 +7,24 @@
 #include <string>
 
 namespace hoboquest {
+  class Engine;
   class Player;
 
   class Quest : public Entity {
     protected:
+      Engine &_engine;
       bool _completed;
       std::list<std::string> _stages;
-      std::shared_ptr<Player> _player;
 
     public:
-      Quest(const std::string &id, const std::string &name);
+      Quest(const std::string &id, const std::string &name, Engine &engine);
 
       virtual ~Quest();
-
-      void assign_to(std::shared_ptr<Player> player);
 
       unsigned state() const;
       bool completed() const;
 
+      bool start();
       bool complete();
 
       // Advance quest to next stage, specified by the description

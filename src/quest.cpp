@@ -1,4 +1,5 @@
 #include "quest.hpp"
+#include "engine.hpp"
 #include "entity.hpp"
 #include "player.hpp"
 
@@ -7,33 +8,37 @@
 #include <iostream>
 
 namespace hoboquest {
-  Quest::Quest(const std::string &id, const std::string &name) :
-    Entity(QUEST, id, name), _completed(false) {}
+  Quest::Quest(const std::string &id, const std::string &name, Engine &engine) :
+    Entity(QUEST, id, name), _engine(engine), _completed(false) {}
 
   Quest::~Quest() {}
 
-  void Quest::assign_to(std::shared_ptr<Player> player) {
-    _player = player;
-    _player->notify("quest_started", shared_from_this());
-  }
-
   unsigned Quest::state() const { return _completed ? 999 : _stages.size(); }
   bool Quest::completed() const { return _completed; }
+
+  bool Quest::start() {
+    auto ptr = std::static_pointer_cast<Quest>(shared_from_this());
+    if (!_engine.player->quests.add(ptr))
+      return false;
+    _engine.player->notify("quest_started", shared_from_this());
+    notify("started", shared_from_this());
+    return true;
+  }
 
   bool Quest::complete() {
     if (_completed)
       return false;
     _completed = true;
+    _engine.player->notify("quest_completed", shared_from_this());
     notify("completed", shared_from_this());
-    if (_player) _player->notify("quest_completed", shared_from_this());
     return true;
   }
 
   // Advance quest to next stage, specified by the description
   void Quest::advance(const std::string &description) {
     _stages.push_back(description);
+    _engine.player->notify("quest_advanced", shared_from_this());
     notify("advanced", shared_from_this());
-    if (_player) _player->notify("quest_advanced", shared_from_this());
   }
 
   void Quest::describe_stages(std::ostream &out) const {
