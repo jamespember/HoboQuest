@@ -1,3 +1,4 @@
+
 #ifndef HOBO_GAME
 #define HOBO_GAME
 
@@ -104,6 +105,22 @@ namespace hoboquest {
         connect_areas("floor1", "up", "down", "floor2");
         connect_areas("floor2", "up", "down", "roof");
         areas.get("roof")->add_exit("east", areas.get("market"));
+        
+        // Actors
+        auto police = make_shared<Actor>("police", "Police officer");
+        auto kid = make_shared<Actor>("kid", "Kid");
+        auto hobo = make_shared<Actor>("hobo", "Friendly(?) hobo");
+        auto manager = make_shared<Actor>("manager", "Manager");
+        auto bartender = make_shared<Actor>("bartender", "Bartender");
+        auto crazy_joe = make_shared<Actor>("crazy_joe", "Crazy Joe");
+        
+        areas.get("main_street")->add_actor(police);
+        areas.get("park")->add_actor(kid);
+        areas.get("floor0")->add_actor(manager);
+        areas.get("pub")->add_actor(bartender);
+        areas.get("shelter")->add_actor(hobo);
+        areas.get("roof")->add_actor(crazy_joe);
+
 
         // Items
         auto beer = make_shared<Consumable>("beer", "Beer");
