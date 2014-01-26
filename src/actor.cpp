@@ -34,7 +34,7 @@ namespace hoboquest {
       modifier -= _hp;
       _hp = 0;
     } else if (_hp > _hp_max) {
-      modifier -= _hp;
+      modifier -= (_hp - _hp_max);
       _hp = _hp_max;
     }
     notify("changed_hp", shared_from_this());
