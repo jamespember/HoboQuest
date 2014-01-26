@@ -40,6 +40,22 @@ void test_subject() {
   a->notify("test", a);
   assert(executed == 14);
 
+  a->observe("test", [&executed](shared_ptr<Entity> src) {
+    executed += 5;
+    return false;
+  });
+
+  a->observe("test", [&executed](shared_ptr<Entity> src) {
+    executed -= 1;
+    return true;
+  });
+
+  assert(executed == 14);
+  a->notify("test", a);
+  assert(executed == 19);
+  a->notify("test", a);
+  assert(executed == 19);
+
 }
 
 #endif

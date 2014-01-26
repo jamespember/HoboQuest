@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <list>
 #include <algorithm>
+#include <iostream>
 
 namespace hoboquest {
   template <class Source>
@@ -21,9 +22,17 @@ namespace hoboquest {
       virtual void notify(const EventId &event, std::shared_ptr<Source> source) {
         if (!_observers.count(event))
           return;
-        _observers.at(event).remove_if([&source](const Observer &obs) {
+        auto &list = _observers.at(event);
+        auto new_end = std::remove_if(list.begin(), list.end(), [&source](const Observer &obs) {
           return !obs(source);
         });
+        list.erase(new_end, list.end());
+
+        // The following should work, but will result in duplicate calls when an observer is removed
+        // _observers.at(event).remove_if([&source](const Observer &obs) {
+          // std::cout << "notifying an observer\n";
+          // return !obs(source);
+        // });
       }
 
     protected:
