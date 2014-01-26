@@ -68,6 +68,37 @@ namespace hoboquest {
     notify("enter_area", _location);
   }
 
+  bool Actor::go(const std::string &where) {
+    auto loc = location();
+    if (loc == nullptr)
+      return false;
+    auto area = loc->get_exit(where);
+    if (!area)
+      return false;
+    move_to(area);
+    return true;
+  }
+
+  bool Actor::consume(const std::string &what) {
+    auto item = get_item(what);
+    if (!item || !item->is_consumable())
+      return false;
+
+    item->on_consume(std::static_pointer_cast<Actor>(shared_from_this()));
+    remove_item(item->id());
+    return true;
+  }
+
+  bool Actor::equip(const std::string &what) {
+    // TODO: Implement
+    return false;
+  }
+
+  bool Actor::unequip(const std::string &what) {
+    // TODO: Implement
+    return false;
+  }
+
   void Actor::tick() {}
 
   void Actor::on_interact(std::shared_ptr<Actor> actor) {

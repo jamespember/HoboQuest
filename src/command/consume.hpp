@@ -24,16 +24,13 @@ namespace hoboquest {
           return ERROR;
         }
 
-        if (!item->is_consumable()) {
-          player.out() << "'" << args.front() << "' can't be consumed, duh\n";
-          return ERROR;
+        if (player.consume(args.front())) {
+          player.out() << "You consume " << *item << std::endl; 
+          return SUCCESS;
         }
 
-        player.out() << "You consume " << *item << std::endl; 
-        item->on_consume(std::static_pointer_cast<Actor>(player.shared_from_this()));
-        player.remove_item(item->id());
-
-        return SUCCESS;
+        player.out() << "'" << args.front() << "' can't be consumed\n";
+        return ERROR;
       }
   };
 } /* hoboquest */ 

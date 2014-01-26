@@ -28,13 +28,12 @@ namespace hoboquest {
 
     auto area = location->get_exit(args.front());
 
-    if (!area) {
+    if (!area || !player.go(args.front())) {
       player.out() << "You can't go " << args.front() << std::endl;
       location->describe_exits(player.out());
       return ERROR;
     }
 
-    player.move_to(area);
     return SUCCESS;
   }
 
