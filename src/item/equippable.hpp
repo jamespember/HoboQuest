@@ -13,7 +13,8 @@ namespace hoboquest {
       Equippable(std::string name, std::string description);
 
       virtual bool is_equippable() const;
-      virtual void on_equip(std::shared_ptr<Actor> actor);
+      // virtual void on_equip(std::shared_ptr<Actor> actor);
+      // virtual void on_unequip(std::shared_ptr<Actor> actor);
   };
 }
 

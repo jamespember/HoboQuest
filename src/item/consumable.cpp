@@ -13,6 +13,7 @@ namespace hoboquest {
 
   void Consumable::on_consume(std::shared_ptr<Actor> actor) {
     actor->modify_hp(_hp_modifier);
+    Item::on_consume(actor);
   }
 
   int Consumable::hp_modifier() const { return _hp_modifier; }

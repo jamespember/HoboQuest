@@ -9,6 +9,7 @@ namespace hoboquest {
       Item(name, description) { }
 
     bool Equippable::is_equippable() const { return true; }
-    void Equippable::on_equip(std::shared_ptr<Actor> actor) {}
+    // void Equippable::on_equip(std::shared_ptr<Actor> actor) {}
+    // void Equippable::on_unequip(std::shared_ptr<Actor> actor) {}
 }
 
