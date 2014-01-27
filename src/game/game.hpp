@@ -128,14 +128,13 @@ namespace hoboquest {
             player->message("Crazy Joe: One step closer and I'll jump! I promise I will!");
             return true;
           }
-          player->message("Debug: no crazy joe");
           return false;
         });
         crazy_joe->observe("interact", [this, crazy_joe](shared_ptr<Entity> e) {
           player->message("Crazy Joe: GERONIMOOOOOO!");
           crazy_joe->go("east");
+          crazy_joe->kill();
           crazy_joe->set_description("Corpse of Crazy Joe");
-          crazy_joe->set_hp(0);
           player->message("Crazy Joe is no more. Happy now?");
           return false;
         });
