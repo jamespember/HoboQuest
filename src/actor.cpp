@@ -99,7 +99,10 @@ namespace hoboquest {
     return false;
   }
 
-  void Actor::tick() {}
+  void Actor::tick() {
+    if (alive())
+      notify("tick", shared_from_this());
+  }
 
   void Actor::on_interact(std::shared_ptr<Actor> actor) {
     notify("interact", actor);
