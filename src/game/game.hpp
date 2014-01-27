@@ -125,11 +125,17 @@ namespace hoboquest {
         areas.get("shelter")->add_actor(hobo);
         areas.get("roof")->add_actor(crazy_joe);
 
-        // Actor interactions
-        crazy_joe->observe("interact", [this](shared_ptr<Entity> e) { 
-          player->message("Crazy Joe: One step closer and I'll jump! I promise I will!"); return false; 
+        // Crazy Joe
+        areas.get("roof")->observe("on_enter", [this](shared_ptr<Entity> e) {
+          if (e == player)
+            player->message("Crazy Joe: One step closer and I'll jump! I promise I will!"); return false;
         });
-
+        crazy_joe->observe("interact", [this](shared_ptr<Entity> e) { 
+          player->message("Crazy Joe: GERONIMOOOOOO!"); 
+          crazy_joe->set_hp(0); areas.get("roof")->remove_actor("crazy_joe");
+          player->message("Crazy Joe is no more. Happy now?"); 
+          return false; 
+        });
 
         // Items
         // {{{ beer @ pub
