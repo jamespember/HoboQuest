@@ -46,6 +46,9 @@ namespace hoboquest {
       Game(istream &in, ostream &out) : Engine(in, out) {
         _out << "Starting HoboQuest...\n";
 
+        // Initialize player
+        initialize_player(player);
+
         /*
            Roof  ------\
             |          |
@@ -166,8 +169,7 @@ namespace hoboquest {
         areas.get("police_station")->add_actor(cop);
         // }}}
 
-        // Initialize player
-        initialize_player(player);
+        // Start game
         player->move_to(areas.get("alley"));
       }
   };
