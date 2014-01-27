@@ -25,7 +25,7 @@ namespace hoboquest {
     _hp = hp < 0 ? 0 : hp;
     notify("changed_hp", shared_from_this());
     if (_hp < 1)
-      notify("death", shared_from_this());
+      notify("died", shared_from_this());
   }
 
   int Actor::modify_hp(int modifier) {
@@ -39,7 +39,7 @@ namespace hoboquest {
     }
     notify("changed_hp", shared_from_this());
     if (_hp < 1)
-      notify("death", shared_from_this());
+      notify("died", shared_from_this());
     return modifier;
   }
 
@@ -60,12 +60,12 @@ namespace hoboquest {
 
   void Actor::move_to(std::shared_ptr<Area> area) {
     if (_location != nullptr) {
-      notify("exit_area", _location);
+      notify("exited", _location);
       area->remove_actor(_id);
     }
     area->add_actor(std::static_pointer_cast<Actor>(shared_from_this()));
     _location = area;
-    notify("enter_area", _location);
+    notify("entered", _location);
   }
 
   bool Actor::go(const std::string &where) {

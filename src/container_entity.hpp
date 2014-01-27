@@ -71,7 +71,7 @@ namespace hoboquest {
         if (success) {
           _carrying += item->weight();
           notify("added_item", item);
-          item->notify("added", shared_from_this());
+          item->notify("added_to", shared_from_this());
           if (over_encumbered())
             notify("over_encumbered", shared_from_this());
         }
@@ -84,7 +84,7 @@ namespace hoboquest {
         if (item != nullptr) {
           _carrying -= item->weight();
           notify("removed_item", item);
-          item->notify("removed", shared_from_this());
+          item->notify("removed_from", shared_from_this());
         }
 				return item;
 			}

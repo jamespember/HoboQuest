@@ -27,7 +27,7 @@ namespace hoboquest {
       }
 
       void on_start() {
-        gun->observe("added", [this](shared_ptr<Entity> e) {
+        gun->observe("added_to", [this](shared_ptr<Entity> e) {
           if (e != this->_engine.player)
             return true;
           this->progress("This might be the gun " + actor->name() + " was missing.");
