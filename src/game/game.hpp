@@ -102,7 +102,7 @@ namespace hoboquest {
         connect_areas("floor2", "up", "down", "roof");
         areas.get("roof")->add_exit("east", areas.get("market"));
         // }}}
-        
+
         // Actors
         auto police = make_shared<Actor>("police", "Police officer");
         auto kid = make_shared<Actor>("kid", "Kid");
@@ -110,7 +110,7 @@ namespace hoboquest {
         auto manager = make_shared<Actor>("manager", "Manager");
         auto bartender = make_shared<Actor>("bartender", "Bartender");
         auto crazy_joe = make_shared<Actor>("crazy_joe", "Crazy Joe");
-        
+
         // Place actors
         areas.get("main_street")->add_actor(police);
         areas.get("park")->add_actor(kid);
@@ -124,11 +124,11 @@ namespace hoboquest {
           if (e == player)
             player->message("Crazy Joe: One step closer and I'll jump! I promise I will!"); return false;
         });
-        crazy_joe->observe("interact", [this](shared_ptr<Entity> e) { 
-          player->message("Crazy Joe: GERONIMOOOOOO!"); 
+        crazy_joe->observe("interact", [this, crazy_joe](shared_ptr<Entity> e) {
+          player->message("Crazy Joe: GERONIMOOOOOO!");
           crazy_joe->set_hp(0); areas.get("roof")->remove_actor("crazy_joe");
-          player->message("Crazy Joe is no more. Happy now?"); 
-          return false; 
+          player->message("Crazy Joe is no more. Happy now?");
+          return false;
         });
 
         // Items
@@ -136,8 +136,8 @@ namespace hoboquest {
         auto beer = make_shared<Consumable>("beer", "Beer");
         beer->set_description("A lovely non-alcoholic(?) beverage.");
         beer->set_hp_modifier(-5);
-        beer->observe("consumed", [this](shared_ptr<Entity> e) { 
-        	player->message("You drank the beer and lost 5 hp."); return false; 
+        beer->observe("consumed", [this](shared_ptr<Entity> e) {
+        	player->message("You drank the beer and lost 5 hp."); return false;
       	});
         areas.get("pub")->add_item(beer);
         // }}}
