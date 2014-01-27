@@ -10,13 +10,13 @@
 namespace hoboquest {
 
   Actor::Actor(const std::string &id, const std::string &name) :
-  ContainerEntity(ACTOR, id, name), _hp_max(1) {
+  ContainerEntity(ACTOR, id, name), _alive(true), _hp_max(1) {
     _hp = _hp_max;
   }
 
   Actor::~Actor() {}
 
-  bool Actor::alive() const  { return _hp > 0; }
+  bool Actor::alive() const  { return _alive; }
   int  Actor::hp() const     { return _hp; }
   int  Actor::hp_max() const { return _hp_max; }
   int  Actor::damage() const { return _damage; }
@@ -25,7 +25,7 @@ namespace hoboquest {
     _hp = hp < 0 ? 0 : hp;
     notify("changed_hp", shared_from_this());
     if (_hp < 1)
-      notify("died", shared_from_this());
+      kill();
   }
 
   int Actor::modify_hp(int modifier) {
@@ -39,7 +39,7 @@ namespace hoboquest {
     }
     notify("changed_hp", shared_from_this());
     if (_hp < 1)
-      notify("died", shared_from_this());
+      kill();
     return modifier;
   }
 
@@ -63,9 +63,9 @@ namespace hoboquest {
       notify("exited", _location);
       area->remove_actor(_id);
     }
-    area->add_actor(std::static_pointer_cast<Actor>(shared_from_this()));
     _location = area;
     notify("entered", _location);
+    area->add_actor(std::static_pointer_cast<Actor>(shared_from_this()));
   }
 
   bool Actor::go(const std::string &where) {
@@ -104,8 +104,22 @@ namespace hoboquest {
       notify("tick", shared_from_this());
   }
 
+  bool Actor::kill() {
+    if (!_alive)
+      return false;
+    _alive = false;
+    _hp = 0;
+    on_death();
+    return true;
+  }
+
   void Actor::on_interact(std::shared_ptr<Actor> actor) {
     notify("interact", actor);
+  }
+
+  void Actor::on_death() {
+    notify("died", shared_from_this());
+    set_name(name() + " (dead)");
   }
 
   void Actor::describe(std::ostream &out) const {

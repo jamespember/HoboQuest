@@ -13,7 +13,7 @@ namespace hoboquest {
   class Actor : public ContainerEntity {
 
     protected:
-      bool _active;
+      bool _alive;
       int _damage = 1;
       int _hp = 1;
       int _hp_max;
@@ -36,6 +36,7 @@ namespace hoboquest {
       std::shared_ptr<Area> location();
 
       virtual void tick();
+      bool kill();
 
       void move_to(std::shared_ptr<Area> area);
 
@@ -45,6 +46,7 @@ namespace hoboquest {
       bool unequip(const std::string &what);
 
       virtual void on_interact(std::shared_ptr<Actor> actor);
+      virtual void on_death();
 
       virtual void describe(std::ostream &out) const;
 
