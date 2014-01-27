@@ -73,14 +73,19 @@ namespace hoboquest {
 
   void Quest::describe(std::ostream &out) const {
     Entity::describe_short(out);
-    std::string status = "Active";
+    std::string status;
     switch (_state) {
-      case INACTIVE: status = "Not yet started"; break;
-      case STARTED: break;
-      case PROGRESSED: break;
-      case COMPLETED: status = "Completed"; break;
+      case INACTIVE:
+        status = "Not yet started";
+        break;
+      case COMPLETED:
+        status = "Completed";
+        break;
+      case STARTED:
+      case PROGRESSED:
+        out << std::endl << "  " << _stages.back() << std::endl;
+        return;
     }
     out << " - " << status << std::endl;
-    describe_stages(out);
   }
 } /* hoboquest  */

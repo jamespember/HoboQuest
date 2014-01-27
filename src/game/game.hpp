@@ -108,6 +108,7 @@ namespace hoboquest {
         connect_areas("floor1", "up", "down", "floor2");
         connect_areas("floor2", "up", "down", "roof");
         areas.get("roof")->add_exit("east", areas.get("market"));
+        // }}}
         
         // Actors
         auto police = make_shared<Actor>("police", "Police officer");
@@ -185,7 +186,7 @@ namespace hoboquest {
         //}}}
 
         //{{{ Player events
-        player->observe("enter_area", [this](shared_ptr<Entity> e) {
+        player->observe("entered", [this](shared_ptr<Entity> e) {
           player->out() << "Entering ";
           e->describe(player->out());
           return true;
@@ -204,7 +205,9 @@ namespace hoboquest {
           return true;
         });
         player->observe("quest_progressed", [this](shared_ptr<Entity> e) {
-          player->out() << "Quest completed: " << e->name() << std::endl;
+          auto &out = player->out();
+          out << "Quest updated: ";
+          e->describe(out);
           return true;
         });
         player->observe("quest_completed", [this](shared_ptr<Entity> e) {
