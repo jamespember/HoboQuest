@@ -27,6 +27,7 @@ namespace hoboquest {
 
       virtual void on_consume(std::shared_ptr<Actor> actor);
       virtual void on_equip(std::shared_ptr<Actor> actor);
+      virtual void on_unequip(std::shared_ptr<Actor> actor);
 
       virtual void describe(std::ostream &out) const;
   };

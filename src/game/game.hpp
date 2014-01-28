@@ -128,7 +128,7 @@ namespace hoboquest {
             says(cop, "Thanks for the help before!");
           } else if (!player->has_quest("gun_quest")) {
             says(cop, "Good evening sir. I've lost my sidearm, would you help me find it?");
-            make_shared<GunQuest>(*this, areas.get("main_street"), cop)->start();
+            make_shared<GunQuest>(*this, areas.get("floor1"), cop)->start();
           } else {
             says(cop, "Found anything?");
           }

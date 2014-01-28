@@ -3,6 +3,7 @@
 
 #include "container_entity.hpp"
 #include "area.hpp"
+#include "item/equippable.hpp"
 
 #include <string>
 #include <memory>
@@ -18,6 +19,7 @@ namespace hoboquest {
       int _hp = 1;
       int _hp_max;
       std::shared_ptr<Area> _location;
+      PtrMap<Equippable> _equipped;
 
     public:
       Actor(const std::string &id, const std::string &name);
@@ -34,6 +36,7 @@ namespace hoboquest {
 
       const std::shared_ptr<Area> location() const;
       std::shared_ptr<Area> location();
+      const std::shared_ptr<Equippable> get_equipment(const std::string &what) const;
 
       virtual void tick();
       bool kill();

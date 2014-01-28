@@ -79,6 +79,57 @@ namespace hoboquest {
       }
   }; /*}}}*/
 
+  class EquipCommand : public Command { /*{{{*/
+    public:
+      EquipCommand() : Command("equip", "eq") {}
+
+      CommandOutcome execute(Player &player, std::list<std::string> &args) {
+        if (args.empty())
+          return player.message("Equip what?"), ERROR;
+
+        auto &out = player.out();
+        auto item = player.get_item(args.front());
+
+        if (!item) {
+          out << "There's nothing called '" << args.front() <<
+            "' in your inventory!\n";
+          return ERROR;
+        }
+
+        if (!player.equip(item->id())) {
+          out << "You can't equip " << *item << "." << std::endl; 
+          return ERROR;
+        }
+
+        return SUCCESS;
+      }
+  }; /*}}}*/
+
+  class UnequipCommand : public Command { /*{{{*/
+    public:
+      UnequipCommand() : Command("unequip", "un") {}
+
+      CommandOutcome execute(Player &player, std::list<std::string> &args) {
+        if (args.empty())
+          return player.message("Unequip what?"), ERROR;
+
+        auto &out = player.out();
+        auto item = player.get_equipment(args.front());
+
+        if (!item) {
+          out << "You don't have anything equipped called '" << args.front() << "'\n";
+          return ERROR;
+        }
+
+        if (!player.unequip(item->id())) {
+          out << "You can't unequip " << *item << "." << std::endl; 
+          return ERROR;
+        }
+
+        return SUCCESS;
+      }
+  }; /*}}}*/
+
 } /* hoboquest */ 
 
 #endif

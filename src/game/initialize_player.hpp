@@ -18,65 +18,68 @@ using namespace std;
 
 namespace hoboquest {
   void initialize_player(shared_ptr<Player> player) {
-      //{{{ Commands
-      player->commands.add_command(make_shared<HelpCommand>());
-      player->commands.add_command(make_shared<DescribeCommand>());
-      player->commands.add_command(make_shared<GoCommand>());
-      player->commands.add_command(make_shared<GoShorthandCommand>("north", "n"));
-      player->commands.add_command(make_shared<GoShorthandCommand>("south", "s"));
-      player->commands.add_command(make_shared<GoShorthandCommand>("west", "w"));
-      player->commands.add_command(make_shared<GoShorthandCommand>("east", "e"));
-      player->commands.add_command(make_shared<GoShorthandCommand>("up", "u"));
-      player->commands.add_command(make_shared<GoShorthandCommand>("down", "d"));
-      player->commands.add_command(make_shared<InteractCommand>());
-      player->commands.add_command(make_shared<InventoryCommand>());
-      player->commands.add_command(make_shared<PickupCommand>());
-      player->commands.add_command(make_shared<DropCommand>());
-      player->commands.add_command(make_shared<ConsumeCommand>());
-      player->commands.add_command(make_shared<QuestCommand>());
-      player->commands.add_command(make_shared<ExitCommand>());
-      //}}}
+    //{{{ Commands
+    #define ADD_CMD(CMD) player->commands.add_command(make_shared<CMD ## Command>());
+    ADD_CMD(Help)
+    ADD_CMD(Describe)
+    ADD_CMD(Go)
+    player->commands.add_command(make_shared<GoShorthandCommand>("north", "n"));
+    player->commands.add_command(make_shared<GoShorthandCommand>("south", "s"));
+    player->commands.add_command(make_shared<GoShorthandCommand>("west", "w"));
+    player->commands.add_command(make_shared<GoShorthandCommand>("east", "e"));
+    player->commands.add_command(make_shared<GoShorthandCommand>("up", "u"));
+    player->commands.add_command(make_shared<GoShorthandCommand>("down", "d"));
+    ADD_CMD(Interact)
+    ADD_CMD(Inventory)
+    ADD_CMD(Pickup)
+    ADD_CMD(Drop)
+    ADD_CMD(Consume)
+    ADD_CMD(Equip)
+    ADD_CMD(Unequip)
+    ADD_CMD(Quest)
+    ADD_CMD(Exit)
+    //}}}
 
-      //{{{ Player events
-      player->observe("picked_up", [player](shared_ptr<Entity> e) {
-        player->out() << "Picked up ";
-        e->describe(player->out());
-        return true;
-      });
-      player->observe("dropped", [player](shared_ptr<Entity> e) {
-        player->out() << "Dropped ";
-        e->describe(player->out());
-        return true;
-      });
-      player->observe("entered", [player](shared_ptr<Entity> e) {
-        player->out() << "Entering ";
-        e->describe(player->out());
-        return true;
-      });
-      player->observe("interact", [player](shared_ptr<Entity> e) {
-        if (e == player)
-          player->message("You can't interact with yourself, you're not schizophrenic!");
-        else
-          player->out() << e->name() << " tries to interact with you." << std::endl;
-        return true;
-      });
-      player->observe("quest_started", [player](shared_ptr<Entity> e) {
-        auto &out = player->out();
-        out << "Quest started: ";
-        e->describe(out);
-        return true;
-      });
-      player->observe("quest_progressed", [player](shared_ptr<Entity> e) {
-        auto &out = player->out();
-        out << "Quest updated: ";
-        e->describe(out);
-        return true;
-      });
-      player->observe("quest_completed", [player](shared_ptr<Entity> e) {
-        player->out() << "Quest completed: " << e->name() << std::endl;
-        return true;
-      });
-      //}}}
+    //{{{ Player events
+    player->observe("picked_up", [player](shared_ptr<Entity> e) {
+      player->out() << "Picked up ";
+      e->describe(player->out());
+      return true;
+    });
+    player->observe("dropped", [player](shared_ptr<Entity> e) {
+      player->out() << "Dropped ";
+      e->describe(player->out());
+      return true;
+    });
+    player->observe("entered", [player](shared_ptr<Entity> e) {
+      player->out() << "Entering ";
+      e->describe(player->out());
+      return true;
+    });
+    player->observe("interact", [player](shared_ptr<Entity> e) {
+      if (e == player)
+        player->message("You can't interact with yourself, you're not schizophrenic!");
+      else
+        player->out() << e->name() << " tries to interact with you." << std::endl;
+      return true;
+    });
+    player->observe("quest_started", [player](shared_ptr<Entity> e) {
+      auto &out = player->out();
+      out << "Quest started: ";
+      e->describe(out);
+      return true;
+    });
+    player->observe("quest_progressed", [player](shared_ptr<Entity> e) {
+      auto &out = player->out();
+      out << "Quest updated: ";
+      e->describe(out);
+      return true;
+    });
+    player->observe("quest_completed", [player](shared_ptr<Entity> e) {
+      player->out() << "Quest completed: " << e->name() << std::endl;
+      return true;
+    });
+    //}}}
   }
 } /* hoboquest */ 
 
