@@ -63,6 +63,11 @@ namespace hoboquest {
     return _equipped.get(what);
   }
 
+  std::shared_ptr<Item> Actor::remove_item(const std::string &id) {
+    unequip(id);
+    return ContainerEntity::remove_item(id);
+  }
+
   void Actor::move_to(std::shared_ptr<Area> area) {
     if (_location != nullptr) {
       notify("exited", _location);
@@ -126,7 +131,6 @@ namespace hoboquest {
     if (!item->is_equippable())
       return false;
     if (item && _equipped.add(std::static_pointer_cast<Equippable>(item))) {
-      remove_item(what);
       notify("equipped", std::static_pointer_cast<Entity>(item));
       return true;
     }
@@ -135,7 +139,7 @@ namespace hoboquest {
 
   bool Actor::unequip(const std::string &what) {
     auto item = _equipped.get(what);
-    if (item && add_item(item)) {
+    if (item) {
       _equipped.remove(what);
       notify("unequipped", std::static_pointer_cast<Entity>(item));
       return true;

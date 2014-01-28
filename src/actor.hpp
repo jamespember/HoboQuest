@@ -43,6 +43,8 @@ namespace hoboquest {
 
       void move_to(std::shared_ptr<Area> area);
 
+      virtual std::shared_ptr<Item> remove_item(const std::string &id);
+
       bool go(const std::string &where);
       bool consume(const std::string &what);
       bool pickup(const std::string &what);
