@@ -42,6 +42,8 @@ namespace hoboquest {
 
       bool go(const std::string &where);
       bool consume(const std::string &what);
+      bool pickup(const std::string &what);
+      bool drop(const std::string &what);
       bool equip(const std::string &what);
       bool unequip(const std::string &what);
 

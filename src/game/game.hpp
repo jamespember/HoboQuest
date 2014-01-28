@@ -106,39 +106,6 @@ namespace hoboquest {
         areas.get("roof")->add_exit("east", areas.get("market"));
         // }}}
 
-        // Actors
-        auto police = make_shared<Actor>("police", "Police officer");
-        auto kid = make_shared<Actor>("kid", "Kid");
-        auto hobo = make_shared<Actor>("hobo", "Friendly(?) hobo");
-        auto manager = make_shared<Actor>("manager", "Manager");
-        auto bartender = make_shared<Actor>("bartender", "Bartender");
-        auto crazy_joe = make_shared<Actor>("joe", "Crazy Joe");
-
-        // Place actors
-        police->move_to(areas.get("main_street"));
-        kid->move_to(areas.get("park"));
-        manager->move_to(areas.get("floor0"));
-        bartender->move_to(areas.get("pub"));
-        hobo->move_to(areas.get("shelter"));
-        crazy_joe->move_to(areas.get("roof"));
-
-        // Crazy Joe
-        areas.get("roof")->observe("on_enter", [this](shared_ptr<Entity> e) {
-          if (e == player && this->areas.get("roof")->has_actor("joe")) {
-            player->message("Crazy Joe: One step closer and I'll jump! I promise I will!");
-            return true;
-          }
-          return false;
-        });
-        crazy_joe->observe("interact", [this, crazy_joe](shared_ptr<Entity> e) {
-          player->message("Crazy Joe: GERONIMOOOOOO!");
-          crazy_joe->go("east");
-          crazy_joe->kill();
-          crazy_joe->set_description("Corpse of Crazy Joe");
-          player->message("Crazy Joe is no more. Happy now?");
-          return false;
-        });
-
         // Items
         // {{{ beer @ pub
         auto beer = make_shared<Consumable>("beer", "Beer");
@@ -153,7 +120,9 @@ namespace hoboquest {
         // Actors
         // {{{ cop @ police_station
         auto cop = make_shared<Actor>("cop", "Cop");
+
         cop->set_description("Random badge-wearer.");
+
         cop->observe("interact", [&](shared_ptr<Entity> e) {
           if (player->completed_quest("gun_quest")) {
             says(cop, "Thanks for the help before!");
@@ -165,8 +134,40 @@ namespace hoboquest {
           }
           return true;
         });
+
         areas.get("police_station")->add_actor(cop);
         // }}}
+        // {{{ joe @ roof
+        auto crazy_joe = make_shared<Actor>("joe", "Crazy Joe");
+        crazy_joe->move_to(areas.get("roof"));
+
+        areas.get("roof")->observe("on_enter", [this](shared_ptr<Entity> e) {
+          if (e == player && this->areas.get("roof")->has_actor("joe")) {
+            player->message("Crazy Joe: One step closer and I'll jump! I promise I will!");
+            return true;
+          }
+          return false;
+        });
+
+        crazy_joe->observe("interact", [this, crazy_joe](shared_ptr<Entity> e) {
+          says(crazy_joe, "GERONIMOOOOOO!");
+          crazy_joe->go("east");
+          crazy_joe->kill();
+          crazy_joe->set_description("Corpse of Crazy Joe");
+          player->message("Crazy Joe is no more. Happy now?");
+          return false;
+        });
+        // }}}
+
+        auto kid = make_shared<Actor>("kid", "Kid");
+        auto hobo = make_shared<Actor>("hobo", "Friendly(?) hobo");
+        auto manager = make_shared<Actor>("manager", "Manager");
+        auto bartender = make_shared<Actor>("bartender", "Bartender");
+
+        kid->move_to(areas.get("park"));
+        manager->move_to(areas.get("floor0"));
+        bartender->move_to(areas.get("pub"));
+        hobo->move_to(areas.get("shelter"));
 
         // Start game
         player->move_to(areas.get("alley"));

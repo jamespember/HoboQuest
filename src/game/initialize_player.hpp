@@ -36,6 +36,16 @@ namespace hoboquest {
       //}}}
 
       //{{{ Player events
+      player->observe("picked_up", [player](shared_ptr<Entity> e) {
+        player->out() << "Picked up ";
+        e->describe(player->out());
+        return true;
+      });
+      player->observe("dropped", [player](shared_ptr<Entity> e) {
+        player->out() << "Dropped ";
+        e->describe(player->out());
+        return true;
+      });
       player->observe("entered", [player](shared_ptr<Entity> e) {
         player->out() << "Entering ";
         e->describe(player->out());

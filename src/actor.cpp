@@ -84,9 +84,36 @@ namespace hoboquest {
     if (!item || !item->is_consumable())
       return false;
 
+    remove_item(what);
+    notify("consumed", std::static_pointer_cast<Entity>(item));
     item->on_consume(std::static_pointer_cast<Actor>(shared_from_this()));
-    remove_item(item->id());
     return true;
+  }
+
+  bool Actor::pickup(const std::string &what) {
+    auto loc = location();
+    if (!loc)
+      return false;
+    auto item = loc->get_item(what);
+    if (item && add_item(item)) {
+      loc->remove_item(what);
+      notify("picked_up", std::static_pointer_cast<Entity>(item));
+      return true;
+    }
+    return false;
+  }
+
+  bool Actor::drop(const std::string &what) {
+    auto loc = location();
+    if (!loc)
+      return false;
+    auto item = get_item(what);
+    if (item && loc->add_item(item)) {
+      remove_item(what);
+      notify("dropped", std::static_pointer_cast<Entity>(item));
+      return true;
+    }
+    return false;
   }
 
   bool Actor::equip(const std::string &what) {
