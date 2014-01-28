@@ -10,8 +10,9 @@
 #include "../command/go.hpp"
 #include "../command/go_shorthand.hpp"
 #include "../command/help.hpp"
-#include "../command/inventory.hpp"
 #include "../command/interact.hpp"
+#include "../command/inventory.hpp"
+#include "../command/quest.hpp"
 
 using namespace std;
 
@@ -32,6 +33,7 @@ namespace hoboquest {
       player->commands.add_command(make_shared<PickupCommand>());
       player->commands.add_command(make_shared<DropCommand>());
       player->commands.add_command(make_shared<ConsumeCommand>());
+      player->commands.add_command(make_shared<QuestCommand>());
       player->commands.add_command(make_shared<ExitCommand>());
       //}}}
 

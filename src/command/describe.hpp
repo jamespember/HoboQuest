@@ -24,6 +24,8 @@ namespace hoboquest {
           entity = player.get_item(args.front());
         if (!entity)
           entity = player.location()->get_actor(args.front());
+        if (!entity)
+          entity = player.quests.get(args.front());
 
         if (!entity) {
           player.out() << "Can't find anything called '" << args.front() <<
