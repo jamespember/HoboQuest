@@ -54,8 +54,8 @@ namespace hoboquest {
             |          |
           Floor2       |
             |          |
-          Floor1       v
-            |
+          Floor1 <-----|--- Apartment
+            |          |
           Floor0 --- Market ------- Park
                        |
            Pub         |
@@ -90,6 +90,8 @@ namespace hoboquest {
             "Hallway on the second floor of the aparments building.");
         add_area("roof", "Roof",
             "The rooftop area of a a large apartments building.");
+        add_area("apartment", "Apartment",
+            "Your very own apartment. It looks rat infested.");
         // }}}
 
         // {{{ Exits
@@ -105,6 +107,7 @@ namespace hoboquest {
         connect_areas("floor1", "up", "down", "floor2");
         connect_areas("floor2", "up", "down", "roof");
         areas.get("roof")->add_exit("east", areas.get("market"));
+        areas.get("apartment")->add_exit("west", areas.get("floor1"));
         // }}}
 
         // Items
@@ -164,18 +167,49 @@ namespace hoboquest {
         auto ball = make_shared<Item>("ball", "Football");
         ball->set_value(5);
         kid->add_item(ball);
+        kid->observe("interact", [this, kid](shared_ptr<Entity> e) {
+            says(kid, "What's up doc?");
+            return true;
+        });
         kid->move_to(areas.get("park"));
+        // }}}
+        // {{{ realtor @ floor0
+        auto realtor = make_shared<Actor>("realtor", "Real eastate agent");
+        realtor->move_to(areas.get("floor0"));
+        realtor->observe("interact", [this, realtor](shared_ptr<Entity> e) {
+          auto floor1 = areas.get("floor1");
+          auto apartment = areas.get("apartment");
+          if (player->money() >= 1000 && !floor1->has_exit("east")) {
+            says(realtor, "Hey pal, I'm sure you want to buy this fine apartment!");
+            says(realtor, "It's only $1000, rats are guaranteed.");
+            says(realtor, "Nice, it's located on the first floor.");
+            says(realtor, "Thanks for the deal sucker, see you later!");
+            realtor->give_money(player->take_money(1000));
+            floor1->add_exit("east", apartment);
+            apartment->observe("on_enter", [this](shared_ptr<Entity> e) {
+              if (e != player) return true;
+              player->message("You've completed the game by acquiring a living space!");
+              player->message("Welcome to your new apartment!");
+              player->message("A hero is you!");
+              return false;
+            });
+          } else if (floor1->has_exit("east")) {
+            says(realtor, "I hope you like your new apartment!");
+          } else {
+            says(realtor, "Come back when you got some money, punk!");
+          }
+          return true;
+        });
         // }}}
 
         auto hobo = make_shared<Actor>("hobo", "Friendly(?) hobo");
-        auto manager = make_shared<Actor>("manager", "Manager");
         auto bartender = make_shared<Actor>("bartender", "Bartender");
 
-        manager->move_to(areas.get("floor0"));
         bartender->move_to(areas.get("pub"));
         hobo->move_to(areas.get("shelter"));
 
         // Start game
+        player->give_money(1000);
         player->move_to(areas.get("alley"));
       }
   };
