@@ -66,7 +66,7 @@ namespace hoboquest {
         return _items.get(id);
       }
 
-      virtual bool add_item(std::shared_ptr<Item> item) {
+      bool add_item(std::shared_ptr<Item> item) {
         bool success = _items.add(item);
         if (success) {
           _carrying += item->weight();
@@ -79,7 +79,7 @@ namespace hoboquest {
       }
 
       // Drops and returns item if present, otherwise returns nullptr
-      virtual std::shared_ptr<Item> remove_item(const std::string &id) {
+      std::shared_ptr<Item> remove_item(const std::string &id) {
         auto item = _items.remove(id);
         if (item != nullptr) {
           _carrying -= item->weight();

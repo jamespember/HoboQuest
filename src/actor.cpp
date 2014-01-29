@@ -126,6 +126,26 @@ namespace hoboquest {
     return false;
   }
 
+  bool Actor::give(std::shared_ptr<Actor> actor, const std::string &what) {
+    auto item = get_item(what);
+    if (item && actor->add_item(item)) {
+      remove_item(what);
+      notify("gave", std::static_pointer_cast<Entity>(item));
+      return true;
+    }
+    return false;
+  }
+
+  bool Actor::steal(std::shared_ptr<Actor> actor, const std::string &what) {
+    auto item = actor->get_item(what);
+    if (item && add_item(item)) {
+      actor->remove_item(what);
+      notify("stole", std::static_pointer_cast<Entity>(item));
+      return true;
+    }
+    return false;
+  }
+
   bool Actor::equip(const std::string &what) {
     auto item = get_item(what);
     if (!item->is_equippable())

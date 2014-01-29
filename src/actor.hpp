@@ -49,6 +49,8 @@ namespace hoboquest {
       bool consume(const std::string &what);
       bool pickup(const std::string &what);
       bool drop(const std::string &what);
+      bool give(std::shared_ptr<Actor> actor, const std::string &what);
+      bool steal(std::shared_ptr<Actor> actor, const std::string &what);
       bool equip(const std::string &what);
       bool unequip(const std::string &what);
 
