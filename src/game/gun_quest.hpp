@@ -40,6 +40,13 @@ namespace hoboquest {
           this->complete();
           return false;
         });
+
+        Quest::on_start();
+      }
+
+      void on_complete() {
+        _engine.player->give_money(100);
+        Quest::on_complete();
       }
   };
 } /* hoboquest */ 
