@@ -44,23 +44,35 @@ namespace hoboquest {
 
     //{{{ Player events
     player->observe("picked_up", [player](shared_ptr<Entity> e) {
-      player->out() << "Picked up ";
-      e->describe(player->out());
+      player->out() << "Picked up " << *e << std::endl;
       return true;
     });
     player->observe("dropped", [player](shared_ptr<Entity> e) {
-      player->out() << "Dropped ";
-      e->describe(player->out());
+      player->out() << "Dropped " << *e << std::endl;
       return true;
     });
     player->observe("gave", [player](shared_ptr<Entity> e) {
-      player->out() << "Gave away ";
-      e->describe(player->out());
+      player->out() << "Gave away " << *e << std::endl;
       return true;
     });
     player->observe("stole", [player](shared_ptr<Entity> e) {
-      player->out() << "Stole ";
-      e->describe(player->out());
+      player->out() << "Stole " << *e << std::endl;
+      return true;
+    });
+    player->observe("equipped", [player](shared_ptr<Entity> e) {
+      player->out() << "Equipped " << *e << std::endl;
+      return true;
+    });
+    player->observe("unequipped", [player](shared_ptr<Entity> e) {
+      player->out() << "Unequipped " << *e << std::endl;
+      return true;
+    });
+    player->observe("got_money", [player](shared_ptr<Entity> e) {
+      player->out() << "You recieved some money, current cash: " << player->money() << std::endl;
+      return true;
+    });
+    player->observe("lost_money", [player](shared_ptr<Entity> e) {
+      player->out() << "You lost some money, current cash: " << player->money() << std::endl;
       return true;
     });
     player->observe("entered", [player](shared_ptr<Entity> e) {
@@ -89,14 +101,6 @@ namespace hoboquest {
     });
     player->observe("quest_completed", [player](shared_ptr<Entity> e) {
       player->out() << "Quest completed: " << e->name() << std::endl;
-      return true;
-    });
-    player->observe("got_money", [player](shared_ptr<Entity> e) {
-      player->out() << "You recieved some money, current cash: " << player->money() << std::endl;
-      return true;
-    });
-    player->observe("lost_money", [player](shared_ptr<Entity> e) {
-      player->out() << "You lost some money, current cash: " << player->money() << std::endl;
       return true;
     });
     //}}}
