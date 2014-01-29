@@ -3,7 +3,7 @@
 #include "actor.hpp"
 #include "util/tokenizer.hpp"
 
-#include <list>
+#include <deque>
 #include <string>
 #include <iostream>
 
@@ -12,7 +12,7 @@ namespace hoboquest {
   Player::Player(std::istream &in, std::ostream &out) :
     Actor::Actor("player", "Player"), _in(in), _out(out) {}
 
-  CommandOutcome Player::execute(const std::string &command, std::list<std::string> &args) {
+  CommandOutcome Player::execute(const std::string &command, std::deque<std::string> &args) {
     return commands.execute(command, args, *this);
   }
 

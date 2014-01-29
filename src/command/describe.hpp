@@ -5,7 +5,7 @@
 #include "../player.hpp"
 
 #include <memory>
-#include <list>
+#include <deque>
 #include <string>
 
 namespace hoboquest {
@@ -13,7 +13,7 @@ namespace hoboquest {
     public:
       DescribeCommand() : Command("describe", "desc") {}
 
-      CommandOutcome execute(Player &player, std::list<std::string> &args) {
+      CommandOutcome execute(Player &player, std::deque<std::string> &args) {
         std::shared_ptr<Entity> entity;
 
         if (args.empty())

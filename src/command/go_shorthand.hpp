@@ -3,7 +3,7 @@
 
 #include "go.hpp"
 
-#include <list>
+#include <deque>
 #include <string>
 
 namespace hoboquest {
@@ -15,8 +15,8 @@ namespace hoboquest {
       GoShorthandCommand(const std::string &direction) :
         GoCommand(direction) {}
 
-      CommandOutcome execute(Player &player, std::list<std::string> &args) {
-        std::list<std::string> go_args { name };
+      CommandOutcome execute(Player &player, std::deque<std::string> &args) {
+        std::deque<std::string> go_args { name };
         return GoCommand::execute(player, go_args);
       }
 

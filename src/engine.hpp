@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
+#include <deque>
 
 #include "area.hpp"
 #include "util/ptr_map.hpp"
@@ -26,7 +26,7 @@ namespace hoboquest {
 
       Engine(std::istream &in_s, std::ostream &out_s);
 
-      std::vector<std::string> read_command();
+      std::deque<std::string> read_command();
       bool tick();
       void loop();
 

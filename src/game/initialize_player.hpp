@@ -33,6 +33,8 @@ namespace hoboquest {
     ADD_CMD(Inventory)
     ADD_CMD(Pickup)
     ADD_CMD(Drop)
+    ADD_CMD(Give)
+    ADD_CMD(Steal)
     ADD_CMD(Consume)
     ADD_CMD(Equip)
     ADD_CMD(Unequip)
@@ -48,6 +50,16 @@ namespace hoboquest {
     });
     player->observe("dropped", [player](shared_ptr<Entity> e) {
       player->out() << "Dropped ";
+      e->describe(player->out());
+      return true;
+    });
+    player->observe("gave", [player](shared_ptr<Entity> e) {
+      player->out() << "Gave away ";
+      e->describe(player->out());
+      return true;
+    });
+    player->observe("stole", [player](shared_ptr<Entity> e) {
+      player->out() << "Stole ";
       e->describe(player->out());
       return true;
     });

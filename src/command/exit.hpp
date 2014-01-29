@@ -3,7 +3,7 @@
 
 #include "command.hpp"
 
-#include <list>
+#include <deque>
 #include <string>
 
 namespace hoboquest {
@@ -13,7 +13,7 @@ namespace hoboquest {
     public:
       ExitCommand() : Command("exit", "quit") {}
 
-      CommandOutcome execute(Player &player, std::list<std::string> &args) {
+      CommandOutcome execute(Player &player, std::deque<std::string> &args) {
         return EXIT;
       }
   };

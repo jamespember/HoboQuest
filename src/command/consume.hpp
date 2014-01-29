@@ -4,7 +4,7 @@
 #include "command.hpp"
 #include "../player.hpp"
 
-#include <list>
+#include <deque>
 #include <string>
 
 namespace hoboquest {
@@ -13,7 +13,7 @@ namespace hoboquest {
     public:
       ConsumeCommand() : Command("consume", "eat") {}
 
-      CommandOutcome execute(Player &player, std::list<std::string> &args) {
+      CommandOutcome execute(Player &player, std::deque<std::string> &args) {
         if (args.empty())
           return player.message("Consume what?"), ERROR;
 

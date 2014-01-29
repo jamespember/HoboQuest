@@ -6,7 +6,7 @@
 
 #include <cassert>
 #include <memory>
-#include <list>
+#include <deque>
 #include <string>
 
 #ifndef PTR_SimpleCommand
@@ -19,22 +19,22 @@ using namespace hoboquest;
 void test_commandable() {
   Commandable cmds;
   Player p(cin, cout);
-  list<string> args;
+  deque<string> args;
 
   assert(cmds.has_command("test") == false);
   assert(cmds.execute("test", args, p) == NOT_FOUND);
 
-  cmds.add_command(PTR_SimpleCommand("test", [](Player &player, list<string> &args) -> bool {
+  cmds.add_command(PTR_SimpleCommand("test", [](Player &player, deque<string> &args) -> bool {
     player.message("test command ran!");
     return true;
   }));
 
-  cmds.add_command(PTR_SimpleCommand("hello", [](Player &player, list<string> &args) -> bool {
+  cmds.add_command(PTR_SimpleCommand("hello", [](Player &player, deque<string> &args) -> bool {
     player.message("hello command ran!");
     return true;
   }));
 
-  cmds.add_command(PTR_SimpleCommand("fail", [](Player &player, list<string> &args) -> bool {
+  cmds.add_command(PTR_SimpleCommand("fail", [](Player &player, deque<string> &args) -> bool {
     player.message("failing command ran!");
     return false;
   }));

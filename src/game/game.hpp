@@ -100,6 +100,7 @@ namespace hoboquest {
         connect_areas("cell", "east", "west", "police_station");
         connect_areas("market", "south", "north", "main_street");
         connect_areas("market", "west", "east", "floor0");
+        connect_areas("market", "east", "west", "park");
         connect_areas("floor0", "up", "down", "floor1");
         connect_areas("floor1", "up", "down", "floor2");
         connect_areas("floor2", "up", "down", "roof");
@@ -158,13 +159,18 @@ namespace hoboquest {
           return false;
         });
         // }}}
-
+        // {{{ kid @ park
         auto kid = make_shared<Actor>("kid", "Kid");
+        auto ball = make_shared<Item>("ball", "Football");
+        ball->set_value(5);
+        kid->add_item(ball);
+        kid->move_to(areas.get("park"));
+        // }}}
+
         auto hobo = make_shared<Actor>("hobo", "Friendly(?) hobo");
         auto manager = make_shared<Actor>("manager", "Manager");
         auto bartender = make_shared<Actor>("bartender", "Bartender");
 
-        kid->move_to(areas.get("park"));
         manager->move_to(areas.get("floor0"));
         bartender->move_to(areas.get("pub"));
         hobo->move_to(areas.get("shelter"));

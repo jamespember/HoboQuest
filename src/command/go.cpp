@@ -1,6 +1,6 @@
 #include "go.hpp"
 
-#include <vector>
+#include <deque>
 #include <string>
 #include "../player.hpp"
 
@@ -12,7 +12,7 @@ namespace hoboquest {
     Command(direction) {}
   GoCommand::GoCommand() : Command("go", "g") {}
 
-  CommandOutcome GoCommand::execute(Player &player, std::list<std::string> &args) {
+  CommandOutcome GoCommand::execute(Player &player, std::deque<std::string> &args) {
     auto location = player.location();
 
     if (location == nullptr) {
