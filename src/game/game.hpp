@@ -123,7 +123,7 @@ namespace hoboquest {
 
         cop->set_description("Random badge-wearer.");
 
-        cop->observe("interact", [&](shared_ptr<Entity> e) {
+        cop->observe("interact", [this, cop](shared_ptr<Entity> e) {
           if (player->completed_quest("gun_quest")) {
             says(cop, "Thanks for the help before!");
           } else if (!player->has_quest("gun_quest")) {
