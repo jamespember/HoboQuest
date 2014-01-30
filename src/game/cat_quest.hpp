@@ -33,9 +33,13 @@ namespace hoboquest {
 		      _areas.get(cat_areas[x])->add_item(cat);
       	}
       }
-      
-      void says(const string &what) {
-        _engine.player->out() << _actor->name() << " says: " << what << std::endl;
+
+      void dummy() {
+        printf("hej!\n");
+      }
+
+      void finish() {
+        this->complete();
       }
 
       void on_start() {

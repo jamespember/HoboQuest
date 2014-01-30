@@ -159,21 +159,23 @@ namespace hoboquest {
         
         // {{{ cat_lady @ park
         auto cat_lady = make_shared<Actor>("cat_lady", "Crazy Cat Lady");
-        cat_lady->move_to(areas.get("park"));
-        auto cat_quest = make_shared<CatQuest>(*this, areas, cat_lady);
-        cat_lady->observe("interact", [&, cat_lady](shared_ptr<Entity> e) {
-         	if (player->completed_quest("cat_quest")) {
-           	says(cat_lady, "AAAAH GI DI BAAAAAAAAAAH!!!");
+        cat_lady->move_to(areas.get("alley")); // TODO park
+        auto cat_quest = make_shared<CatQuest>(*this, areas, cat_lady)->start();
+        cat_lady->observe("interact", [this, cat_lady, cat_quest](shared_ptr<Entity> e) {
+          if (player->completed_quest("cat_quest")) {
+            says(cat_lady, "AAAAH GI DI BAAAAAAAAAAH!!!");
           } else if (!player->has_quest("cat_quest")) {
-        		says(cat_lady, "AHH GA DI BA DI AAAAAAH!");
-		    		says(cat_lady, "Find cats ... GAAAAAH ... get money!");
-		    		says(cat_lady, "AAAHHH GIII DAA BAAAAA");
-            cat_quest->start();
+            says(cat_lady, "AHH GA DI BA DI AAAAAAH!");
+            says(cat_lady, "Find cats ... GAAAAAH ... get money!");
+            says(cat_lady, "AAAHHH GIII DAA BAAAAA");
+            //bool test = cat_quest->start();
+            //if (test) { printf("yes\n"); } else { printf("no\n"); }
             //player->quests.add(cat_quest);
           } else {
             says(cat_lady, "AAAAH STARTED AAAAAH");
-            cat_quest->complete();
+            //cat_quest->finish();
           }
+          this->cat_quest->dummy();
           return true;
         });
         // }}}
