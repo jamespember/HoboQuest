@@ -8,6 +8,7 @@
 #include "initialize_player.hpp"
 
 #include "gun_quest.hpp"
+#include "cat_quest.hpp"
 
 #include <iostream>
 #include <string>
@@ -100,6 +101,7 @@ namespace hoboquest {
         connect_areas("cell", "east", "west", "police_station");
         connect_areas("market", "south", "north", "main_street");
         connect_areas("market", "west", "east", "floor0");
+        connect_areas("market", "east", "west", "park");
         connect_areas("floor0", "up", "down", "floor1");
         connect_areas("floor1", "up", "down", "floor2");
         connect_areas("floor2", "up", "down", "roof");
@@ -113,6 +115,7 @@ namespace hoboquest {
         auto manager = make_shared<Actor>("manager", "Manager");
         auto bartender = make_shared<Actor>("bartender", "Bartender");
         auto crazy_joe = make_shared<Actor>("joe", "Crazy Joe");
+        auto cat_lady = make_shared<Actor>("cat_lady", "Crazy Cat Lady");
 
         // Place actors
         police->move_to(areas.get("main_street"));
@@ -121,6 +124,7 @@ namespace hoboquest {
         bartender->move_to(areas.get("pub"));
         hobo->move_to(areas.get("shelter"));
         crazy_joe->move_to(areas.get("roof"));
+        cat_lady->move_to(areas.get("park"));
 
         // Crazy Joe
         areas.get("roof")->observe("on_enter", [this](shared_ptr<Entity> e) {
@@ -149,6 +153,25 @@ namespace hoboquest {
       	});
         areas.get("pub")->add_item(beer);
         // }}}
+        
+        // Quests
+        auto cat_quest = make_shared<CatQuest>(*this, areas, cat_lady);
+        cat_lady->observe("interact", [&, cat_lady](shared_ptr<Entity> e) {
+         	if (player->completed_quest("cat_quest")) {
+           	says(cat_lady, "AAAAH GI DI BAAAAAAAAAAH!!!");
+          } else if (!player->has_quest("cat_quest")) {
+        		says(cat_lady, "AHH GA DI BA DI AAAAAAH!");
+		    		says(cat_lady, "Find cats ... GAAAAAH ... get money!");
+		    		says(cat_lady, "AAAHHH GIII DAA BAAAAA");
+            cat_quest->start();
+            //player->quests.add(cat_quest);
+          } else {
+            says(cat_lady, "AAAAH STARTED AAAAAH");
+            cat_quest->complete();
+          }
+          return true;
+        });
+        
 
         // Actors
         // {{{ cop @ police_station
@@ -160,6 +183,7 @@ namespace hoboquest {
           } else if (!player->has_quest("gun_quest")) {
             says(cop, "Good evening sir. I've lost my sidearm, would you help me find it?");
             make_shared<GunQuest>(*this, areas.get("main_street"), cop)->start();
+            
           } else {
             says(cop, "Found anything?");
           }
