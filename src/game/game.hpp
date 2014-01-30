@@ -246,7 +246,7 @@ namespace hoboquest {
         hobo->move_to(areas.get("shelter"));
 
         // Start game
-        player->give_money(1000);
+        player->add_money(1000);
         player->move_to(areas.get("alley"));
       }
   };
