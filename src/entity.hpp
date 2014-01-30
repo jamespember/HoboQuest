@@ -23,6 +23,8 @@ namespace hoboquest {
       Entity(Type type, const std::string &id, const std::string &name) :
         _type(type), _id(id), _name(name) {}
 
+      virtual ~Entity() {}
+
       Type type() const { return _type; }
       const std::string & id() const { return _id; }
       const std::string & name() const { return _name; }
