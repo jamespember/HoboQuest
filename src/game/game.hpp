@@ -160,7 +160,6 @@ namespace hoboquest {
             talk(cat_lady, "AAAAH STARTED AAAAAH");
             cat_quest->complete();
           }
-          cat_quest->dummy();
           return true;
         });
         // }}}
