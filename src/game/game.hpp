@@ -207,9 +207,13 @@ namespace hoboquest {
         hobo->move_to(areas.get("shelter"));
 
         // Start game
-        player->add_money(1000);
         player->move_to(areas.get("alley"));
-        make_shared<MainQuest>(*this, realtor, areas.get("apartment"), areas.get("floor1"))->start();
+
+        // Start main quest after first move
+        player->observe("entered", [this, realtor](shared_ptr<Entity> e) {
+          make_shared<MainQuest>(*this, realtor, areas.get("apartment"), areas.get("floor1"))->start();
+          return false;
+        });
       }
   };
 }
