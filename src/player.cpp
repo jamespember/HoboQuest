@@ -70,6 +70,16 @@ namespace hoboquest {
     return false;
   }
 
+  unsigned Player::remove_money(unsigned amount) {
+    unsigned removed = ContainerEntity::remove_money(amount);
+    _out << "You lost $" << amount << "." << std::endl;
+    return removed;
+  }
+  void Player::add_money(unsigned amount) {
+    ContainerEntity::add_money(amount);
+    _out << "You received $" << amount << "." << std::endl;
+  }
+
   bool Player::has_quest(const std::string &id) const {
     return quests.has(id);
   }

@@ -11,13 +11,26 @@
 
 namespace hoboquest {
   Engine::Engine(std::istream &in, std::ostream &out) :
-  _in(in), _out(out) {
+  _in(in), _out(out), _quitting(false) {
     player = std::make_shared<Player>(in, out);
     _entity_ptr = new Actor("dummy", "Dummy actor to demonstrate memory management");
   }
 
   Engine::~Engine() {
     delete _entity_ptr;
+  }
+
+
+  void Engine::connect_areas(const std::string &area_a, const std::string &dir_a,
+      const std::string &dir_b, const std::string &area_b) {
+    if (!areas.has(area_a) || !areas.has(area_b)) {
+      _out << "Can't connect '" << area_a << "' with '" << area_b << "'\n";
+      return;
+    }
+
+    auto a = areas.get(area_a), b = areas.get(area_b);
+    a->add_exit(dir_a, b);
+    b->add_exit(dir_b, a);
   }
 
   bool Engine::tick() {
@@ -34,7 +47,15 @@ namespace hoboquest {
   }
 
   void Engine::loop() {
-    while (tick());
+    while (!_quitting && tick());
+  }
+
+  void Engine::quit() {
+    _quitting = true;
+  }
+
+  void Engine::talk(std::shared_ptr<Actor> who, const std::string &what) const {
+    player->out() << who->name() << " says: " << what << std::endl;
   }
 
   void Engine::import_entity(const std::unordered_map<std::string, std::string> &data) {

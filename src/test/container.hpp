@@ -16,13 +16,13 @@ void test_container() {
   assert(c->money() == 0);
   assert(c->over_encumbered() == false);
 
-  c->give_money(100);
+  c->add_money(100);
   assert(c->money() == 100);
-  assert(c->take_money(50) == 50);
+  assert(c->remove_money(50) == 50);
   assert(c->money() == 50);
-  assert(c->take_money(100) == 50);
+  assert(c->remove_money(100) == 50);
   assert(c->money() == 0);
-  c->give_money(10);
+  c->add_money(10);
   assert(c->money() == 10);
 
   c->set_capacity(10);

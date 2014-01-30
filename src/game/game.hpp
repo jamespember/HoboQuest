@@ -7,6 +7,7 @@
 
 #include "initialize_player.hpp"
 
+#include "main_quest.hpp"
 #include "gun_quest.hpp"
 #include "cat_quest.hpp"
 
@@ -25,22 +26,6 @@ namespace hoboquest {
         auto area = make_shared<Area>(id, name);
         area->set_description(description);
         areas.add(area);
-      }
-
-      void connect_areas(const string &area_a, const string &dir_a,
-          const string &dir_b, const string &area_b) {
-        if (!areas.has(area_a) || !areas.has(area_b)) {
-          _out << "Can't connect '" << area_a << "' with '" << area_b << "'\n";
-          return;
-        }
-
-        auto a = areas.get(area_a), b = areas.get(area_b);
-        a->add_exit(dir_a, b);
-        b->add_exit(dir_b, a);
-      }
-
-      void says(shared_ptr<Entity> who, const string &what) {
-        player->out() << who->name() << " says: " << what << std::endl;
       }
 
     public:
@@ -99,9 +84,9 @@ namespace hoboquest {
         add_area("floor0", "Apartments, bottom floor",
             "Bottom floor of a large apartments building.");
         add_area("floor1", "Apartments, 1st floor",
-            "Hallway on the first floor of the aparments building.");
+            "Hallway on the first floor of the apartments building.");
         add_area("floor2", "Apartments, 2nd floor",
-            "Hallway on the second floor of the aparments building.");
+            "Hallway on the second floor of the apartments building.");
         add_area("roof", "Roof",
             "The rooftop area of a a large apartments building.");
         add_area("apartment", "Apartment",
@@ -130,56 +115,53 @@ namespace hoboquest {
         beer->set_description("A lovely non-alcoholic(?) beverage.");
         beer->set_hp_modifier(-5);
         beer->observe("consumed", [this](shared_ptr<Entity> e) {
-        	player->message("You drank the beer and lost 5 hp."); return false;
-      	});
+          player->message("You drank the beer and lost 5 hp."); return false;
+        });
         areas.get("pub")->add_item(beer);
         // }}}
 
         // Actors
         // {{{ cop @ police_station
         auto cop = make_shared<Actor>("cop", "Cop");
-
         cop->set_description("Random badge-wearer.");
 
         cop->observe("interact", [this, cop](shared_ptr<Entity> e) {
           if (player->completed_quest("gun_quest")) {
-            says(cop, "Thanks for the help before!");
+            talk(cop, "Thanks for the help before!");
           } else if (!player->has_quest("gun_quest")) {
-            says(cop, "Good evening sir. I've lost my sidearm, would you help me find it?");
+            talk(cop, "Good evening sir. I've lost my sidearm, would you help me find it?");
             make_shared<GunQuest>(*this, areas.get("floor1"), cop)->start();
+          } else if (player->has_item("gun")){
+            talk(cop, "You found my gun?! May I have it?");
           } else {
-            says(cop, "Found anything?");
+            talk(cop, "Found anything?");
           }
           return true;
         });
 
         areas.get("police_station")->add_actor(cop);
         // }}}
-        
-        
         // {{{ cat_lady @ park
         auto cat_lady = make_shared<Actor>("cat_lady", "Crazy Cat Lady");
-        cat_lady->move_to(areas.get("alley")); // TODO park
-        auto cat_quest = make_shared<CatQuest>(*this, areas, cat_lady)->start();
-        cat_lady->observe("interact", [this, cat_lady, cat_quest](shared_ptr<Entity> e) {
+        cat_lady->move_to(areas.get("park"));
+        auto cat_quest = make_shared<CatQuest>(*this, areas, cat_lady);
+        cat_lady->observe("interact", [&, cat_lady](shared_ptr<Entity> e) {
           if (player->completed_quest("cat_quest")) {
-            says(cat_lady, "AAAAH GI DI BAAAAAAAAAAH!!!");
+            talk(cat_lady, "AAAAH GI DI BAAAAAAAAAAH!!!");
           } else if (!player->has_quest("cat_quest")) {
-            says(cat_lady, "AHH GA DI BA DI AAAAAAH!");
-            says(cat_lady, "Find cats ... GAAAAAH ... get money!");
-            says(cat_lady, "AAAHHH GIII DAA BAAAAA");
-            //bool test = cat_quest->start();
-            //if (test) { printf("yes\n"); } else { printf("no\n"); }
+            talk(cat_lady, "AHH GA DI BA DI AAAAAAH!");
+            talk(cat_lady, "Find cats ... GAAAAAH ... get money!");
+            talk(cat_lady, "AAAHHH GIII DAA BAAAAA");
+            cat_quest->start();
             //player->quests.add(cat_quest);
           } else {
-            says(cat_lady, "AAAAH STARTED AAAAAH");
-            //cat_quest->finish();
+            talk(cat_lady, "AAAAH STARTED AAAAAH");
+            cat_quest->complete();
           }
           this->cat_quest->dummy();
           return true;
         });
         // }}}
-        
         // {{{ joe @ roof
         auto crazy_joe = make_shared<Actor>("joe", "Crazy Joe");
         crazy_joe->move_to(areas.get("roof"));
@@ -193,7 +175,7 @@ namespace hoboquest {
         });
 
         crazy_joe->observe("interact", [this, crazy_joe](shared_ptr<Entity> e) {
-          says(crazy_joe, "GERONIMOOOOOO!");
+          talk(crazy_joe, "GERONIMOOOOOO!");
           crazy_joe->go("east");
           crazy_joe->kill();
           crazy_joe->set_description("Corpse of Crazy Joe");
@@ -207,7 +189,7 @@ namespace hoboquest {
         ball->set_value(5);
         kid->add_item(ball);
         kid->observe("interact", [this, kid](shared_ptr<Entity> e) {
-            says(kid, "What's up doc?");
+            talk(kid, "What's up doc?");
             return true;
         });
         kid->move_to(areas.get("park"));
@@ -215,30 +197,6 @@ namespace hoboquest {
         // {{{ realtor @ floor0
         auto realtor = make_shared<Actor>("realtor", "Real eastate agent");
         realtor->move_to(areas.get("floor0"));
-        realtor->observe("interact", [this, realtor](shared_ptr<Entity> e) {
-          auto floor1 = areas.get("floor1");
-          auto apartment = areas.get("apartment");
-          if (player->money() >= 1000 && !floor1->has_exit("east")) {
-            says(realtor, "Hey pal, I'm sure you want to buy this fine apartment!");
-            says(realtor, "It's only $1000, rats are guaranteed.");
-            says(realtor, "Nice, it's located on the first floor.");
-            says(realtor, "Thanks for the deal sucker, see you later!");
-            realtor->give_money(player->take_money(1000));
-            floor1->add_exit("east", apartment);
-            apartment->observe("on_enter", [this](shared_ptr<Entity> e) {
-              if (e != player) return true;
-              player->message("You've completed the game by acquiring a living space!");
-              player->message("Welcome to your new apartment!");
-              player->message("A hero is you!");
-              return false;
-            });
-          } else if (floor1->has_exit("east")) {
-            says(realtor, "I hope you like your new apartment!");
-          } else {
-            says(realtor, "Come back when you got some money, punk!");
-          }
-          return true;
-        });
         // }}}
 
         auto hobo = make_shared<Actor>("hobo", "Friendly(?) hobo");
@@ -248,8 +206,9 @@ namespace hoboquest {
         hobo->move_to(areas.get("shelter"));
 
         // Start game
-        player->give_money(1000);
+        player->add_money(1000);
         player->move_to(areas.get("alley"));
+        make_shared<MainQuest>(*this, realtor, areas.get("apartment"), areas.get("floor1"))->start();
       }
   };
 }

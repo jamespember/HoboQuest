@@ -67,14 +67,6 @@ namespace hoboquest {
       player->out() << "Unequipped " << *e << std::endl;
       return true;
     });
-    player->observe("got_money", [player](shared_ptr<Entity> e) {
-      player->out() << "You recieved some money, current cash: " << player->money() << std::endl;
-      return true;
-    });
-    player->observe("lost_money", [player](shared_ptr<Entity> e) {
-      player->out() << "You lost some money, current cash: " << player->money() << std::endl;
-      return true;
-    });
     player->observe("entered", [player](shared_ptr<Entity> e) {
       player->out() << "Entering ";
       e->describe(player->out());

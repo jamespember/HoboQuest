@@ -18,6 +18,7 @@ namespace hoboquest {
       std::istream & _in;
       std::ostream & _out;
       Entity *_entity_ptr;
+      bool _quitting;
 
     public:
       PtrMap<Area> areas;
@@ -32,6 +33,13 @@ namespace hoboquest {
       std::deque<std::string> read_command();
       bool tick();
       void loop();
+
+      void quit();
+
+      void connect_areas(const std::string &area_a, const std::string &dir_a,
+          const std::string &dir_b, const std::string &area_b);
+
+      void talk(std::shared_ptr<Actor> who, const std::string &what) const;
 
       void import_entity(const std::unordered_map<std::string, std::string> &data);
   };
