@@ -17,6 +17,7 @@ namespace hoboquest {
     protected:
       std::istream & _in;
       std::ostream & _out;
+      Entity *_entity_ptr;
 
     public:
       PtrMap<Area> areas;
@@ -25,6 +26,8 @@ namespace hoboquest {
       std::shared_ptr<Player> player;
 
       Engine(std::istream &in_s, std::ostream &out_s);
+
+      virtual ~Engine();
 
       std::deque<std::string> read_command();
       bool tick();

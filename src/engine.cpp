@@ -13,6 +13,11 @@ namespace hoboquest {
   Engine::Engine(std::istream &in, std::ostream &out) :
   _in(in), _out(out) {
     player = std::make_shared<Player>(in, out);
+    _entity_ptr = new Actor("dummy", "Dummy actor to demonstrate memory management");
+  }
+
+  Engine::~Engine() {
+    delete _entity_ptr;
   }
 
   bool Engine::tick() {
