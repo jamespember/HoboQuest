@@ -47,8 +47,8 @@ namespace hoboquest {
       Game(istream &in, ostream &out) : Engine(in, out) {
         _out << "Welcome to HoboQuest!\n";
         _out << "You are a sad, homeless, piece of junk. To all other \n";
-        _out << "characters in the game you're dirt. You need to get a\n";
-        _out << "place to live asap so the society will respect you!\n";
+        _out << "characters in the game you are dirt. You need to find\n";
+        _out << "a place to live asap so the society will respect you!\n";
         _out << "\n";
         _out << "Important commands:\n";
         _out << "go <direction>       Move between areas\n";
