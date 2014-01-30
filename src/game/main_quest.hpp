@@ -10,15 +10,15 @@ using namespace std;
 namespace hoboquest {
   class MainQuest : public Quest {
     protected:
-      shared_ptr<Area> apartment, hall;
       shared_ptr<Actor> realtor;
+      shared_ptr<Area> apartment, hall;
       shared_ptr<Player> player;
 
     public:
       MainQuest(Engine &engine,
-          shared_ptr<Area> apartment, shared_ptr<Area> hall, shared_ptr<Actor> realtor) :
+          shared_ptr<Actor> realtor, shared_ptr<Area> apartment, shared_ptr<Area> hall) :
       Quest("main_quest", "Acquire living space", engine),
-      apartment(apartment), hall(hall), realtor(realtor) {
+      realtor(realtor), apartment(apartment), hall(hall) {
         player = _engine.player;
         progress("Fulfill your biggest dream by acquiring someplace to live.");
 
@@ -37,6 +37,7 @@ namespace hoboquest {
             this->say("Nice, it's located on the first floor.");
             this->say("Thanks for the deal sucker, see you later!");
             this->realtor->add_money(this->player->remove_money(1000));
+            this->complete();
           } else if (this->completed()) {
             this->say("I hope you like your new apartment!");
           } else {
@@ -65,6 +66,7 @@ namespace hoboquest {
           player->message("You've completed the game by acquiring a living space!");
           player->message("Welcome to your new apartment!");
           player->message("A hero is you!");
+          _engine.quit();
           return false;
         });
 

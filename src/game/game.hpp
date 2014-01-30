@@ -84,9 +84,9 @@ namespace hoboquest {
         add_area("floor0", "Apartments, bottom floor",
             "Bottom floor of a large apartments building.");
         add_area("floor1", "Apartments, 1st floor",
-            "Hallway on the first floor of the aparments building.");
+            "Hallway on the first floor of the apartments building.");
         add_area("floor2", "Apartments, 2nd floor",
-            "Hallway on the second floor of the aparments building.");
+            "Hallway on the second floor of the apartments building.");
         add_area("roof", "Roof",
             "The rooftop area of a a large apartments building.");
         add_area("apartment", "Apartment",
@@ -207,7 +207,7 @@ namespace hoboquest {
         // Start game
         player->add_money(1000);
         player->move_to(areas.get("alley"));
-        make_shared<MainQuest>(*this, areas.get("floor1"), areas.get("apartment"), realtor)->start();
+        make_shared<MainQuest>(*this, realtor, areas.get("apartment"), areas.get("floor1"))->start();
       }
   };
 }
