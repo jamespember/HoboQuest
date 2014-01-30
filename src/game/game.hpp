@@ -115,8 +115,8 @@ namespace hoboquest {
         beer->set_description("A lovely non-alcoholic(?) beverage.");
         beer->set_hp_modifier(-5);
         beer->observe("consumed", [this](shared_ptr<Entity> e) {
-        	player->message("You drank the beer and lost 5 hp."); return false;
-      	});
+          player->message("You drank the beer and lost 5 hp."); return false;
+        });
         areas.get("pub")->add_item(beer);
         // }}}
 
@@ -146,12 +146,12 @@ namespace hoboquest {
         cat_lady->move_to(areas.get("park"));
         auto cat_quest = make_shared<CatQuest>(*this, areas, cat_lady);
         cat_lady->observe("interact", [&, cat_lady](shared_ptr<Entity> e) {
-         	if (player->completed_quest("cat_quest")) {
-           	talk(cat_lady, "AAAAH GI DI BAAAAAAAAAAH!!!");
+          if (player->completed_quest("cat_quest")) {
+            talk(cat_lady, "AAAAH GI DI BAAAAAAAAAAH!!!");
           } else if (!player->has_quest("cat_quest")) {
-        		talk(cat_lady, "AHH GA DI BA DI AAAAAAH!");
-		    		talk(cat_lady, "Find cats ... GAAAAAH ... get money!");
-		    		talk(cat_lady, "AAAHHH GIII DAA BAAAAA");
+            talk(cat_lady, "AHH GA DI BA DI AAAAAAH!");
+            talk(cat_lady, "Find cats ... GAAAAAH ... get money!");
+            talk(cat_lady, "AAAHHH GIII DAA BAAAAA");
             cat_quest->start();
             //player->quests.add(cat_quest);
           } else {
