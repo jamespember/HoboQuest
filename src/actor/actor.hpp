@@ -9,7 +9,7 @@
 #include <memory>
 
 namespace hoboquest {
-	class Area;
+  class Area;
 
   class Actor : public ContainerEntity {
 

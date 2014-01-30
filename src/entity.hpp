@@ -8,6 +8,7 @@
 
 namespace hoboquest {
   class Entity;
+  class Engine;
 
   class Entity : public Subject<Entity>, public std::enable_shared_from_this<Entity> {
     public:
@@ -41,12 +42,13 @@ namespace hoboquest {
 
       virtual void describe_short(std::ostream &out) const {
         out << _name << " (" << _id << ")";
-        if (_description != "")  out << ", " << _description;
       }
 
       virtual void describe(std::ostream &out) const {
         describe_short(out);
         out << std::endl;
+        if (!_description.empty())
+          out << _description << std::endl;
       }
   };
 

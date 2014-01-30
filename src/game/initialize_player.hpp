@@ -13,6 +13,7 @@
 #include "../command/interact.hpp"
 #include "../command/inventory.hpp"
 #include "../command/quest.hpp"
+#include "../command/wait.hpp"
 
 using namespace std;
 
@@ -39,44 +40,53 @@ namespace hoboquest {
     ADD_CMD(Equip)
     ADD_CMD(Unequip)
     ADD_CMD(Quest)
+    ADD_CMD(Wait)
     ADD_CMD(Exit)
     //}}}
 
     //{{{ Player events
     player->observe("picked_up", [player](shared_ptr<Entity> e) {
-      player->out() << "Picked up " << *e << std::endl;
+      player->out() << "Picked up " << *e << "." << endl;
       return true;
     });
     player->observe("dropped", [player](shared_ptr<Entity> e) {
-      player->out() << "Dropped " << *e << std::endl;
+      player->out() << "Dropped " << *e << "." << endl;
       return true;
     });
     player->observe("gave", [player](shared_ptr<Entity> e) {
-      player->out() << "Gave away " << *e << std::endl;
+      player->out() << "Gave away " << *e << "." << endl;
       return true;
     });
     player->observe("stole", [player](shared_ptr<Entity> e) {
-      player->out() << "Stole " << *e << std::endl;
+      player->out() << "Stole " << *e << "." << endl;
       return true;
     });
     player->observe("equipped", [player](shared_ptr<Entity> e) {
-      player->out() << "Equipped " << *e << std::endl;
+      player->out() << "Equipped " << *e << "." << endl;
       return true;
     });
     player->observe("unequipped", [player](shared_ptr<Entity> e) {
-      player->out() << "Unequipped " << *e << std::endl;
+      player->out() << "Unequipped " << *e << "." << endl;
       return true;
     });
     player->observe("entered", [player](shared_ptr<Entity> e) {
-      player->out() << "Entering ";
-      e->describe(player->out());
+      player->out() << "Entering " << *e << "." << endl;
+      return true;
+    });
+    player->observe("location_added_actor", [player](shared_ptr<Entity> e) {
+      player->out() << *e << " entered the area." << endl;
+      return true;
+    });
+    player->observe("location_removed_actor", [player](shared_ptr<Entity> e) {
+      auto actor = static_pointer_cast<Actor>(e);
+      player->out() << *e << " left the area, heading towards " << *(actor->location()) << "." << endl;
       return true;
     });
     player->observe("interact", [player](shared_ptr<Entity> e) {
       if (e == player)
         player->message("You can't interact with yourself, you're not schizophrenic!");
       else
-        player->out() << e->name() << " tries to interact with you." << std::endl;
+        player->out() << e->name() << " tries to interact with you." << endl;
       return true;
     });
     player->observe("quest_started", [player](shared_ptr<Entity> e) {
@@ -92,7 +102,7 @@ namespace hoboquest {
       return true;
     });
     player->observe("quest_completed", [player](shared_ptr<Entity> e) {
-      player->out() << "Quest completed: " << e->name() << std::endl;
+      player->out() << "Quest completed: " << e->name() << endl;
       return true;
     });
     //}}}

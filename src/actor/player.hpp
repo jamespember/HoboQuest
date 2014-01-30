@@ -16,6 +16,7 @@ namespace hoboquest {
     protected:
       std::istream &_in;
       std::ostream &_out;
+      unsigned _turns_stationary;
 
     public:
       Commandable commands;

@@ -14,10 +14,15 @@ namespace hoboquest {
 	class Actor;
 
 	class Area : public ContainerEntity {
+    public:
+      typedef std::unordered_map<std::string, std::shared_ptr<Area>> exit_map;
+
 		protected:
 			PtrMap<Actor> _actors;
 			std::string _description;
-			std::unordered_map<std::string, std::shared_ptr<Area>> _exits;
+			exit_map _exits;
+
+      void notify_actors(const std::string &event, std::shared_ptr<Entity> source);
 
 		public:
       Area(const std::string &id, const std::string &name);
@@ -26,6 +31,7 @@ namespace hoboquest {
     	bool has_exit(const std::string &direction) const;
     	std::shared_ptr<Area> get_exit(const std::string &direction) const;
     	std::shared_ptr<Area> remove_exit(const std::string &direction);
+      const exit_map & exits() const;
 
 			bool add_actor(std::shared_ptr<Actor> actor);
 			bool has_actor(const std::string &id) const;

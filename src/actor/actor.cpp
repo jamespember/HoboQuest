@@ -69,11 +69,12 @@ namespace hoboquest {
   }
 
   void Actor::move_to(std::shared_ptr<Area> area) {
-    if (_location != nullptr) {
-      notify("exited", _location);
-      _location->remove_actor(_id);
+    auto previous = _location;
+    if (previous != nullptr) {
+      previous->remove_actor(_id);
     }
     _location = area;
+    notify("exited", previous);
     notify("entered", _location);
     area->add_actor(std::static_pointer_cast<Actor>(shared_from_this()));
   }

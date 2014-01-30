@@ -22,7 +22,6 @@ namespace hoboquest {
 
     public:
       PtrMap<Area> areas;
-      PtrMap<Item> items;
       PtrMap<Actor> actors;
       std::shared_ptr<Player> player;
 
@@ -35,6 +34,8 @@ namespace hoboquest {
       void loop();
 
       void quit();
+
+      void add_actor(std::shared_ptr<Actor> who, const std::string &where);
 
       void connect_areas(const std::string &area_a, const std::string &dir_a,
           const std::string &dir_b, const std::string &area_b);

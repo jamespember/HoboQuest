@@ -10,7 +10,12 @@
 namespace hoboquest {
 
   Player::Player(std::istream &in, std::ostream &out) :
-    Actor::Actor("player", "Player"), _in(in), _out(out) {}
+    Actor::Actor("player", "Player"), _in(in), _out(out), _turns_stationary(0) {
+      observe("entered", [this](std::shared_ptr<Entity> e) {
+        this->_turns_stationary = 0;
+        return true;
+      });
+    }
 
   CommandOutcome Player::execute(const std::string &command, std::deque<std::string> &args) {
     return commands.execute(command, args, *this);
@@ -43,12 +48,19 @@ namespace hoboquest {
   bool Player::interact() {
     Player::token_container tokens;
 
+
+    if (_turns_stationary++ < 1) {
+      _out << std::endl << "Location: ";
+      _location->describe(_out);
+    }
+
     while (1) {
       tokens = command_prompt();
 
       std::string command = tokens.front();
       tokens.pop_front();
 
+      _out << std::endl;
       CommandOutcome outcome = execute(command, tokens);
 
       switch (outcome) {

@@ -20,8 +20,7 @@ namespace hoboquest {
     public:
       const unsigned UNLIMITED_CAPACITY = 10e8;
 
-      ContainerEntity(Entity::Type type, const std::string &id,
-          const std::string &name);
+      ContainerEntity(Entity::Type type, const std::string &id, const std::string &name);
 
       unsigned carrying() const;
       unsigned capacity() const;

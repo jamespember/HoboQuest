@@ -8,9 +8,18 @@ namespace hoboquest {
   Area::Area(const std::string &id, const std::string &name) :
     ContainerEntity(Entity::AREA, id, name) {}
 
+  void Area::notify_actors(const std::string &event, std::shared_ptr<Entity> source) {
+    if (_actors.get_map().empty())
+      return;
+    for (auto &kv : _actors.get_map())
+      if (kv.second != source)
+        kv.second->notify(event, source);
+  }
+
   void Area::add_exit(const std::string &direction, std::shared_ptr<Area> exit)  {
     _exits[direction] = exit;
-    notify("add_exit", exit);
+    notify("added_exit", exit);
+    notify_actors("location_added_exit", exit);
   }
 
   bool Area::has_exit(const std::string &direction) const {
@@ -27,14 +36,22 @@ namespace hoboquest {
     auto exit = get_exit(direction);
     if (exit != nullptr) {
       _exits.erase(direction);
-      notify("remove_exit", exit);
+      notify("removed_exit", exit);
+      notify_actors("location_removed_exit", exit);
     }
     return exit;
   }
 
+  const Area::exit_map & Area::exits() const {
+    return _exits;
+  }
+
   bool Area::add_actor(std::shared_ptr<Actor> actor) {
     bool result = _actors.add(actor);
-    if (result) notify("on_enter", actor);
+    if (result) {
+      notify("on_enter", actor);
+      notify_actors("location_added_actor", actor);
+    }
     return result;
   }
 
@@ -48,8 +65,10 @@ namespace hoboquest {
 
   void Area::remove_actor(const std::string &id) {
     auto removed = _actors.remove(id);
-    if (removed)
+    if (removed) {
       notify("on_exit", removed);
+      notify_actors("location_removed_actor", removed);
+    }
   }
 
   void Area::describe_exits(std::ostream &out) const {
@@ -70,7 +89,7 @@ namespace hoboquest {
     out << "Actors:" << std::endl;
     for (const auto &kv : map)
       if (kv.first != "player")
-        out << "  " << kv.first << ": " << kv.second->name() << std::endl;
+        out << "  " << *(kv.second) << std::endl;
   }
 
   void Area::describe(std::ostream &out) const {

@@ -13,6 +13,7 @@ namespace hoboquest {
   Engine::Engine(std::istream &in, std::ostream &out) :
   _in(in), _out(out), _quitting(false) {
     player = std::make_shared<Player>(in, out);
+
     _entity_ptr = new Actor("dummy", "Dummy actor to demonstrate memory management");
   }
 
@@ -20,6 +21,10 @@ namespace hoboquest {
     delete _entity_ptr;
   }
 
+  void Engine::add_actor(std::shared_ptr<Actor> who, const std::string &where) {
+    actors.add(who);
+    who->move_to(areas.get(where));
+  }
 
   void Engine::connect_areas(const std::string &area_a, const std::string &dir_a,
       const std::string &dir_b, const std::string &area_b) {
@@ -38,7 +43,7 @@ namespace hoboquest {
     if (!player->interact())
       return false;
 
-    _out << "tick...\n";
+    player->tick();
 
     for (auto actor : actors.get_map())
       actor.second->tick();

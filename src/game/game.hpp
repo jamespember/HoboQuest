@@ -4,6 +4,7 @@
 #include "../engine.hpp"
 #include "../item/consumable.hpp"
 #include "../item/equippable.hpp"
+#include "../actor/walker.hpp"
 
 #include "initialize_player.hpp"
 
@@ -30,20 +31,22 @@ namespace hoboquest {
 
     public:
       Game(istream &in, ostream &out) : Engine(in, out) {
+        // {{{ Output welcome text
         _out << "Welcome to HoboQuest!\n";
         _out << "You are a sad, homeless, piece of junk. To all other \n";
         _out << "characters in the game you are dirt. You need to find\n";
-        _out << "a place to live asap so the society will respect you!\n";
+        _out << "a place to live asap so society will respect you!\n";
         _out << "\n";
         _out << "Important commands:\n";
-        _out << "go <direction>       Move between areas\n";
+        _out << "help                 List all commands\n";
+        _out << "go <direction>       Move between areas (shorthand aliases available)\n";
         _out << "pickup <item>        Pick up an item\n";
         _out << "drop <item>          Drop an item in inventory\n";
         _out << "inventory            List items in inventory\n";
         _out << "interact <actor>     Interact with character\n";
         _out << "consume <item>       Eat/drink a consumable item\n";
-        _out << "help                 List all commands\n";
         _out << "\n";
+        // }}}
 
         // Initialize player
         initialize_player(player);
@@ -124,6 +127,7 @@ namespace hoboquest {
         // {{{ cop @ police_station
         auto cop = make_shared<Actor>("cop", "Cop");
         cop->set_description("Random badge-wearer.");
+        add_actor(cop, "police_station");
 
         cop->observe("interact", [this, cop](shared_ptr<Entity> e) {
           if (player->completed_quest("gun_quest")) {
@@ -138,14 +142,12 @@ namespace hoboquest {
           }
           return true;
         });
-
-        areas.get("police_station")->add_actor(cop);
         // }}}
         // {{{ cat_lady @ park
         auto cat_lady = make_shared<Actor>("cat_lady", "Crazy Cat Lady");
         cat_lady->set_description("No one can understand her, not even her cats.");
-        cat_lady->move_to(areas.get("park"));
-        
+        add_actor(cat_lady, "park");
+
         auto cat_quest = make_shared<CatQuest>(*this, areas, cat_lady);
         
         cat_lady->observe("interact", [this, cat_lady, cat_quest](shared_ptr<Entity> e) {
@@ -168,8 +170,8 @@ namespace hoboquest {
         });
         // }}}
         // {{{ joe @ roof
-        auto crazy_joe = make_shared<Actor>("joe", "Crazy Joe");
-        crazy_joe->move_to(areas.get("roof"));
+        auto joe = make_shared<Actor>("joe", "Crazy Joe");
+        add_actor(joe, "roof");
 
         areas.get("roof")->observe("on_enter", [this](shared_ptr<Entity> e) {
           if (e == player && this->areas.get("roof")->has_actor("joe")) {
@@ -179,11 +181,11 @@ namespace hoboquest {
           return false;
         });
 
-        crazy_joe->observe("interact", [this, crazy_joe](shared_ptr<Entity> e) {
-          talk(crazy_joe, "GERONIMOOOOOO!");
-          crazy_joe->go("east");
-          crazy_joe->kill();
-          crazy_joe->set_description("Corpse of Crazy Joe");
+        joe->observe("interact", [this, joe](shared_ptr<Entity> e) {
+          talk(joe, "GERONIMOOOOOO!");
+          joe->go("east");
+          joe->kill();
+          joe->set_description("Corpse of Crazy Joe");
           player->message("Crazy Joe is no more. Happy now?");
           return false;
         });
@@ -197,18 +199,21 @@ namespace hoboquest {
             talk(kid, "What's up doc?");
             return true;
         });
-        kid->move_to(areas.get("park"));
+        add_actor(kid, "park");
         // }}}
         // {{{ realtor @ floor0
         auto realtor = make_shared<Actor>("realtor", "Real eastate agent");
-        realtor->move_to(areas.get("floor0"));
+        add_actor(realtor, "floor0");
+        // }}}
+        // {{{ walker @ main_street
+        auto walker = make_shared<Walker>("walker", "Texas Ranger");
+        add_actor(walker, "main_street");
         // }}}
 
         auto hobo = make_shared<Actor>("hobo", "Friendly(?) hobo");
+        add_actor(hobo, "shelter");
         auto bartender = make_shared<Actor>("bartender", "Bartender");
-
-        bartender->move_to(areas.get("pub"));
-        hobo->move_to(areas.get("shelter"));
+        add_actor(bartender, "pub");
 
         // Start game
         player->move_to(areas.get("alley"));
