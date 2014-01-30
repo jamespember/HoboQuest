@@ -55,12 +55,13 @@ namespace hoboquest {
     }
 
     while (1) {
+      _out << std::endl;
       tokens = command_prompt();
+      _out << std::endl;
 
       std::string command = tokens.front();
       tokens.pop_front();
 
-      _out << std::endl;
       CommandOutcome outcome = execute(command, tokens);
 
       switch (outcome) {
