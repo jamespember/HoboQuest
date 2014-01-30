@@ -20,6 +20,19 @@ namespace hoboquest {
     delete _entity_ptr;
   }
 
+
+  void Engine::connect_areas(const std::string &area_a, const std::string &dir_a,
+      const std::string &dir_b, const std::string &area_b) {
+    if (!areas.has(area_a) || !areas.has(area_b)) {
+      _out << "Can't connect '" << area_a << "' with '" << area_b << "'\n";
+      return;
+    }
+
+    auto a = areas.get(area_a), b = areas.get(area_b);
+    a->add_exit(dir_a, b);
+    b->add_exit(dir_b, a);
+  }
+
   bool Engine::tick() {
     // Player interaction (stop game on false return value)
     if (!player->interact())
@@ -35,6 +48,11 @@ namespace hoboquest {
 
   void Engine::loop() {
     while (tick());
+  }
+
+
+  void Engine::talk(std::shared_ptr<Actor> who, const std::string &what) const {
+    player->out() << who->name() << " says: " << what << std::endl;
   }
 
   void Engine::import_entity(const std::unordered_map<std::string, std::string> &data) {

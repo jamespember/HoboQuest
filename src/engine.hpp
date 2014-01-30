@@ -33,6 +33,12 @@ namespace hoboquest {
       bool tick();
       void loop();
 
+      void connect_areas(const std::string &area_a, const std::string &dir_a,
+          const std::string &dir_b, const std::string &area_b);
+
+      void talk(std::shared_ptr<Actor> who, const std::string &what) const;
+
+
       void import_entity(const std::unordered_map<std::string, std::string> &data);
   };
 }
