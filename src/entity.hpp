@@ -41,6 +41,7 @@ namespace hoboquest {
 
       virtual void describe_short(std::ostream &out) const {
         out << _name << " (" << _id << ")";
+        if (_description != "")  out << ", " << _description;
       }
 
       virtual void describe(std::ostream &out) const {
