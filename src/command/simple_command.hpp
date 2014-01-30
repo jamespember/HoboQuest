@@ -3,7 +3,7 @@
 
 #include "command.hpp"
 
-#include <list>
+#include <deque>
 #include <string>
 #include <functional>
 
@@ -11,7 +11,7 @@ namespace hoboquest {
   class Player;
 
   // FIXME: Change return type to CommandOutcome
-  typedef std::function<bool(Player&, std::list<std::string>&)> command_function;
+  typedef std::function<bool(Player&, std::deque<std::string>&)> command_function;
 
   class SimpleCommand : public Command {
     protected:
@@ -23,7 +23,7 @@ namespace hoboquest {
 
       ~SimpleCommand();
 
-      CommandOutcome execute(Player &player, std::list<std::string> &args);
+      CommandOutcome execute(Player &player, std::deque<std::string> &args);
 
   };
 } /* hoboquest */ 

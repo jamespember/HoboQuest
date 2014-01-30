@@ -33,6 +33,9 @@ namespace hoboquest {
   void Item::on_equip(std::shared_ptr<Actor> actor) {
     notify("equipped", actor);
   }
+  void Item::on_unequip(std::shared_ptr<Actor> actor) {
+    notify("unequipped", actor);
+  }
 
   void Item::describe(std::ostream &out) const {
     Entity::describe(out);

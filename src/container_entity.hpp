@@ -13,12 +13,12 @@
 #include <memory>
 
 namespace hoboquest {
-	class ContainerEntity : public Entity {
-		protected:
+  class ContainerEntity : public Entity {
+    protected:
       PtrMap<Item> _items;
       unsigned _capacity, _carrying, _money;
 
-		public:
+    public:
       const unsigned UNLIMITED_CAPACITY = 10e8;
       
       ContainerEntity(Entity::Type type, const std::string &id,
@@ -58,15 +58,15 @@ namespace hoboquest {
         return _money > 0 || !_items.get_map().empty();
       }
 
-			bool has_item(const std::string &id) const {
-				return _items.has(id);
-			}
+      bool has_item(const std::string &id) const {
+        return _items.has(id);
+      }
 
       std::shared_ptr<Item> get_item(const std::string &id) const {
-				return _items.get(id);
-			}
+        return _items.get(id);
+      }
 
-			bool add_item(std::shared_ptr<Item> item) {
+      bool add_item(std::shared_ptr<Item> item) {
         bool success = _items.add(item);
         if (success) {
           _carrying += item->weight();
@@ -76,7 +76,7 @@ namespace hoboquest {
             notify("over_encumbered", shared_from_this());
         }
         return success;
-			}
+      }
 
       // Drops and returns item if present, otherwise returns nullptr
       std::shared_ptr<Item> remove_item(const std::string &id) {
@@ -86,8 +86,8 @@ namespace hoboquest {
           notify("removed_item", item);
           item->notify("removed_from", shared_from_this());
         }
-				return item;
-			}
+        return item;
+      }
 
       void describe_carrying(std::ostream &out) const {
         out << _carrying;
@@ -115,7 +115,7 @@ namespace hoboquest {
         // out << std::endl;
         describe_contents(out);
       }
-	};
+  };
 } /* hoboquest  */
 
 #endif

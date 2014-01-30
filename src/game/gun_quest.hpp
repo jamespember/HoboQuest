@@ -19,7 +19,7 @@ namespace hoboquest {
       location(location), actor(actor) {
         progress(actor->name() + " is missing his precious sidearm, you should look for it.");
 
-        gun = make_shared<Equippable>("gun", "Gun");
+        gun = make_shared<Equippable>("gun", "Gun", 0, 15);
         gun->set_weight(2);
         gun->set_value(100);
         
@@ -40,6 +40,13 @@ namespace hoboquest {
           this->complete();
           return false;
         });
+
+        Quest::on_start();
+      }
+
+      void on_complete() {
+        _engine.player->give_money(100);
+        Quest::on_complete();
       }
   };
 } /* hoboquest */ 

@@ -4,7 +4,7 @@
 #include "../player.hpp"
 
 #include <memory>
-#include <list>
+#include <deque>
 #include <string>
 #include <iostream>
 
@@ -57,7 +57,7 @@ namespace hoboquest {
   }
 
   CommandOutcome Commandable::execute(const std::string &name,
-      std::list<std::string> &args, Player &player) {
+      std::deque<std::string> &args, Player &player) {
     auto it = get_iterator(name);
     if (it == _commands.end())
       return CommandOutcome::NOT_FOUND;

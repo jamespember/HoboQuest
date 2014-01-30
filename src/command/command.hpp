@@ -1,7 +1,7 @@
 #ifndef HOBO_COMMAND
 #define HOBO_COMMAND
 
-#include <list>
+#include <deque>
 #include <string>
 #include <ostream>
 
@@ -29,7 +29,7 @@ namespace hoboquest {
 
       bool responds_to(const std::string &cmd) const;
 
-      virtual CommandOutcome execute(Player &player, std::list<std::string> &args) = 0;
+      virtual CommandOutcome execute(Player &player, std::deque<std::string> &args) = 0;
 
   };
 

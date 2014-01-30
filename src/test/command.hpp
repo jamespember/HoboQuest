@@ -5,7 +5,7 @@
 #include "../player.hpp"
 
 #include <cassert>
-#include <list>
+#include <deque>
 #include <string>
 
 using namespace std;
@@ -14,21 +14,21 @@ using namespace hoboquest;
 namespace {
   struct TestCommand1 : public Command {
     TestCommand1() : Command("test1") {}
-    CommandOutcome execute(Player &player, std::list<std::string> &args) {
+    CommandOutcome execute(Player &player, std::deque<std::string> &args) {
       return SUCCESS;
     }
   };
 
   struct FailingCommand : public Command {
     FailingCommand() : Command("failing", "fail") {}
-    CommandOutcome execute(Player &player, std::list<std::string> &args) {
+    CommandOutcome execute(Player &player, std::deque<std::string> &args) {
       return ERROR;
     }
   };
 
   struct ArgsCommand : public Command {
     ArgsCommand() : Command("args") {}
-    CommandOutcome execute(Player &player, std::list<std::string> &args) {
+    CommandOutcome execute(Player &player, std::deque<std::string> &args) {
       return args.back() == "second" ? SUCCESS : ERROR;
     }
   };
@@ -36,7 +36,7 @@ namespace {
 
 void test_command() {
   Player p(cin, cout);
-  list<string> args = {"first", "second"};
+  deque<string> args = {"first", "second"};
 
   TestCommand1 tc;
   assert(tc.name == "test1");

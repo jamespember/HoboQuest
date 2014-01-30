@@ -4,7 +4,7 @@
 #include "command.hpp"
 #include "../player.hpp"
 
-#include <list>
+#include <deque>
 #include <string>
 
 namespace hoboquest {
@@ -12,7 +12,7 @@ namespace hoboquest {
     public:
       HelpCommand() : Command("help", "h") {}
 
-      CommandOutcome execute(Player &player, std::list<std::string> &args) {
+      CommandOutcome execute(Player &player, std::deque<std::string> &args) {
         player.message("Available commands:");
         player.out() << player.commands;
         return NOOP;

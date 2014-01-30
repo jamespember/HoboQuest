@@ -4,7 +4,7 @@
 #include "command.hpp"
 #include "../player.hpp"
 
-#include <list>
+#include <deque>
 #include <string>
 
 namespace hoboquest {
@@ -13,7 +13,7 @@ namespace hoboquest {
     public:
       InteractCommand() : Command("interact", "i") {}
 
-      CommandOutcome execute(Player &player, std::list<std::string> &args) {
+      CommandOutcome execute(Player &player, std::deque<std::string> &args) {
         auto location = player.location();
 
         if (location == nullptr) {

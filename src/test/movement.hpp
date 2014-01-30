@@ -8,7 +8,7 @@
 
 #include <cassert>
 #include <memory>
-#include <list>
+#include <deque>
 #include <string>
 
 using namespace std;
@@ -16,7 +16,7 @@ using namespace hoboquest;
 
 void test_movement() {
   auto player = make_shared<Player>(cin, cout);
-  auto args = list<string>();
+  auto args = deque<string>();
 
   auto house = make_shared<Area>("House", "");
   auto garden = make_shared<Area>("Garden", "");

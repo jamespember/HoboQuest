@@ -4,7 +4,7 @@
 #include "command.hpp"
 #include "../player.hpp"
 
-#include <list>
+#include <deque>
 #include <string>
 
 namespace hoboquest {
@@ -13,7 +13,7 @@ namespace hoboquest {
     public:
       InventoryCommand() : Command("inventory", "inv") {}
 
-      CommandOutcome execute(Player &player, std::list<std::string> &args) {
+      CommandOutcome execute(Player &player, std::deque<std::string> &args) {
         auto &out = player.out();
         out << "Player inventory (";
         player.describe_carrying(out);
@@ -30,26 +30,24 @@ namespace hoboquest {
     public:
       PickupCommand() : Command("pickup", "take") {}
 
-      CommandOutcome execute(Player &player, std::list<std::string> &args) {
+      CommandOutcome execute(Player &player, std::deque<std::string> &args) {
         if (args.empty())
           return player.message("Pick up what?"), ERROR;
 
-        auto item = player.location()->remove_item(args.front());
         auto &out = player.out();
+        auto item = player.location()->get_item(args[0]);
 
         if (!item) {
-          out << "There's nothing called '" << args.front() << "' here!\n";
+          out << "There's nothing called '" << args[0] << "' here!\n";
           return ERROR;
         }
 
         // Attempt to add item to inventory
-        if (!player.add_item(item)) {
+        if (!player.pickup(item->id())) {
           out << "You can't pick up " << *item << "." << std::endl; 
-          player.location()->add_item(item);
           return ERROR;
         }
 
-        out << "Picked up " << *item << "." << std::endl; 
         return SUCCESS;
       }
   }; /*}}}*/
@@ -58,27 +56,145 @@ namespace hoboquest {
     public:
       DropCommand() : Command("drop", "leave") {}
 
-      CommandOutcome execute(Player &player, std::list<std::string> &args) {
+      CommandOutcome execute(Player &player, std::deque<std::string> &args) {
         if (args.empty())
-          return player.message("Drop up what?"), ERROR;
+          return player.message("Drop what?"), ERROR;
 
-        auto item = player.remove_item(args.front());
         auto &out = player.out();
+        auto item = player.get_item(args[0]);
 
         if (!item) {
-          out << "There's nothing called '" << args.front() <<
+          out << "There's nothing called '" << args[0] <<
             "' in your inventory!\n";
           return ERROR;
         }
 
         // Attempt to drop item in area
-        if (!player.location()->add_item(item)) {
+        if (!player.drop(item->id())) {
           out << "You can't drop " << *item << " here!" << std::endl; 
-          player.add_item(item);
           return ERROR;
         }
 
-        out << "Dropped " << *item << "." << std::endl; 
+        return SUCCESS;
+      }
+  }; /*}}}*/
+
+  class GiveCommand : public Command { /*{{{*/
+    public:
+      GiveCommand() : Command("give", "g") {}
+
+      CommandOutcome execute(Player &player, std::deque<std::string> &args) {
+        if (args.empty())
+          return player.message("Give what?"), ERROR;
+        if (args.size() < 2)
+          return player.message("Give to whom?"), ERROR;
+
+
+        auto &out = player.out();
+        auto actor = player.location()->get_actor(args[0]);
+
+        if (!actor) {
+          out << "There's no one around known as '" << args[0] << "'.\n";
+          return ERROR;
+        }
+
+        auto item = player.get_item(args[1]);
+
+        if (!item) {
+          out << "You don't have anything called '" << args[0] << "'.\n";
+          return ERROR;
+        }
+
+        if (!player.give(actor, item->id())) {
+          out << "You can't give " << *item << " to " << *actor << "." << std::endl; 
+          return ERROR;
+        }
+
+        return SUCCESS;
+      }
+  }; /*}}}*/
+
+  class StealCommand : public Command { /*{{{*/
+    public:
+      StealCommand() : Command("steal") {}
+
+      CommandOutcome execute(Player &player, std::deque<std::string> &args) {
+        if (args.empty())
+          return player.message("Steal what?"), ERROR;
+        if (args.size() < 2)
+          return player.message("Steal from whom?"), ERROR;
+
+        auto &out = player.out();
+        auto actor = player.location()->get_actor(args[0]);
+
+        if (!actor) {
+          out << "There's no one around known as '" << args[0] << "'.\n";
+          return ERROR;
+        }
+
+        auto item = actor->get_item(args[1]);
+
+        if (!item) {
+          out << actor->name() << " doesn't have anything called '" << args[0] << "'.\n";
+          return ERROR;
+        }
+
+        if (!player.steal(actor, item->id())) {
+          out << "You can't steal " << *item << " from " << *actor << "." << std::endl; 
+          return ERROR;
+        }
+
+        return SUCCESS;
+      }
+  }; /*}}}*/
+
+  class EquipCommand : public Command { /*{{{*/
+    public:
+      EquipCommand() : Command("equip", "eq") {}
+
+      CommandOutcome execute(Player &player, std::deque<std::string> &args) {
+        if (args.empty())
+          return player.message("Equip what?"), ERROR;
+
+        auto &out = player.out();
+        auto item = player.get_item(args[0]);
+
+        if (!item) {
+          out << "There's nothing called '" << args[0] <<
+            "' in your inventory!\n";
+          return ERROR;
+        }
+
+        if (!player.equip(item->id())) {
+          out << "You can't equip " << *item << "." << std::endl; 
+          return ERROR;
+        }
+
+        return SUCCESS;
+      }
+  }; /*}}}*/
+
+  class UnequipCommand : public Command { /*{{{*/
+    public:
+      UnequipCommand() : Command("unequip", "un") {}
+
+      CommandOutcome execute(Player &player, std::deque<std::string> &args) {
+        if (args.empty())
+          return player.message("Unequip what?"), ERROR;
+
+        auto &out = player.out();
+        auto item = player.get_equipment(args[0]);
+
+        if (!item) {
+          out << "You don't have anything equipped called '" << args[0] << "'\n";
+          return ERROR;
+        }
+
+        if (!player.unequip(item->id())) {
+          out << "You can't unequip " << *item << "." << std::endl; 
+          return ERROR;
+        }
+
         return SUCCESS;
       }
   }; /*}}}*/

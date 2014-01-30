@@ -4,6 +4,7 @@
 #include "command.hpp"
 
 #include <memory>
+#include <deque>
 #include <list>
 #include <string>
 
@@ -31,7 +32,7 @@ namespace hoboquest {
       bool has_command(const std::string &name) const;
 
       CommandOutcome execute(const std::string &name,
-          std::list<std::string> &args, Player &player);
+          std::deque<std::string> &args, Player &player);
 
       friend std::ostream & operator << (std::ostream &out, const Commandable &c);
   };

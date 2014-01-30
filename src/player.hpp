@@ -7,11 +7,11 @@
 
 #include <string>
 #include <iostream>
-#include <vector>
+#include <deque>
 
 namespace hoboquest {
   class Player : public Actor {
-    typedef std::list<std::string> token_container;
+    typedef std::deque<std::string> token_container;
 
     protected:
       std::istream &_in;
@@ -23,7 +23,7 @@ namespace hoboquest {
 
       Player(std::istream &in, std::ostream &out);
 
-      CommandOutcome execute(const std::string &command, std::list<std::string> &args);
+      CommandOutcome execute(const std::string &command, std::deque<std::string> &args);
 
       void message(std::string msg);
       std::ostream & out();

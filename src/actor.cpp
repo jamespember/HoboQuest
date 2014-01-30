@@ -2,6 +2,7 @@
 #include "area.hpp"
 #include "container_entity.hpp"
 #include "item/item.hpp"
+#include "item/equippable.hpp"
 
 #include <memory>
 #include <vector>
@@ -58,6 +59,15 @@ namespace hoboquest {
   const std::shared_ptr<Area> Actor::location() const { return _location; }
   std::shared_ptr<Area> Actor::location() { return _location; }
 
+  const std::shared_ptr<Equippable> Actor::get_equipment(const std::string &what) const {
+    return _equipped.get(what);
+  }
+
+  std::shared_ptr<Item> Actor::remove_item(const std::string &id) {
+    unequip(id);
+    return ContainerEntity::remove_item(id);
+  }
+
   void Actor::move_to(std::shared_ptr<Area> area) {
     if (_location != nullptr) {
       notify("exited", _location);
@@ -84,18 +94,76 @@ namespace hoboquest {
     if (!item || !item->is_consumable())
       return false;
 
+    remove_item(what);
+    notify("consumed", std::static_pointer_cast<Entity>(item));
     item->on_consume(std::static_pointer_cast<Actor>(shared_from_this()));
-    remove_item(item->id());
     return true;
   }
 
+  bool Actor::pickup(const std::string &what) {
+    auto loc = location();
+    if (!loc)
+      return false;
+    auto item = loc->get_item(what);
+    if (item && add_item(item)) {
+      loc->remove_item(what);
+      notify("picked_up", std::static_pointer_cast<Entity>(item));
+      return true;
+    }
+    return false;
+  }
+
+  bool Actor::drop(const std::string &what) {
+    auto loc = location();
+    if (!loc)
+      return false;
+    auto item = get_item(what);
+    if (item && loc->add_item(item)) {
+      remove_item(what);
+      notify("dropped", std::static_pointer_cast<Entity>(item));
+      return true;
+    }
+    return false;
+  }
+
+  bool Actor::give(std::shared_ptr<Actor> actor, const std::string &what) {
+    auto item = get_item(what);
+    if (item && actor->add_item(item)) {
+      remove_item(what);
+      notify("gave", std::static_pointer_cast<Entity>(item));
+      return true;
+    }
+    return false;
+  }
+
+  bool Actor::steal(std::shared_ptr<Actor> actor, const std::string &what) {
+    auto item = actor->get_item(what);
+    if (item && add_item(item)) {
+      actor->remove_item(what);
+      notify("stole", std::static_pointer_cast<Entity>(item));
+      return true;
+    }
+    return false;
+  }
+
   bool Actor::equip(const std::string &what) {
-    // TODO: Implement
+    auto item = get_item(what);
+    if (!item->is_equippable())
+      return false;
+    if (item && _equipped.add(std::static_pointer_cast<Equippable>(item))) {
+      notify("equipped", std::static_pointer_cast<Entity>(item));
+      return true;
+    }
     return false;
   }
 
   bool Actor::unequip(const std::string &what) {
-    // TODO: Implement
+    auto item = _equipped.get(what);
+    if (item) {
+      _equipped.remove(what);
+      notify("unequipped", std::static_pointer_cast<Entity>(item));
+      return true;
+    }
     return false;
   }
 
