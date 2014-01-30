@@ -142,7 +142,7 @@ namespace hoboquest {
         areas.get("police_station")->add_actor(cop);
         // }}}
         // {{{ cat_lady @ park
-        auto cat_lady = make_shared<Actor>("cl", "Crazy Cat Lady");
+        auto cat_lady = make_shared<Actor>("cat_lady", "Crazy Cat Lady");
         cat_lady->set_description("No one can understand her, not even her cats.");
         cat_lady->move_to(areas.get("park"));
         
