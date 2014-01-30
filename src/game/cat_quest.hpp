@@ -10,7 +10,7 @@ using namespace std;
 namespace hoboquest {
   class CatQuest : public Quest {
     protected:
-      PtrMap<Area> _areas;
+      PtrMap<Area> &_areas;
       shared_ptr<Actor> _actor;
 
     public:
@@ -32,14 +32,6 @@ namespace hoboquest {
 		      cat->set_value(10);
 		      _areas.get(cat_areas[x])->add_item(cat);
       	}
-      }
-
-      void dummy() {
-        printf("hej!\n");
-      }
-
-      void finish() {
-        this->complete();
       }
 
       void on_start() {

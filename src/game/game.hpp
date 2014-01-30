@@ -143,9 +143,11 @@ namespace hoboquest {
         // }}}
         // {{{ cat_lady @ park
         auto cat_lady = make_shared<Actor>("cat_lady", "Crazy Cat Lady");
+        cat_lady->set_description("No one can understand her, not even her cats.");
         cat_lady->move_to(areas.get("park"));
+
         auto cat_quest = make_shared<CatQuest>(*this, areas, cat_lady);
-        cat_lady->observe("interact", [&, cat_lady](shared_ptr<Entity> e) {
+        cat_lady->observe("interact", [this, cat_lady, cat_quest](shared_ptr<Entity> e) {
           if (player->completed_quest("cat_quest")) {
             talk(cat_lady, "AAAAH GI DI BAAAAAAAAAAH!!!");
           } else if (!player->has_quest("cat_quest")) {
@@ -158,7 +160,7 @@ namespace hoboquest {
             talk(cat_lady, "AAAAH STARTED AAAAAH");
             cat_quest->complete();
           }
-          this->cat_quest->dummy();
+          cat_quest->dummy();
           return true;
         });
         // }}}
