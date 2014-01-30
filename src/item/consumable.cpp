@@ -1,6 +1,6 @@
 #include "consumable.hpp"
 #include "item.hpp"
-#include "../actor.hpp"
+#include "../actor/actor.hpp"
 
 #include <string>
 

@@ -2,7 +2,7 @@
 #define HOBO_INITIALIZE_PLAYER
 
 #include "../entity.hpp"
-#include "../player.hpp"
+#include "../actor/player.hpp"
 
 #include "../command/consume.hpp"
 #include "../command/describe.hpp"

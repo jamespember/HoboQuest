@@ -2,7 +2,7 @@
 #define HOBO_TEST_COMMAND
 
 #include "../command/command.hpp"
-#include "../player.hpp"
+#include "../actor/player.hpp"
 
 #include <cassert>
 #include <deque>

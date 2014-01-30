@@ -1,7 +1,7 @@
 #ifndef HOBO_TEST_MOVEMENT
 #define HOBO_TEST_MOVEMENT
 
-#include "../player.hpp"
+#include "../actor/player.hpp"
 #include "../area.hpp"
 #include "../command/go.hpp"
 #include "../command/go_shorthand.hpp"

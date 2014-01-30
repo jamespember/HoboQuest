@@ -1,9 +1,9 @@
 #ifndef HOBO_ITEM_EQUIPPABLE
 #define HOBO_ITEM_EQUIPPABLE
 
-#include <string>
-
 #include "item.hpp"
+
+#include <string>
 
 namespace hoboquest {
   class Actor;

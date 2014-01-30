@@ -2,8 +2,8 @@
 #define HOBO_PLAYER
 
 #include "actor.hpp"
-#include "quest.hpp"
-#include "command/commandable.hpp"
+#include "../quest.hpp"
+#include "../command/commandable.hpp"
 
 #include <string>
 #include <iostream>

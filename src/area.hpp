@@ -2,7 +2,7 @@
 #define HOBO_AREA
 
 #include "container_entity.hpp"
-#include "actor.hpp"
+#include "actor/actor.hpp"
 #include "util/ptr_map.hpp"
 
 #include <string>

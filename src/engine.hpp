@@ -8,7 +8,7 @@
 #include "area.hpp"
 #include "util/ptr_map.hpp"
 #include "item/item.hpp"
-#include "actor.hpp"
+#include "actor/actor.hpp"
 
 namespace hoboquest {
   class Player;

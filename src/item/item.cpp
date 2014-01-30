@@ -1,6 +1,6 @@
 #include "item.hpp"
 #include "../entity.hpp"
-#include "../actor.hpp"
+#include "../actor/actor.hpp"
 
 #include <memory>
 #include <string>

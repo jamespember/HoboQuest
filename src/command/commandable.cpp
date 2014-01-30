@@ -1,7 +1,7 @@
 #include "commandable.hpp"
 
 #include "command.hpp"
-#include "../player.hpp"
+#include "../actor/player.hpp"
 
 #include <memory>
 #include <deque>

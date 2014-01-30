@@ -1,9 +1,9 @@
 #ifndef HOBO_ACTOR
 #define HOBO_ACTOR
 
-#include "container_entity.hpp"
-#include "area.hpp"
-#include "item/equippable.hpp"
+#include "../container_entity.hpp"
+#include "../area.hpp"
+#include "../item/equippable.hpp"
 
 #include <string>
 #include <memory>

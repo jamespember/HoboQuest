@@ -2,7 +2,7 @@
 #define HOBO_INVENTORY_COMMAND
 
 #include "command.hpp"
-#include "../player.hpp"
+#include "../actor/player.hpp"
 
 #include <deque>
 #include <string>

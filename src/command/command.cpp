@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <string>
-#include "../player.hpp"
+#include "../actor/player.hpp"
 
 namespace hoboquest {
 

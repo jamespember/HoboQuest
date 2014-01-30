@@ -1,11 +1,12 @@
 #ifndef HOBO_TEST_QUEST
 #define HOBO_TEST_QUEST
 
-#include <memory>
-#include <cassert>
+#include "../entity.hpp"
 #include "../quest.hpp"
 #include "../engine.hpp"
-#include "../entity.hpp"
+
+#include <memory>
+#include <cassert>
 
 using namespace std;
 using namespace hoboquest;

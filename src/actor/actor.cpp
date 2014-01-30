@@ -1,8 +1,8 @@
 #include "actor.hpp"
-#include "area.hpp"
-#include "container_entity.hpp"
-#include "item/item.hpp"
-#include "item/equippable.hpp"
+#include "../area.hpp"
+#include "../container_entity.hpp"
+#include "../item/item.hpp"
+#include "../item/equippable.hpp"
 
 #include <memory>
 #include <vector>

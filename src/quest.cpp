@@ -1,7 +1,7 @@
 #include "quest.hpp"
 #include "engine.hpp"
 #include "entity.hpp"
-#include "player.hpp"
+#include "actor/player.hpp"
 
 #include <memory>
 #include <string>

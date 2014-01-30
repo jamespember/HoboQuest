@@ -3,7 +3,7 @@
 
 #include <memory>
 #include <cassert>
-#include "../actor.hpp"
+#include "../actor/actor.hpp"
 
 using namespace std;
 using namespace hoboquest;

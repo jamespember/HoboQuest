@@ -4,7 +4,7 @@
 #include <memory>
 #include <cassert>
 #include "../area.hpp"
-#include "../actor.hpp"
+#include "../actor/actor.hpp"
 #include "../engine.hpp"
 #include "../item/item.hpp"
 #include "../item/equippable.hpp"

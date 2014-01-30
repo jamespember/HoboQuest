@@ -6,8 +6,8 @@
 
 #include "area.hpp"
 #include "item/item.hpp"
-#include "actor.hpp"
-#include "player.hpp"
+#include "actor/actor.hpp"
+#include "actor/player.hpp"
 
 namespace hoboquest {
   Engine::Engine(std::istream &in, std::ostream &out) :

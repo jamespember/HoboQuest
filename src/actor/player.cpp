@@ -1,7 +1,7 @@
 #include "player.hpp"
 
 #include "actor.hpp"
-#include "util/tokenizer.hpp"
+#include "../util/tokenizer.hpp"
 
 #include <deque>
 #include <string>

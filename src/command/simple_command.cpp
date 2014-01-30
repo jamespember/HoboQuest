@@ -1,7 +1,7 @@
 #include "simple_command.hpp"
 
 #include "command.hpp"
-#include "../player.hpp"
+#include "../actor/player.hpp"
 
 #include <deque>
 #include <string>
