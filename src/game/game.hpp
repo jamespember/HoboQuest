@@ -142,23 +142,27 @@ namespace hoboquest {
         areas.get("police_station")->add_actor(cop);
         // }}}
         // {{{ cat_lady @ park
-        auto cat_lady = make_shared<Actor>("cat_lady", "Crazy Cat Lady");
+        auto cat_lady = make_shared<Actor>("cl", "Crazy Cat Lady");
         cat_lady->set_description("No one can understand her, not even her cats.");
         cat_lady->move_to(areas.get("park"));
-
+        
         auto cat_quest = make_shared<CatQuest>(*this, areas, cat_lady);
+        
         cat_lady->observe("interact", [this, cat_lady, cat_quest](shared_ptr<Entity> e) {
           if (player->completed_quest("cat_quest")) {
             talk(cat_lady, "AAAAH GI DI BAAAAAAAAAAH!!!");
           } else if (!player->has_quest("cat_quest")) {
             talk(cat_lady, "AHH GA DI BA DI AAAAAAH!");
-            talk(cat_lady, "Find cats ... GAAAAAH ... get money!");
+            talk(cat_lady, "Find cats ... GAAAAAH ... for DAAAAAAAH meAAAAH!");
             talk(cat_lady, "AAAHHH GIII DAA BAAAAA");
             cat_quest->start();
-            //player->quests.add(cat_quest);
           } else {
-            talk(cat_lady, "AAAAH STARTED AAAAAH");
-            cat_quest->complete();
+            if (cat_quest->has_all_cats()) {
+              cat_quest->complete();
+              talk(cat_lady, "GAAAAAAAAAAAAH CAAAAAAAAATS!!!");  
+            } else {
+              talk(cat_lady, "BAAAAAH MORE CATS GLAAAAAAAAHH!");  
+            }
           }
           return true;
         });
