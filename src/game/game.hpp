@@ -23,7 +23,6 @@ using namespace std;
 namespace hoboquest {
   class Game : public Engine {
     protected:
-
       void add_area(std::shared_ptr<Area> area) {
         areas.add(area);
       }
@@ -56,6 +55,13 @@ namespace hoboquest {
 
         // Initialize player
         initialize_player(player);
+
+        player->observe("died", [this](shared_ptr<Entity> e) {
+          player->message("You have died.");
+          player->message("Game over.");
+          quit();
+          return false;
+        });
 
         /*
            Roof  ------\
@@ -100,7 +106,7 @@ namespace hoboquest {
             "The rooftop area of a a large apartments building.");
         add_area("apartment", "Apartment",
             "Your very own apartment. It looks rat infested.");
-        
+
         auto pub = make_shared<Shop>("pub", "Pub", *this);
         pub->set_description("A pub sometimes filled with people, more or less drunk.");
         pub->observe("on_enter", [this](shared_ptr<Entity> e) {
@@ -136,8 +142,17 @@ namespace hoboquest {
         connect_areas("floor0", "up", "down", "floor1");
         connect_areas("floor1", "up", "down", "floor2");
         connect_areas("floor2", "up", "down", "roof");
-        areas.get("roof")->add_exit("east", areas.get("market"));
         areas.get("apartment")->add_exit("west", areas.get("floor1"));
+        auto roof = areas.get("roof");
+        roof->add_exit("east", areas.get("market"));
+        roof->observe("on_exit", [this](shared_ptr<Entity> e) {
+          if (e == player) {
+            player->message("You jump from the roof down towards the market.");
+            player->kill();
+          }
+          return true;
+        });
+
         // }}}
 
         // Items
@@ -215,9 +230,9 @@ namespace hoboquest {
         auto joe = make_shared<Actor>("joe", "Crazy Joe");
         add_actor(joe, "roof");
 
-        areas.get("roof")->observe("on_enter", [this](shared_ptr<Entity> e) {
-          if (e == player && this->areas.get("roof")->has_actor("joe")) {
-            player->message("Crazy Joe: One step closer and I'll jump! I promise I will!");
+        areas.get("roof")->observe("on_enter", [this, joe](shared_ptr<Entity> e) {
+          if (e == player && joe->alive()) {
+            talk(joe, "One step closer and I'll jump! I promise I will!");
             return true;
           }
           return false;
