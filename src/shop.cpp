@@ -3,10 +3,33 @@
 #include "actor/player.hpp"
 #include "command/buy.hpp"
 
+#include <memory>
+#include <iostream>
+
 namespace hoboquest {
 
   Shop::Shop(const std::string &id, const std::string &name, Engine &engine) : 
   Area(id, name), _engine(engine) {
+    _command = std::make_shared<BuyCommand>();
+
+    observe("on_enter", [this](std::shared_ptr<Entity> e) {
+      // std::cout << "on_enter shop\n";
+      auto player = std::dynamic_pointer_cast<Player>(e);
+      if (player) {
+        player->commands.add_command(_command);
+        player->message("Tip: in here you can use the command \"buy <item>\" to buy an item.");
+      }
+      return true;
+    });
+
+    observe("on_exit", [this](std::shared_ptr<Entity> e) {
+      // std::cout << "on_exit shop\n";
+      auto player = std::dynamic_pointer_cast<Player>(e);
+      if (player) {
+        player->commands.remove_command(_command->name);
+      }
+      return true;
+    });
   }
 
   bool Shop::in_stock(const std::string &item_id) {
@@ -42,16 +65,16 @@ namespace hoboquest {
   }
 
   bool Shop::add_actor(std::shared_ptr<Actor> actor) {
-    _engine.player->message("add_actor");
+    // _engine.player->message("add_actor");
     if (actor == _engine.player) {
-      printf("ADDING PLAYER!\n");
+      // printf("ADDING PLAYER!\n");
       _engine.player->commands.add_command(std::make_shared<BuyCommand>());
     }
     return Area::add_actor(actor);
   }
 
   void Shop::remove_actor(const std::string &id) {
-    _engine.player->message("remove_actor");
+    // _engine.player->message("remove_actor");
     if (id == _engine.player->id()) {
       _engine.player->commands.remove_command("buy");
     }

@@ -8,11 +8,13 @@
 #include <unordered_map>
 
 namespace hoboquest {
+  class BuyCommand;
   
 	class Shop : public Area {
 		protected:
       Engine &_engine;
       std::unordered_map<std::string, std::shared_ptr<Item>> _stock;
+      std::shared_ptr<BuyCommand> _command;
 
 		public:
       Shop(const std::string &id, const std::string &name, Engine &engine);

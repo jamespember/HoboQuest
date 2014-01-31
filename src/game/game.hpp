@@ -86,8 +86,6 @@ namespace hoboquest {
             "The main street of the town, plenty of places to go from here.");
         add_area("market", "Market",
             "The town market. There are not many people around right now.");
-        add_area("pub", "Pub",
-            "A pub filled with people, more or less drunk.");
         add_area("shelter", "Homeless shelter",
             "A state-owned homeless shelter for people lacking a home.");
         add_area("park", "Park",
@@ -109,12 +107,6 @@ namespace hoboquest {
 
         auto pub = make_shared<Shop>("pub", "Pub", *this);
         pub->set_description("A pub sometimes filled with people, more or less drunk.");
-        pub->observe("on_enter", [this](shared_ptr<Entity> e) {
-          if (e == player) {
-            player->message("Tip: in here you can use the command \"buy <item>\" to buy an item.");
-          }
-          return true;
-        });
         add_area(pub);
 
         auto garbage = make_shared<DangerZone>("garbage", "Burning garbage", -5);

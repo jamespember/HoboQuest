@@ -48,8 +48,8 @@ namespace hoboquest {
 
   bool Area::add_actor(std::shared_ptr<Actor> actor) {
     bool result = _actors.add(actor);
-    std::cout << "add_actor in " << id() << ": " << actor->id() << "\n";
     if (result) {
+      // std::cout << "add_actor in " << id() << ": " << actor->id() << "\n";
       notify("on_enter", actor);
       notify_actors("location_added_actor", actor);
     }
@@ -65,9 +65,9 @@ namespace hoboquest {
   }
 
   void Area::remove_actor(const std::string &id) {
-    std::cout << "remove_actor in " << _id << ": " << id << "\n";
     auto removed = _actors.remove(id);
     if (removed) {
+      // std::cout << "remove_actor in " << _id << ": " << id << "\n";
       notify("on_exit", removed);
       notify_actors("location_removed_actor", removed);
     }
