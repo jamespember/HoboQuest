@@ -14,7 +14,7 @@ namespace hoboquest {
       shared_ptr<Actor> _actor;
       vector<string> _cat_ids = {"mjau", "cow", "milk", "catwoman", "curt"};
       vector<string> _cat_names = {"Mr Mjau", "Mr Cow", "Mrs Milk", "Catwoman", "Curt"};
-      vector<string> _cat_areas = {"market", "floor1", "shelter", "alley", "police_station"};
+      vector<string> _cat_areas = {"market", "floor2", "shelter", "alley", "cell"};
 
     public:
       CatQuest(Engine &engine,

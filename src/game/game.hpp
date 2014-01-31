@@ -99,6 +99,7 @@ namespace hoboquest {
             "The rooftop area of a a large apartments building.");
         add_area("apartment", "Apartment",
             "Your very own apartment. It looks rat infested.");
+
         auto pub = make_shared<Shop>("pub", "Pub", *this);
         pub->set_description("A pub filled with people, more or less drunk.");
         add_area(pub);
@@ -203,9 +204,9 @@ namespace hoboquest {
         auto joe = make_shared<Actor>("joe", "Crazy Joe");
         add_actor(joe, "roof");
 
-        areas.get("roof")->observe("on_enter", [this](shared_ptr<Entity> e) {
-          if (e == player && this->areas.get("roof")->has_actor("joe")) {
-            player->message("Crazy Joe: One step closer and I'll jump! I promise I will!");
+        areas.get("roof")->observe("on_enter", [this, joe](shared_ptr<Entity> e) {
+          if (e == player && joe->alive()) {
+            talk(joe, "One step closer and I'll jump! I promise I will!");
             return true;
           }
           return false;
