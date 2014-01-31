@@ -24,8 +24,8 @@ namespace hoboquest {
     if (!_engine.player->quests.add(ptr))
       return false;
     _state = STARTED;
-    _engine.player->notify("quest_started", shared_from_this());
     on_start();
+    _engine.player->notify("quest_started", shared_from_this());
     return true;
   }
 
@@ -33,8 +33,8 @@ namespace hoboquest {
     if (_state == COMPLETED)
       return false;
     _state = COMPLETED;
-    _engine.player->notify("quest_completed", shared_from_this());
     on_complete();
+    _engine.player->notify("quest_completed", shared_from_this());
     return true;
   }
 
