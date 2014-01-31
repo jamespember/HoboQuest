@@ -5,6 +5,7 @@
 #include "../item/consumable.hpp"
 #include "../item/equippable.hpp"
 #include "../actor/walker.hpp"
+#include "../bar.hpp"
 
 #include "initialize_player.hpp"
 
@@ -21,6 +22,10 @@ using namespace std;
 namespace hoboquest {
   class Game : public Engine {
     protected:
+
+      void add_area(std::shared_ptr<Area> area) {
+        areas.add(area);
+      }
 
       void add_area(const string &id, const string &name,
           const string &description) {
@@ -74,8 +79,6 @@ namespace hoboquest {
             "The main street of the town, plenty of places to go from here.");
         add_area("market", "Market",
             "The town market. There are not many people around right now.");
-        add_area("pub", "Pub",
-            "A pub filled with people, more or less drunk.");
         add_area("shelter", "Homeless shelter",
             "A state-owned homeless shelter for people lacking a home.");
         add_area("park", "Park",
@@ -94,6 +97,10 @@ namespace hoboquest {
             "The rooftop area of a a large apartments building.");
         add_area("apartment", "Apartment",
             "Your very own apartment. It looks rat infested.");
+        auto pub = make_shared<Bar>("pub", "Pub");
+        pub->set_description("A pub filled with people, more or less drunk.");
+        add_area(pub);
+
         // }}}
 
         // {{{ Exits
