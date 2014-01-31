@@ -45,7 +45,7 @@ namespace hoboquest {
       }
 
       void on_complete() {
-        _engine.player->add_money(100);
+        _engine.player->add_money(500);
         Quest::on_complete();
       }
   };

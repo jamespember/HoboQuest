@@ -36,7 +36,7 @@ namespace hoboquest {
         for (string cat : _cat_ids) {
           _engine.player->give(_actor, cat);
         }
-        _engine.player->add_money(500);
+        _engine.player->add_money(600);
         Quest::on_complete();
       }
 
