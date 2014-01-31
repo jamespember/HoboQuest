@@ -56,6 +56,13 @@ namespace hoboquest {
         // Initialize player
         initialize_player(player);
 
+        player->observe("died", [this](shared_ptr<Entity> e) {
+          player->message("You have died.");
+          player->message("Game over.");
+          quit();
+          return false;
+        });
+
         /*
            Roof  ------\
             |          |
@@ -124,8 +131,17 @@ namespace hoboquest {
         connect_areas("floor0", "up", "down", "floor1");
         connect_areas("floor1", "up", "down", "floor2");
         connect_areas("floor2", "up", "down", "roof");
-        areas.get("roof")->add_exit("east", areas.get("market"));
         areas.get("apartment")->add_exit("west", areas.get("floor1"));
+        auto roof = areas.get("roof");
+        roof->add_exit("east", areas.get("market"));
+        roof->observe("on_exit", [this](shared_ptr<Entity> e) {
+          if (e == player) {
+            player->message("You jump from the roof down towards the market.");
+            player->kill();
+          }
+          return true;
+        });
+
         // }}}
 
         // Items
