@@ -17,6 +17,8 @@ namespace hoboquest {
 
   Actor::~Actor() {}
 
+  void Actor::init() {}
+
   bool Actor::alive() const  { return _alive; }
   int  Actor::hp() const     { return _hp; }
   int  Actor::hp_max() const { return _hp_max; }

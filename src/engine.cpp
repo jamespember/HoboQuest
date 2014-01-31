@@ -23,6 +23,7 @@ namespace hoboquest {
 
   void Engine::add_actor(std::shared_ptr<Actor> who, const std::string &where) {
     actors.add(who);
+    who->init();
     who->move_to(areas.get(where));
   }
 
@@ -60,7 +61,7 @@ namespace hoboquest {
   }
 
   void Engine::talk(std::shared_ptr<Actor> who, const std::string &what) const {
-    player->out() << who->name() << " says: " << what << std::endl;
+    player->listen(who, what);
   }
 
   void Engine::import_entity(const std::unordered_map<std::string, std::string> &data) {

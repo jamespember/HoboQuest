@@ -146,7 +146,7 @@ namespace hoboquest {
         auto item = actor->get_item(args[1]);
 
         if (!item) {
-          out << actor->name() << " doesn't have anything called '" << args[0] << "'.\n";
+          out << actor->name() << " doesn't have anything called '" << args[1] << "'.\n";
           return ERROR;
         }
 

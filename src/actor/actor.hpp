@@ -25,6 +25,8 @@ namespace hoboquest {
       Actor(const std::string &id, const std::string &name);
       virtual ~Actor();
 
+      virtual void init();
+
       bool alive() const;
       int hp() const;
       int hp_max() const;

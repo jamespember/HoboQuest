@@ -4,7 +4,7 @@
 #include "../engine.hpp"
 #include "../item/consumable.hpp"
 #include "../item/equippable.hpp"
-#include "../actor/walker.hpp"
+#include "../actor/ranger.hpp"
 #include "../shop.hpp"
 
 #include "initialize_player.hpp"
@@ -79,6 +79,8 @@ namespace hoboquest {
             "The main street of the town, plenty of places to go from here.");
         add_area("market", "Market",
             "The town market. There are not many people around right now.");
+        add_area("pub", "Pub",
+            "A pub filled with people, more or less drunk.");
         add_area("shelter", "Homeless shelter",
             "A state-owned homeless shelter for people lacking a home.");
         add_area("park", "Park",
@@ -107,7 +109,6 @@ namespace hoboquest {
           }
           return true;
         });
-
         // }}}
 
         // {{{ Exits
@@ -224,20 +225,46 @@ namespace hoboquest {
         auto ball = make_shared<Item>("ball", "Football");
         ball->set_value(5);
         kid->add_item(ball);
+        kid->add_money(10);
         kid->observe("interacted", [this, kid](shared_ptr<Entity> e) {
+          if (kid->has_item("ball"))
             talk(kid, "What's up doc?");
+          else if (player->has_item("ball"))
+            talk(kid, "You've got my ball? Please give it back!");
+          else
+            talk(kid, "Someone took my ball! Could you help me find it?");
+          return true;
+        });
+        kid->observe("added_item", [this, kid, ball](shared_ptr<Entity> e) {
+          if (e != ball) {
+            talk(kid, "What's this?");
             return true;
+          }
+          talk(kid, "Hey, that's my ball, thanks!");
+          if (kid->money() < 1) {
+            talk(kid, "I'd give you a reward but someone stole my lunch money.");
+          } else {
+            talk(kid, "Here, have my lunch money as a reward.");
+            player->add_money(kid->remove_money());
+          }
+          return false;
+        });
+        kid->observe("tick", [this, kid](shared_ptr<Entity> e) {
+          if (kid->has_item("ball"))
+            return true;
+          talk(kid, "Hey, who took my ball?!");
+          return false;
         });
         add_actor(kid, "park");
         // }}}
         // {{{ realtor @ floor0
         auto realtor = make_shared<Actor>("realtor", "Real eastate agent");
+        realtor->add_money(200);
         add_actor(realtor, "floor0");
         // }}}
-        // {{{ walker @ main_street
-        auto walker = make_shared<Walker>("walker", "Texas Ranger");
-        walker->set_description("The real law man around these parts.");
-        add_actor(walker, "main_street");
+        // {{{ ranger @ main_street
+        auto ranger = make_shared<Ranger>();
+        add_actor(ranger, "main_street");
         // }}}
 
         auto hobo = make_shared<Actor>("hobo", "Friendly(?) hobo");

@@ -11,21 +11,9 @@
 
 namespace hoboquest {
   Walker::Walker(const std::string &id, const std::string &name) :
-  Actor(id, name), _spoken_with_player(false), _turns_stationary(0) {
-    _hp = _hp_max = 30;
-    _damage = 10;
-
+  Actor(id, name), _idle_turns(2) {
     srand(time(NULL));
-
-    observe("interacted", [this](std::shared_ptr<Entity> e) {
-      auto player = std::dynamic_pointer_cast<Player>(e);
-      if (!player) return false;
-      player->listen(shared_from_this(), "Howdy friend!");
-      return true;
-    });
   }
-
-  Walker::~Walker() {}
 
   unsigned Walker::random_choice(unsigned min, unsigned max) const {
     return min + (int)((double)rand() / RAND_MAX * (max-min+1));
@@ -38,34 +26,19 @@ namespace hoboquest {
     if (areas.empty()) return;
 
     auto it = areas.begin();
-    unsigned x = random_choice(0, areas.size());
+    unsigned x = random_choice(0, areas.size() - 1);
     
-    if (x < areas.size()) {
-      std::advance(it, x);
-      std::string exit = (*it).first;
-      std::string target = (*it).second->id();
-      go(exit);
-      _turns_stationary = 0;
-    }
+    std::advance(it, x);
+    std::string exit = (*it).first;
+    std::string target = (*it).second->id();
+    go(exit);
+
+    _turns_to_move = _idle_turns;
   }
 
   void Walker::tick() {
-    if (!_location) return;
-
-    if (_location->has_actor("player")) {
-      auto player = std::dynamic_pointer_cast<Player>(_location->get_actor("player"));
-      if (!_spoken_with_player) {
-        player->listen(shared_from_this(), "Hey there fella! Don't cause any trouble or I'll come after you.");
-        _spoken_with_player = true;
-      }
-
-      if (player->has_item("gun"))
-        player->listen(shared_from_this(), "Don't go about waving that gun around mister!");
-    }
-
-    if (_turns_stationary++ > 2)
+    if (_turns_to_move-- < 1)
       random_move();
-
     Actor::tick();
   }
 } /* hoboquest */ 
