@@ -10,40 +10,60 @@
 #include <iostream>
 
 namespace hoboquest {
-  unsigned Walker::randomChoice(unsigned min, unsigned max) const {
-    return min + (int)((double)rand() / RAND_MAX * (max-min+1));
-  }
-
   Walker::Walker(const std::string &id, const std::string &name) :
-  Actor(id, name) {
+  Actor(id, name), _spoken_with_player(false), _turns_stationary(0) {
     srand(time(NULL));
+
+    observe("interacted", [this](std::shared_ptr<Entity> e) {
+      auto player = std::dynamic_pointer_cast<Player>(e);
+      if (!player) return false;
+      player->listen(shared_from_this(), "Howdy friend!");
+      return true;
+    });
   }
 
   Walker::~Walker() {}
 
-  void Walker::tick() {
-    if (!_location)
-      return;
+  unsigned Walker::random_choice(unsigned min, unsigned max) const {
+    return min + (int)((double)rand() / RAND_MAX * (max-min+1));
+  }
+
+  void Walker::random_move() {
+    if (!_location) return;
 
     auto &areas = _location->exits();
-    if (areas.empty())
-      return;
+    if (areas.empty()) return;
 
     auto it = areas.begin();
-    unsigned x = randomChoice(0, areas.size() * 2);
+    unsigned x = random_choice(0, areas.size());
     
     if (x < areas.size()) {
       std::advance(it, x);
       std::string exit = (*it).first;
       std::string target = (*it).second->id();
       go(exit);
+      _turns_stationary = 0;
     }
   }
 
-  void Walker::interact(std::shared_ptr<Actor> actor) {
-    auto player = std::dynamic_pointer_cast<Player>(actor);
-    if (!player) return;
-    player->out() << name() << " says: Howdy friend!" << std::endl;
+  void Walker::tick() {
+    if (!_location) return;
+
+    if (_location->has_actor("player")) {
+      auto player = std::dynamic_pointer_cast<Player>(_location->get_actor("player"));
+      if (!_spoken_with_player) {
+        player->listen(shared_from_this(), "Hey there fella! Don't cause any trouble or I'll come after you.");
+        _spoken_with_player = true;
+      }
+
+      if (player->has_item("gun"))
+        player->listen(shared_from_this(), "Don't go about waving that gun around mister!");
+    }
+
+    if (_turns_stationary++ > 2)
+      random_move();
+
+    Actor::tick();
   }
 } /* hoboquest */ 
 

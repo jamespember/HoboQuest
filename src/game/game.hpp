@@ -136,7 +136,7 @@ namespace hoboquest {
         cop->set_description("Random badge-wearer.");
         add_actor(cop, "police_station");
 
-        cop->observe("interact", [this, cop](shared_ptr<Entity> e) {
+        cop->observe("interacted", [this, cop](shared_ptr<Entity> e) {
           if (player->completed_quest("gun_quest")) {
             talk(cop, "Thanks for the help before!");
           } else if (!player->has_quest("gun_quest")) {
@@ -157,7 +157,7 @@ namespace hoboquest {
 
         auto cat_quest = make_shared<CatQuest>(*this, areas, cat_lady);
         
-        cat_lady->observe("interact", [this, cat_lady, cat_quest](shared_ptr<Entity> e) {
+        cat_lady->observe("interacted", [this, cat_lady, cat_quest](shared_ptr<Entity> e) {
           if (player->completed_quest("cat_quest")) {
             talk(cat_lady, "AAAAH GI DI BAAAAAAAAAAH!!!");
           } else if (!player->has_quest("cat_quest")) {
@@ -188,7 +188,7 @@ namespace hoboquest {
           return false;
         });
 
-        joe->observe("interact", [this, joe](shared_ptr<Entity> e) {
+        joe->observe("interacted", [this, joe](shared_ptr<Entity> e) {
           talk(joe, "GERONIMOOOOOO!");
           joe->go("east");
           joe->kill();
@@ -202,7 +202,7 @@ namespace hoboquest {
         auto ball = make_shared<Item>("ball", "Football");
         ball->set_value(5);
         kid->add_item(ball);
-        kid->observe("interact", [this, kid](shared_ptr<Entity> e) {
+        kid->observe("interacted", [this, kid](shared_ptr<Entity> e) {
             talk(kid, "What's up doc?");
             return true;
         });
@@ -214,6 +214,7 @@ namespace hoboquest {
         // }}}
         // {{{ walker @ main_street
         auto walker = make_shared<Walker>("walker", "Texas Ranger");
+        walker->set_description("The real law man around these parts.");
         add_actor(walker, "main_street");
         // }}}
 

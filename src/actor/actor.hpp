@@ -44,7 +44,8 @@ namespace hoboquest {
       void move_to(std::shared_ptr<Area> area);
 
       virtual std::shared_ptr<Item> remove_item(const std::string &id);
-      virtual void interact(std::shared_ptr<Actor> actor);
+      virtual bool interact(std::shared_ptr<Actor> actor);
+      virtual void listen(std::shared_ptr<Entity> source, const std::string &said);
 
       bool go(const std::string &where);
       bool consume(const std::string &what);

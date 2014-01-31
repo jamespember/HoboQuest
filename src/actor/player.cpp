@@ -93,6 +93,14 @@ namespace hoboquest {
     _out << "You received $" << amount << "." << std::endl;
   }
 
+  void Player::listen(std::shared_ptr<Entity> source, const std::string &said) {
+    auto actor = std::dynamic_pointer_cast<Actor>(source);
+    if (actor)
+      _out << actor->name() << " says: " << said << std::endl;
+    else
+      _out << "You hear " << said << " coming from " << source->name() << "." << std::endl;
+  }
+
   bool Player::has_quest(const std::string &id) const {
     return quests.has(id);
   }
@@ -101,4 +109,4 @@ namespace hoboquest {
     return quest && quest->completed();
   }
 
-} /* hoboquest */ 
+} /* hoboquest */

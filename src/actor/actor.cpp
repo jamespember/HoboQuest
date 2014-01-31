@@ -70,11 +70,11 @@ namespace hoboquest {
 
   void Actor::move_to(std::shared_ptr<Area> area) {
     auto previous = _location;
+    _location = area;
     if (previous != nullptr) {
       previous->remove_actor(_id);
+      notify("exited", previous);
     }
-    _location = area;
-    notify("exited", previous);
     notify("entered", _location);
     area->add_actor(std::static_pointer_cast<Actor>(shared_from_this()));
   }
@@ -182,9 +182,13 @@ namespace hoboquest {
     return true;
   }
 
-  void Actor::interact(std::shared_ptr<Actor> actor) {
+  bool Actor::interact(std::shared_ptr<Actor> actor) {
     notify("interact", actor);
+    actor->notify("interacted", shared_from_this());
+    return actor->observed("interacted");
   }
+
+  void Actor::listen(std::shared_ptr<Entity> source, const std::string &said) {}
 
   void Actor::on_death() {
     notify("died", shared_from_this());

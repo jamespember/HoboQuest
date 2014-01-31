@@ -82,11 +82,11 @@ namespace hoboquest {
       player->out() << *e << " left the area, heading towards " << *(actor->location()) << "." << endl;
       return true;
     });
-    player->observe("interact", [player](shared_ptr<Entity> e) {
+    player->observe("interacted", [player](shared_ptr<Entity> e) {
       if (e == player)
         player->message("You can't interact with yourself, you're not schizophrenic!");
       else
-        player->out() << e->name() << " tries to interact with you." << endl;
+        player->out() << e->name() << " wants to interact with you." << endl;
       return true;
     });
     player->observe("quest_started", [player](shared_ptr<Entity> e) {
