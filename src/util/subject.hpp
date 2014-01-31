@@ -34,6 +34,10 @@ namespace hoboquest {
         // });
       }
 
+      bool observed(const EventId &event) const {
+        return _observers.count(event) > 0;
+      }
+
     protected:
       std::unordered_map<EventId, std::list<Observer>> _observers;
   };
