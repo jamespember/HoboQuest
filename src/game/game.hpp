@@ -101,6 +101,13 @@ namespace hoboquest {
         pub->set_description("A pub filled with people, more or less drunk.");
         add_area(pub);
 
+        areas.get("pub")->observe("on_enter", [this](shared_ptr<Entity> e) {
+          if (e == player) {
+            player->message("Tip: in here you can use the command \"buy <item>\" to buy an item.");
+          }
+          return true;
+        });
+
         // }}}
 
         // {{{ Exits
@@ -124,10 +131,25 @@ namespace hoboquest {
         auto beer = make_shared<Consumable>("beer", "Beer");
         beer->set_description("A lovely non-alcoholic(?) beverage.");
         beer->set_hp_modifier(-5);
-        beer->observe("consumed", [this](shared_ptr<Entity> e) {
-          player->message("You drank the beer and lost 5 hp."); return false;
+        beer->set_value(10);
+        beer->observe("consumed", [this, beer, pub](shared_ptr<Entity> e) {
+          player->message("You drank the beer and lost 5 hp.");
+          pub->stock_add(beer); return true;
         });
-        areas.get("pub")->add_item(beer);
+        pub->stock_add(beer);
+
+
+        auto juice = make_shared<Consumable>("juice", "Juice");
+        juice->set_description("A fruitful beverage.");
+        juice->set_hp_modifier(10);
+        juice->set_value(50);
+        juice->observe("consumed", [this, juice, pub](shared_ptr<Entity> e) {
+          player->message("You drank the juice and got 10 hp!"); 
+          pub->stock_add(juice); return true;
+        });
+        pub->stock_add(juice);
+
+
         // }}}
 
         // Actors
@@ -220,7 +242,14 @@ namespace hoboquest {
 
         auto hobo = make_shared<Actor>("hobo", "Friendly(?) hobo");
         add_actor(hobo, "shelter");
+
         auto bartender = make_shared<Actor>("bartender", "Bartender");
+        bartender->observe("interacted", [this, bartender](shared_ptr<Entity> e) {
+            talk(bartender, "Welcome to the bar!");
+            talk(bartender, "Here you can buy a vast set of the finest products on the market.");
+            talk(bartender, "We have both beer ($10) and juice ($50)! Something for everyone!");
+            return true;
+        });
         add_actor(bartender, "pub");
 
         // Start game

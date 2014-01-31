@@ -88,7 +88,7 @@ namespace hoboquest {
   void ContainerEntity::describe_carrying(std::ostream &out) const {
     out << _carrying;
     if (!has_unlimited_capacity()) {
-      out << " / " << _capacity;
+      out << '/' << _capacity;
       if (over_encumbered())
         out << ", over encumbered";
     }
