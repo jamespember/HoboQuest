@@ -22,7 +22,7 @@ namespace hoboquest {
 
     public:
       Entity(Type type, const std::string &id, const std::string &name) :
-        _type(type), _id(id), _name(name) {}
+        _type(type), _id(id), _name(name), _description("") {}
 
       virtual ~Entity() {}
 

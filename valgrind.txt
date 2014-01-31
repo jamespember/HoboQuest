@@ -1,0 +1,18 @@
+A hero is you!
+==10865== 
+==10865== HEAP SUMMARY:
+==10865==     in use at exit: 37,343 bytes in 551 blocks
+==10865==   total heap usage: 2,358 allocs, 1,807 frees, 164,101 bytes allocated
+==10865== 
+==10865== LEAK SUMMARY:
+==10865==    definitely lost: 880 bytes in 2 blocks
+==10865==    indirectly lost: 36,463 bytes in 549 blocks
+==10865==      possibly lost: 0 bytes in 0 blocks
+==10865==    still reachable: 0 bytes in 0 blocks
+==10865==         suppressed: 0 bytes in 0 blocks
+==10865== Rerun with --leak-check=full to see details of leaked memory
+==10865== 
+==10865== For counts of detected and suppressed errors, rerun with: -v
+==10865== Use --track-origins=yes to see where uninitialised values come from
+==10865== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 2 from 2)
+
