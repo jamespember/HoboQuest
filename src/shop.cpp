@@ -6,7 +6,7 @@
 namespace hoboquest {
 
   Shop::Shop(const std::string &id, const std::string &name, Engine &engine) : 
-    Area(id, name), _engine(engine) {
+  Area(id, name), _engine(engine) {
   }
 
   bool Shop::in_stock(const std::string &item_id) {
@@ -42,6 +42,7 @@ namespace hoboquest {
   }
 
   bool Shop::add_actor(std::shared_ptr<Actor> actor) {
+    _engine.player->message("add_actor");
     if (actor == _engine.player) {
       _engine.player->commands.add_command(std::make_shared<BuyCommand>());
     }
@@ -49,6 +50,7 @@ namespace hoboquest {
   }
 
   void Shop::remove_actor(const std::string &id) {
+    _engine.player->message("remove_actor");
     if (id == _engine.player->id()) {
       _engine.player->commands.remove_command("buy");
     }
