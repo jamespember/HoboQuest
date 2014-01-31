@@ -5,7 +5,7 @@
 #include "../item/consumable.hpp"
 #include "../item/equippable.hpp"
 #include "../actor/walker.hpp"
-#include "../bar.hpp"
+#include "../shop.hpp"
 
 #include "initialize_player.hpp"
 
@@ -97,7 +97,7 @@ namespace hoboquest {
             "The rooftop area of a a large apartments building.");
         add_area("apartment", "Apartment",
             "Your very own apartment. It looks rat infested.");
-        auto pub = make_shared<Bar>("pub", "Pub");
+        auto pub = make_shared<Shop>("pub", "Pub", *this);
         pub->set_description("A pub filled with people, more or less drunk.");
         add_area(pub);
 

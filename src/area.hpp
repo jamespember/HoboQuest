@@ -33,10 +33,10 @@ namespace hoboquest {
       std::shared_ptr<Area> remove_exit(const std::string &direction);
       const exit_map & exits() const;
 
-      bool add_actor(std::shared_ptr<Actor> actor);
+      virtual bool add_actor(std::shared_ptr<Actor> actor);
       bool has_actor(const std::string &id) const;
       std::shared_ptr<Actor> get_actor(const std::string &id) const;
-      void remove_actor(const std::string &id);
+      virtual void remove_actor(const std::string &id);
 
       void describe_exits(std::ostream &out) const;
       void describe_actors(std::ostream &out) const;
