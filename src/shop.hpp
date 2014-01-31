@@ -23,8 +23,8 @@ namespace hoboquest {
       std::shared_ptr<Item> remove_stock(const std::string &item_id);
       int price(const std::string &item_id);
       
-      bool add_actor(std::shared_ptr<Actor> actor);
-      void remove_actor(const std::string &id);
+      virtual bool add_actor(std::shared_ptr<Actor> actor);
+      virtual void remove_actor(const std::string &id);
 
   };
 }
