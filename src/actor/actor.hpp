@@ -59,7 +59,6 @@ namespace hoboquest {
       virtual void on_death();
 
       virtual void describe(std::ostream &out) const;
-
   };
 } /* hoboquest  */
 

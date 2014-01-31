@@ -40,8 +40,7 @@ namespace hoboquest {
 
       bool has_quest(const std::string &id) const;
       bool completed_quest(const std::string &id) const;
-
   };
-} /* hoboquest */ 
+} /* hoboquest */
 
 #endif

@@ -12,6 +12,7 @@
 #include "../command/help.hpp"
 #include "../command/interact.hpp"
 #include "../command/inventory.hpp"
+#include "../command/stats.hpp"
 #include "../command/quest.hpp"
 #include "../command/wait.hpp"
 
@@ -31,11 +32,12 @@ namespace hoboquest {
     player->commands.add_command(make_shared<GoShorthandCommand>("up", "u"));
     player->commands.add_command(make_shared<GoShorthandCommand>("down", "d"));
     ADD_CMD(Interact)
+    ADD_CMD(Stats)
     ADD_CMD(Inventory)
     ADD_CMD(Pickup)
     ADD_CMD(Drop)
     ADD_CMD(Give)
-    ADD_CMD(Steal)
+    ADD_CMD(Pickpocket)
     ADD_CMD(Consume)
     ADD_CMD(Equip)
     ADD_CMD(Unequip)

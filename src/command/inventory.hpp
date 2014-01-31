@@ -114,15 +114,13 @@ namespace hoboquest {
       }
   }; /*}}}*/
 
-  class StealCommand : public Command { /*{{{*/
+  class PickpocketCommand : public Command { /*{{{*/
     public:
-      StealCommand() : Command("steal") {}
+      PickpocketCommand() : Command("pickpocket", "pp") {}
 
       CommandOutcome execute(Player &player, std::deque<std::string> &args) {
         if (args.empty())
-          return player.message("Steal what?"), ERROR;
-        if (args.size() < 2)
-          return player.message("Steal from whom?"), ERROR;
+          return player.message("Pickpocket what?"), ERROR;
 
         auto &out = player.out();
         auto actor = player.location()->get_actor(args[0]);
@@ -130,6 +128,19 @@ namespace hoboquest {
         if (!actor) {
           out << "There's no one around known as '" << args[0] << "'.\n";
           return ERROR;
+        }
+
+        // Pickpocket money, not an item
+        if (args.size() < 2) {
+          unsigned amount = actor->remove_money();
+          if (amount == 0) {
+            out << actor->name() << " didn't have anything worth taking." << std::endl;
+            return SUCCESS;
+          }
+
+          out << "Took $" << amount << " from " << actor->name() << "." << std::endl;
+          player.add_money(amount);
+          return SUCCESS;
         }
 
         auto item = actor->get_item(args[1]);
@@ -140,7 +151,7 @@ namespace hoboquest {
         }
 
         if (!player.steal(actor, item->id())) {
-          out << "You can't steal " << *item << " from " << *actor << "." << std::endl; 
+          out << "You can't pickpocket " << *item << " from " << *actor << "." << std::endl; 
           return ERROR;
         }
 

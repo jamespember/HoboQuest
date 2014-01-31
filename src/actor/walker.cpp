@@ -12,6 +12,9 @@
 namespace hoboquest {
   Walker::Walker(const std::string &id, const std::string &name) :
   Actor(id, name), _spoken_with_player(false), _turns_stationary(0) {
+    _hp = _hp_max = 30;
+    _damage = 10;
+
     srand(time(NULL));
 
     observe("interacted", [this](std::shared_ptr<Entity> e) {

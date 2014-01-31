@@ -23,6 +23,8 @@ namespace hoboquest {
   int  Actor::damage() const { return _damage; }
 
   void Actor::set_hp(int hp) {
+    if (hp > _hp_max)
+      set_hp_max(hp);
     _hp = hp < 0 ? 0 : hp;
     notify("changed_hp", shared_from_this());
     if (_hp < 1)
@@ -196,7 +198,12 @@ namespace hoboquest {
   }
 
   void Actor::describe(std::ostream &out) const {
-    ContainerEntity::describe(out);
+    Entity::describe(out);
+    out << "  hp: " << _hp << " / " << _hp_max << ", damage: " << _damage << std::endl;
+    out << "  carrying: ";
+    describe_carrying(out);
+    out << std::endl;
+    describe_contents(out);
   }
 
 } /* hoboquest  */

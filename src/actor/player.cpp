@@ -10,7 +10,10 @@
 namespace hoboquest {
 
   Player::Player(std::istream &in, std::ostream &out) :
-    Actor::Actor("player", "Player"), _in(in), _out(out), _turns_stationary(0) {
+    Actor::Actor("player", "Hobo"), _in(in), _out(out), _turns_stationary(0) {
+      _hp = _hp_max = 20;
+      _damage = 5;
+
       observe("entered", [this](std::shared_ptr<Entity> e) {
         this->_turns_stationary = 0;
         return true;
