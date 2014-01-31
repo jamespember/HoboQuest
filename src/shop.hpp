@@ -18,9 +18,9 @@ namespace hoboquest {
       Shop(const std::string &id, const std::string &name, Engine &engine);
 
       bool in_stock(const std::string &item_id);
-      void stock_add(std::shared_ptr<Item> item);
-      std::shared_ptr<Item> stock_get(const std::string &item_id);
-      std::shared_ptr<Item> stock_remove(const std::string &item_id);
+      void add_stock(std::shared_ptr<Item> item);
+      std::shared_ptr<Item> get_stock(const std::string &item_id);
+      std::shared_ptr<Item> remove_stock(const std::string &item_id);
       int price(const std::string &item_id);
       
       bool add_actor(std::shared_ptr<Actor> actor);

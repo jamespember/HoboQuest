@@ -31,7 +31,7 @@ namespace hoboquest {
         if (player.money() < price)
           return player.message("Not enough money!"), NOOP;
 
-        auto item = shop->stock_remove(item_id);
+        auto item = shop->remove_stock(item_id);
         if (item == nullptr)
           return player.message("Sorry, that is bug infested."), ERROR;
 

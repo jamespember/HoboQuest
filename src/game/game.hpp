@@ -6,6 +6,7 @@
 #include "../item/equippable.hpp"
 #include "../actor/ranger.hpp"
 #include "../shop.hpp"
+#include "../danger_zone.hpp"
 
 #include "initialize_player.hpp"
 
@@ -99,22 +100,34 @@ namespace hoboquest {
             "The rooftop area of a a large apartments building.");
         add_area("apartment", "Apartment",
             "Your very own apartment. It looks rat infested.");
+        
         auto pub = make_shared<Shop>("pub", "Pub", *this);
-        pub->set_description("A pub filled with people, more or less drunk.");
-        add_area(pub);
-
-        areas.get("pub")->observe("on_enter", [this](shared_ptr<Entity> e) {
+        pub->set_description("A pub sometimes filled with people, more or less drunk.");
+        pub->observe("on_enter", [this](shared_ptr<Entity> e) {
           if (e == player) {
             player->message("Tip: in here you can use the command \"buy <item>\" to buy an item.");
           }
           return true;
         });
+        add_area(pub);
+
+        auto garbage = make_shared<DangerZone>("garbage", "Burning garbage", -5);
+        garbage->set_description("A great pile of burning garbage");
+        garbage->observe("on_enter", [this](shared_ptr<Entity> e) {
+          if (e == player) {
+            player->message("Auch! HOT!");
+            player->message("You lost 5 hp.");
+          }
+          return true;
+        });
+        add_area(garbage);
         // }}}
 
         // {{{ Exits
         connect_areas("alley", "north", "south", "pub");
         connect_areas("alley", "east", "west", "main_street");
         connect_areas("main_street", "east", "west", "shelter");
+        connect_areas("shelter", "east", "west", "garbage");
         connect_areas("main_street", "south", "north", "police_station");
         connect_areas("cell", "east", "west", "police_station");
         connect_areas("market", "south", "north", "main_street");
@@ -128,17 +141,16 @@ namespace hoboquest {
         // }}}
 
         // Items
-        // {{{ beer @ pub
+        // {{{ beverages @ pub
         auto beer = make_shared<Consumable>("beer", "Beer");
         beer->set_description("A lovely non-alcoholic(?) beverage.");
         beer->set_hp_modifier(-5);
         beer->set_value(10);
         beer->observe("consumed", [this, beer, pub](shared_ptr<Entity> e) {
           player->message("You drank the beer and lost 5 hp.");
-          pub->stock_add(beer); return true;
+          pub->add_stock(beer); return true;
         });
-        pub->stock_add(beer);
-
+        pub->add_stock(beer);
 
         auto juice = make_shared<Consumable>("juice", "Juice");
         juice->set_description("A fruitful beverage.");
@@ -146,9 +158,9 @@ namespace hoboquest {
         juice->set_value(50);
         juice->observe("consumed", [this, juice, pub](shared_ptr<Entity> e) {
           player->message("You drank the juice and got 10 hp!"); 
-          pub->stock_add(juice); return true;
+          pub->add_stock(juice); return true;
         });
-        pub->stock_add(juice);
+        pub->add_stock(juice);
 
 
         // }}}
