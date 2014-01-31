@@ -18,7 +18,7 @@ namespace hoboquest {
 
       virtual void tick();
 
-      virtual void on_interact(std::shared_ptr<Actor> actor);
+      virtual void interact(std::shared_ptr<Actor> actor);
   };
 } /* hoboquest */ 
 

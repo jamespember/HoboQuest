@@ -45,7 +45,7 @@ namespace hoboquest {
     }
   }
 
-  void Walker::on_interact(std::shared_ptr<Actor> actor) {
+  void Walker::interact(std::shared_ptr<Actor> actor) {
     auto player = std::dynamic_pointer_cast<Player>(actor);
     if (!player) return;
     player->out() << name() << " says: Howdy friend!" << std::endl;

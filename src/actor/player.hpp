@@ -31,7 +31,7 @@ namespace hoboquest {
       // std::istream & in();
 
       token_container command_prompt();
-      bool interact();
+      bool execute();
 
       unsigned remove_money(unsigned amount);
       void add_money(unsigned amount);

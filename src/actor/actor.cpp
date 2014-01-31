@@ -182,7 +182,7 @@ namespace hoboquest {
     return true;
   }
 
-  void Actor::on_interact(std::shared_ptr<Actor> actor) {
+  void Actor::interact(std::shared_ptr<Actor> actor) {
     notify("interact", actor);
   }
 

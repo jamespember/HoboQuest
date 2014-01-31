@@ -45,7 +45,7 @@ namespace hoboquest {
 
   // Prompts the player input for a command and then attempts to execute it.
   // This is repeated until a valid command read and successfully executed.
-  bool Player::interact() {
+  bool Player::execute() {
     Player::token_container tokens;
 
 

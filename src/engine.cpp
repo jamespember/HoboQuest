@@ -40,7 +40,7 @@ namespace hoboquest {
 
   bool Engine::tick() {
     // Player interaction (stop game on false return value)
-    if (!player->interact())
+    if (!player->execute())
       return false;
 
     player->tick();
