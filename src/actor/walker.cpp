@@ -25,13 +25,9 @@ namespace hoboquest {
     if (!_location)
       return;
 
-    std::cout << "Walker currently located at " << _location->id() << std::endl;
-
     auto &areas = _location->exits();
     if (areas.empty())
       return;
-
-    std::cout << "Number of exits: "<< areas.size() << std::endl;
 
     auto it = areas.begin();
     unsigned x = randomChoice(0, areas.size() * 2);
@@ -40,7 +36,6 @@ namespace hoboquest {
       std::advance(it, x);
       std::string exit = (*it).first;
       std::string target = (*it).second->id();
-      std::cout << "x=" << x << ", chose " << exit << " which leads to " << target << std::endl;
       go(exit);
     }
   }
