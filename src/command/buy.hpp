@@ -27,7 +27,7 @@ namespace hoboquest {
         if (!shop->in_stock(item_id))
           return player.message("Sorry, we're out."), NOOP;      
         
-        int price = shop->price(item_id);
+        unsigned price = shop->price(item_id);
         if (player.money() < price)
           return player.message("Not enough money!"), NOOP;
 
