@@ -34,7 +34,9 @@ namespace hoboquest {
           return ERROR;
         }
 
-        actor->interact(std::static_pointer_cast<Actor>(player.shared_from_this()));
+        if (!player.interact(actor))
+          player.message("No response.");
+
         return SUCCESS;
       }
   }; /*}}}*/

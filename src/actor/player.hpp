@@ -33,13 +33,14 @@ namespace hoboquest {
       token_container command_prompt();
       bool execute();
 
+      void listen(std::shared_ptr<Entity> source, const std::string &said);
+
       unsigned remove_money(unsigned amount);
       void add_money(unsigned amount);
 
       bool has_quest(const std::string &id) const;
       bool completed_quest(const std::string &id) const;
-
   };
-} /* hoboquest */ 
+} /* hoboquest */
 
 #endif

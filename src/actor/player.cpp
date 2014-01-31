@@ -10,7 +10,10 @@
 namespace hoboquest {
 
   Player::Player(std::istream &in, std::ostream &out) :
-    Actor::Actor("player", "Player"), _in(in), _out(out), _turns_stationary(0) {
+    Actor::Actor("player", "Hobo"), _in(in), _out(out), _turns_stationary(0) {
+      _hp = _hp_max = 20;
+      _damage = 5;
+
       observe("entered", [this](std::shared_ptr<Entity> e) {
         this->_turns_stationary = 0;
         return true;
@@ -93,6 +96,14 @@ namespace hoboquest {
     _out << "You received $" << amount << "." << std::endl;
   }
 
+  void Player::listen(std::shared_ptr<Entity> source, const std::string &said) {
+    auto actor = std::dynamic_pointer_cast<Actor>(source);
+    if (actor)
+      _out << actor->name() << " says: " << said << std::endl;
+    else
+      _out << "You hear " << said << " coming from " << source->name() << "." << std::endl;
+  }
+
   bool Player::has_quest(const std::string &id) const {
     return quests.has(id);
   }
@@ -101,4 +112,4 @@ namespace hoboquest {
     return quest && quest->completed();
   }
 
-} /* hoboquest */ 
+} /* hoboquest */

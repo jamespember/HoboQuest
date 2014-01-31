@@ -30,7 +30,7 @@ namespace hoboquest {
           return true;
         });
 
-        realtor->observe("interact", [this](shared_ptr<Entity> e) {
+        realtor->observe("interacted", [this](shared_ptr<Entity> e) {
           if (this->has_enough_money() && !this->hall->has_exit("east")) {
             this->say("Hey pal, I'm sure you want to buy one of these fine apartments!");
             this->say("It's only $1000, pe(s)ts are optional.");

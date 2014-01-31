@@ -12,6 +12,7 @@
 #include "../command/help.hpp"
 #include "../command/interact.hpp"
 #include "../command/inventory.hpp"
+#include "../command/stats.hpp"
 #include "../command/quest.hpp"
 #include "../command/wait.hpp"
 
@@ -31,11 +32,12 @@ namespace hoboquest {
     player->commands.add_command(make_shared<GoShorthandCommand>("up", "u"));
     player->commands.add_command(make_shared<GoShorthandCommand>("down", "d"));
     ADD_CMD(Interact)
+    ADD_CMD(Stats)
     ADD_CMD(Inventory)
     ADD_CMD(Pickup)
     ADD_CMD(Drop)
     ADD_CMD(Give)
-    ADD_CMD(Steal)
+    ADD_CMD(Pickpocket)
     ADD_CMD(Consume)
     ADD_CMD(Equip)
     ADD_CMD(Unequip)
@@ -82,11 +84,11 @@ namespace hoboquest {
       player->out() << *e << " left the area, heading towards " << *(actor->location()) << "." << endl;
       return true;
     });
-    player->observe("interact", [player](shared_ptr<Entity> e) {
+    player->observe("interacted", [player](shared_ptr<Entity> e) {
       if (e == player)
         player->message("You can't interact with yourself, you're not schizophrenic!");
       else
-        player->out() << e->name() << " tries to interact with you." << endl;
+        player->out() << e->name() << " wants to interact with you." << endl;
       return true;
     });
     player->observe("quest_started", [player](shared_ptr<Entity> e) {

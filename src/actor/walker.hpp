@@ -10,15 +10,17 @@
 namespace hoboquest {
   class Walker : public Actor {
     protected:
-      unsigned randomChoice(unsigned min, unsigned max) const;
+      bool _spoken_with_player;
+      unsigned _turns_stationary;
+
+      unsigned random_choice(unsigned min, unsigned max) const;
+      void random_move();
 
     public:
       Walker(const std::string &id, const std::string &name);
       virtual ~Walker();
 
       virtual void tick();
-
-      virtual void interact(std::shared_ptr<Actor> actor);
   };
 } /* hoboquest */ 
 

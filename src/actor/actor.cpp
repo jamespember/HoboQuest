@@ -23,6 +23,8 @@ namespace hoboquest {
   int  Actor::damage() const { return _damage; }
 
   void Actor::set_hp(int hp) {
+    if (hp > _hp_max)
+      set_hp_max(hp);
     _hp = hp < 0 ? 0 : hp;
     notify("changed_hp", shared_from_this());
     if (_hp < 1)
@@ -70,11 +72,11 @@ namespace hoboquest {
 
   void Actor::move_to(std::shared_ptr<Area> area) {
     auto previous = _location;
+    _location = area;
     if (previous != nullptr) {
       previous->remove_actor(_id);
+      notify("exited", previous);
     }
-    _location = area;
-    notify("exited", previous);
     notify("entered", _location);
     area->add_actor(std::static_pointer_cast<Actor>(shared_from_this()));
   }
@@ -182,9 +184,13 @@ namespace hoboquest {
     return true;
   }
 
-  void Actor::interact(std::shared_ptr<Actor> actor) {
+  bool Actor::interact(std::shared_ptr<Actor> actor) {
     notify("interact", actor);
+    actor->notify("interacted", shared_from_this());
+    return actor->observed("interacted");
   }
+
+  void Actor::listen(std::shared_ptr<Entity> source, const std::string &said) {}
 
   void Actor::on_death() {
     notify("died", shared_from_this());
@@ -192,7 +198,12 @@ namespace hoboquest {
   }
 
   void Actor::describe(std::ostream &out) const {
-    ContainerEntity::describe(out);
+    Entity::describe(out);
+    out << "  hp: " << _hp << " / " << _hp_max << ", damage: " << _damage << std::endl;
+    out << "  carrying: ";
+    describe_carrying(out);
+    out << std::endl;
+    describe_contents(out);
   }
 
 } /* hoboquest  */
